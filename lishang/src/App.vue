@@ -13,7 +13,7 @@
               <li
                 :key="index.id"
                 ref="changeInit"
-                @click="addClass(index)"
+                @click="addClass(index,item.path)"
                 :class="index == isChange ? 'changeClass' : ''"
                 :style="index == isChange ? item.checked : item.unchecked"
               >
@@ -24,15 +24,10 @@
         </el-aside>
         <el-container>
           
-          <el-footer>
-            <button><span /> 删除</button>
-            <button><span /> 添加课程</button>
-          </el-footer>
-          <el-main>
+       
            <router-view/>
-
-          </el-main>
         </el-container>
+ 
 
       </el-container>
     </el-container>
@@ -46,7 +41,7 @@ export default {
         isChange:0,
       navList: [
         {
-          path: "",
+          path: "/banji",
           meta: {
             name: "班级管理",
           },
@@ -58,7 +53,7 @@ export default {
           },
         },
         {
-          path: "",
+          path: "/kecheng",
           meta: {
             name: "课程管理",
           },
@@ -70,7 +65,7 @@ export default {
           },
         },
         {
-          path: "",
+          path: "/kaoqin",
           meta: {
             name: "考勤管理",
           },
@@ -82,7 +77,7 @@ export default {
           },
         },
         {
-          path: "",
+          path: "/keshi",
           meta: {
             name: "课时汇总",
           },
@@ -94,7 +89,7 @@ export default {
           },
         },
         {
-          path: "",
+          path: "/xueyuan",
           meta: {
             name: "学员管理",
           },
@@ -110,8 +105,10 @@ export default {
     };
   },
   methods: {
-    addClass(val) {
+    addClass(val,path) {
       this.isChange = val;
+       this.$router.push(path);
+
     },
   },
 
