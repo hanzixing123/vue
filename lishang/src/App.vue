@@ -26,7 +26,7 @@
           
           <el-footer>
             <button><span /> 删除</button>
-            <button><span /> 添加课程</button>
+            <button><span /> 添加班级</button>
           </el-footer>
           <el-main>
            <router-view/>
