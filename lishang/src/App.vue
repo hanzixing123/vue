@@ -135,7 +135,7 @@ export default {
   font-size: 35px;
   text-align: left;
   line-height: 60px;
-}
+} 
     
 
 .el-footer {
