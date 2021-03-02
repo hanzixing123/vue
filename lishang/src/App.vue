@@ -22,17 +22,8 @@
             </template>
             </ul>
         </el-aside>
-        <el-container>
-          
-          <el-footer>
-            <button><span /> 删除</button>
-            <button><span /> 添加课程</button>
-          </el-footer>
-          <el-main>
-           <router-view/>
-
-          </el-main>
-        </el-container>
+       
+        <router-view/>
 
       </el-container>
     </el-container>
