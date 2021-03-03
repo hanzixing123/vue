@@ -1,4 +1,5 @@
 <template>
+
   <div class="banji-nav">
     <el-footer>
       <button><span /> 删除</button>
@@ -82,6 +83,7 @@
       </table>
     </el-main>
   </div>
+  
 </template>
 
 <script>
