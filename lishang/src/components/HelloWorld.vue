@@ -16,7 +16,7 @@
                 <li
                   :key="index.id"
                   ref="changeInit"
-                  @click="addClass(index, item.path)"
+                  @click="addClass(index, item.path)" 
                   :class="index == isChange ? 'changeClass' : ''"
                   :style="index == isChange ? item.checked : item.unchecked"
                 >
