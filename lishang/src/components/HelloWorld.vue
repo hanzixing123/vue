@@ -19,7 +19,7 @@
                   @click="addClass(index, item.path)" 
                   :class="index == isChange ? 'changeClass' : ''"
                   :style="index == isChange ? item.checked : item.unchecked"
-                >
+                > 
                   {{ item.meta.name }}
                 </li>
               </template>
