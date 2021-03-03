@@ -270,5 +270,6 @@ body {
 .el-dialog{
   box-shadow: 0 0 5px #aeafb1;
   border-radius: 5px;
+  
 }
 </style>
