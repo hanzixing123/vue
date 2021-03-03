@@ -5,8 +5,19 @@
       <button><span /> 删除</button>
       <button @click="dialogFormVisible = true"><span /> 添加班级</button>
       <div class="banji-option">
-        <span class="btn-op">课程</span>
-        <span class="btn-img"></span>
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            课程<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>架子鼓基础班2021</el-dropdown-item>
+            <el-dropdown-item>架子鼓基础班2021</el-dropdown-item>
+            <el-dropdown-item>架子鼓基础班2021</el-dropdown-item>
+            <el-dropdown-item disabled>架子鼓基础班2021</el-dropdown-item>
+            <el-dropdown-item divided>架子鼓基础班2021</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <input type="text" name="" class="btn-sou" id="" />
       </div>
     </el-footer>
 
@@ -212,6 +223,7 @@ body {
   position: relative;
   top: 2px;
   display: inline-block;
+    
 }
 .el-main {
   background-color: #fff;
@@ -221,7 +233,7 @@ body {
 }
 
 .banji-option {
-  width: 510px;
+  width: 560px;
   height: 45px;
   border: 1px solid #dfe4ea;
   background-color: #fff;
@@ -229,26 +241,18 @@ body {
   top: -46px;
   left: 255px;
   border-radius: 5px;
-  background: url("./img/sou.gif") no-repeat 468px;
+  background: url("./img/sou.gif") no-repeat 517px;
   cursor: pointer;
 }
 
-.btn-op {
+.el-dropdown-link {
   font-size: 20px;
   height: 45px;
   line-height: 45px;
   color: #aca3a8;
+  margin-left: 20px;
 }
 
-.btn-img {
-  background: url("./img/xia.gif") no-repeat;
-  position: relative;
-  float: left;
-  width: 30px;
-  height: 23px;
-  left: 85px;
-  top: 15px;
-}
 
 .tu-img {
   background: url("./img/ico.png") 1px 513px;
@@ -264,14 +268,20 @@ body {
   width: 447px;
 }
 
-.block{
+.block {
   padding-top: 15px;
   margin-left: 55px;
 }
 
-.el-dialog{
+.el-dialog {
   box-shadow: 0 0 5px #aeafb1;
   border-radius: 5px;
-  
+}
+
+.btn-sou {
+  width: 390px;
+  height: 40px;
+  margin-left: 40px;
+  border: none;
 }
 </style>
