@@ -13,7 +13,7 @@
               <li
                 :key="index.id"
                 ref="changeInit"
-                @click="addClass(index)"
+                @click="addClass(index,item.path)"
                 :class="index == isChange ? 'changeClass' : ''"
                 :style="index == isChange ? item.checked : item.unchecked"
               >
@@ -24,15 +24,10 @@
         </el-aside>
         <el-container>
           
-          <el-footer>
-            <button><span /> 删除</button>
-            <button><span /> 添加班级</button>
-          </el-footer>
-          <el-main>
+       
            <router-view/>
-
-          </el-main>
         </el-container>
+ 
 
       </el-container>
     </el-container>
@@ -46,7 +41,7 @@ export default {
         isChange:0,
       navList: [
         {
-          path: "",
+          path: "/banji",
           meta: {
             name: "班级管理",
           },
@@ -58,7 +53,7 @@ export default {
           },
         },
         {
-          path: "",
+          path: "/kecheng",
           meta: {
             name: "课程管理",
           },
@@ -70,7 +65,7 @@ export default {
           },
         },
         {
-          path: "",
+          path: "/kaoqin",
           meta: {
             name: "考勤管理",
           },
@@ -82,7 +77,7 @@ export default {
           },
         },
         {
-          path: "",
+          path: "/keshi",
           meta: {
             name: "课时汇总",
           },
@@ -94,7 +89,7 @@ export default {
           },
         },
         {
-          path: "",
+          path: "/xueyuan",
           meta: {
             name: "学员管理",
           },
@@ -110,8 +105,10 @@ export default {
     };
   },
   methods: {
-    addClass(val) {
+    addClass(val,path) {
       this.isChange = val;
+       this.$router.push(path);
+
     },
   },
 
@@ -138,42 +135,10 @@ export default {
   font-size: 35px;
   text-align: left;
   line-height: 60px;
-}
+} 
+    
 
 
-.el-footer {
-  background-color: #f5f6fa;
-}
-.el-footer button {
-  margin-top: 14px;
-  margin-left: 10px;
-  background-color: #ffffff;
-  line-height: 32px;
-  text-align: center;
-  font-size: 19px;
-  padding-right: 10px;
-  border: 1px solid #c8ccd5;
-  display: inline-block;
-  cursor: pointer;
-  outline: 0 none !important;
-}
-.el-footer button:nth-child(1) span {
-  background: url("./assets/ico.png") 34px 675px;
-  width: 25px;
-  height: 24px;
-  position: relative;
-  top: 2px;
-  display: inline-block;
-}
-.el-footer button:nth-child(2) span {
-  background: url("./assets/ico.png") 33px 590px;
-  width: 25px;
-  height: 23px;
-  padding-right: 5px;
-  position: relative;
-  top: 2px;
-  display: inline-block;
-}
 
 
 .el-aside {
@@ -203,12 +168,7 @@ ul,li{
   margin-bottom:220px;
 
 }
-.el-main {
-  background-color: #e9eef3;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
+
 body > .el-container {
   margin-bottom: 40px;
 }
