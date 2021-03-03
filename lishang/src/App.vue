@@ -22,12 +22,8 @@
             </template>
             </ul>
         </el-aside>
-        <el-container>
-          
        
-           <router-view/>
-        </el-container>
- 
+        <router-view/>
 
       </el-container>
     </el-container>
