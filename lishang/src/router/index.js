@@ -10,33 +10,47 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld,
-      redirect:"/banji"
+      redirect:"/banji",
+    
+      children:[
+        {
+          path:"/banji",
+          // name:"banji",
+          component: () => import ("@/components/banji/index.vue")
+        },
+        {
+          path:"/kecheng",
+          // name:"kecheng",
+          component:()=>import("@/components/kecheng/index.vue")
+        },
+        {
+          path:"/kaoqin",
+          // name:"kaoqin",
+          component:()=>import("@/components/kaoqin/index.vue")
+        },
+        {
+          path:"/keshi",
+          // name:"keshi",
+          component:()=>import("@/components/keshi/index.vue")
+        },
+        {
+          path:"/xueyuan",
+          // name:"xueyuan",
+          component:()=>import("@/components/xueyuan/index.vue")
+        }
+      ]
     },
     {
-      path:"/banji",
-      name:"banji",
-      component: () => import ("@/components/banji/index.vue")
-    },
-    {
-      path:"/kecheng",
-      name:"kecheng",
-      component:()=>import("@/components/kecheng/index.vue")
-    },
-    {
-      path:"/kaoqin",
-      name:"kaoqin",
-      component:()=>import("@/components/kaoqin/index.vue")
-    },
-    {
-      path:"/keshi",
-      name:"keshi",
-      component:()=>import("@/components/keshi/index.vue")
-    },
-    {
-      path:"/xueyuan",
-      name:"xueyuan",
-      component:()=>import("@/components/xueyuan/index.vue")
+      path: '/login',
+      // name: 'HelloWorld',
+      component:()=>import("@/components/login.vue"),
     }
+   
 
-  ]
+  ],
+  // methods:{
+
+
+
+  // }
 })

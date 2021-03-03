@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%">
-    <div class=" el-footer1">
+    <div class="el-footer1">
       <div class="da">
         <b>学员管理</b>
         <button @click="dialogFormVisible = true"><span /> 添加学员</button>
@@ -23,14 +23,14 @@
           </el-input>
         </div>
       </div>
-    <!-- </el-footer> -->
-  </div>
+      <!-- </el-footer> -->
+    </div>
     <div class="el-main1">
-    <!-- <el-main> -->
-      <table>
+      <!-- <el-main> -->
+      <table class="table">
         <tr>
           <td>
-            <input type="checkbox"  class="kuang" >
+            <input type="checkbox" class="kuang" />
             <!-- <span class="kuang" @click="xuan" /> -->
           </td>
           <td>学员名称</td>
@@ -41,9 +41,9 @@
         </tr>
         <tr v-for="(res, index) in list" :key="index">
           <td>
-            <input type="checkbox" class="kuang">
+            <input type="checkbox" class="kuang" />
             <!-- <span class="kuang" @click="xuanzhong(res.id)" /> -->
-            </td>
+          </td>
           <td><span class="kuang-1" /> {{ res.name }}</td>
           <td>{{ res.sex }}</td>
           <td>{{ res.kecheng }}</td>
@@ -108,25 +108,131 @@
       </el-dialog>
 
       <el-dialog title="放学员名称..." :visible.sync="dialogFormVisible1">
-        <!-- <el-form :model="form1">
+        <el-form :model="form1">
           <el-tabs type="border-card">
-            <el-tab-pane label="用户管理">用户管理</el-tab-pane>
-            <el-tab-pane label="配置管理">配置管理</el-tab-pane>
-            <el-tab-pane label="配置管理">配置管理</el-tab-pane>
-            <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-            <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
+            <!-- <el-tab-pane label="用户管理">用户管理</el-tab-pane> -->
+            <el-tab-pane label="插班排课">
+              <div class="chaban">
+                <input type="text" name="" id="" placeholder="输入关键字" />
+                <span />
+              </div>
+              <table class="table1">
+                <tr>
+                  <td>班级名称</td>
+                  <td>课程</td>
+                  <td>老师</td>
+                  <td>人数</td>
+                  <td>计划课时</td>
+                  <td>已排课时</td>
+                  <td>已上课时</td>
+                  <td>操作</td>
+                </tr>
+                <tr>
+                  <td>架子鼓基础班2101</td>
+                  <td>架子鼓课</td>
+                  <td></td>
+                  <td>0人</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td><span>课表</span></td>
+                </tr>
+                <tr>
+                  <td>架子鼓基础班2101</td>
+                  <td>架子鼓课</td>
+                  <td></td>
+                  <td>0人</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td><span>课表</span></td>
+                </tr>
+                <tr>
+                  <td>架子鼓基础班2101</td>
+                  <td>架子鼓课</td>
+                  <td></td>
+                  <td>0人</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td><span>课表</span></td>
+                </tr>
+                <tr>
+                  <td>架子鼓基础班2101</td>
+                  <td>架子鼓课</td>
+                  <td></td>
+                  <td>0人</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td><span>课表</span></td>
+                </tr>
+                <tr>
+                  <td>架子鼓基础班2101</td>
+                  <td>架子鼓课</td>
+                  <td></td>
+                  <td>0人</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td><span>课表</span></td>
+                </tr>
+              </table>
+            </el-tab-pane>
+            <el-tab-pane label="一对一排课">
+              <div>
+                *选择课程
+                <div class="xiala">
+                  <select name="" id="" placeholder="请选择">
+                    <option value="" disabled selected hidden>请选择</option>
+                    <option value=""></option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="san">
+                <div>
+                  *主讲老师 <span>添加助教</span>
+                  <div class="xiala">
+                    <select name="" id="" placeholder="请选择">
+                      <option value="" disabled selected hidden>请选择</option>
+                      <option value=""></option>
+                    </select>
+                </div>
+                <!-- <div>
+                    *选择课程
+                    <div class="xiala">
+                      <select name="" id="" placeholder="请选择">
+                        <option value="" disabled selected hidden>
+                          请选择
+                        </option>
+                        <option value=""></option>
+                      </select>
+                    </div>
+                </div>
+                <div>
+                    *选择课程
+                    <div class="xiala">
+                      <select name="" id="" placeholder="请选择">
+                        <option value="" disabled selected hidden>
+                          请选择
+                        </option>
+                        <option value=""></option>
+                      </select>
+                    </div>
+                </div> -->
+                </div>
+              </div>
+            </el-tab-pane>
           </el-tabs>
-        </el-form> -->
-
-
-
+        </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="dialogFormVisible1 = false"
             >确 定</el-button
           >
         </div>
       </el-dialog>
-    <!-- </el-main> -->
+      <!-- </el-main> -->
     </div>
   </div>
 </template>
@@ -239,9 +345,7 @@ export default {
         resource: "",
         desc: "",
       },
-      form1:{
-
-      },
+      form1: {},
       formLabelWidth: "120px",
     };
   },
@@ -251,6 +355,56 @@ export default {
 };
 </script> 
 <style>
+.san div {
+  float: left;
+}
+.xiala select {
+  width: 140px;
+  height: 40px;
+}
+.table1 {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table1 tr {
+  height: 20px;
+  line-height: 50px;
+  text-align: center;
+}
+/* .table1 tr td{
+
+} */
+.table1 tr:nth-child(1) {
+  background: #f5f6fa;
+}
+
+.is-top:nth-last-child(1) {
+  margin-left: 10px;
+}
+.chaban {
+  display: inline-block;
+  border: 1px solid #cdcdcd;
+  height: 30px;
+}
+.chaban input {
+  height: 25px;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: none;
+  position: relative;
+  top: -11px;
+}
+.chaban span {
+  background: url("../../assets/ico.png") 80px 614px;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  position: relative;
+  /* top:12px;
+  left: -5px; */
+}
 /* .wei {
   float: left;
   width:100%;
@@ -280,12 +434,14 @@ export default {
     height:20px;
     margin-right:4px;
 } */
-
+/* .el-form-item{
+  margin:0;
+} */
 .kuang {
-  width:25px;height:25px;
-  margin-left:20px;
+  width: 25px;
+  height: 25px;
+  margin-left: 20px;
 }
-
 
 .el-dialog__header {
   background: coral;
@@ -307,7 +463,7 @@ export default {
   top:10px;
 } */
 
-.el-main1 table tr td:nth-child(1) {
+.el-main1 .table tr td:nth-child(1) {
   width: 80px;
 }
 /* .kuang {
@@ -327,7 +483,7 @@ export default {
   position: relative;
   top: 10px;
 } */
-.el-main1 table,
+.el-main1 .table,
 tr {
   /* border:0; */
   background: #fff;
@@ -338,7 +494,7 @@ tr {
   border-bottom: 1px solid #eff2f7;
 }
 
-.el-main1 table tr:nth-child(1) {
+.el-main1 .table tr:nth-child(1) {
   background: #e9eef3;
   /* line-height: 70px; */
   font-size: 19px;
@@ -346,19 +502,19 @@ tr {
   border-top: 1px solid #e9eef3;
   border-bottom: 1px solid #e9eef3;
 }
-.el-main1 table tr td:nth-child(2) {
+.el-main1 .table tr td:nth-child(2) {
   padding-left: 10px;
   width: 439px;
 }
-.el-main1 table tr td:nth-child(3) {
+.el-main1 .table tr td:nth-child(3) {
   /* padding-left: 10px; */
   width: 170px;
 }
-.el-main1 table tr td:nth-child(4) {
+.el-main1 .table tr td:nth-child(4) {
   /* padding-left: 10px; */
   width: 275px;
 }
-.el-main1 table tr td:nth-child(5) {
+.el-main1 .table tr td:nth-child(5) {
   /* padding-left: 10px; */
   width: 294px;
 }
@@ -427,7 +583,7 @@ tr {
 .el-footer1 div button:nth-child(4) span {
   background: url("../../assets/ico.png") 31px 595px;
   display: inline-block;
-  width: 27px; 
+  width: 27px;
   height: 28px;
 }
 
