@@ -38,7 +38,7 @@
 
 <div class="hs">
     <div class="rs">1日(周一)</div>
-  <p class="op">架子鼓基础班2101 <br>
+  <p class="op" @click="dialogFormVisible = true">架子鼓基础班2101 <br>
   13:30 明明
    </p>
 </div>
@@ -67,8 +67,8 @@
          <img class="km" src="../../assets/images/keshi-01_03.gif" alt="">
     </h1>
    
-   <img src="../../assets/images/keshi-02_03.gif" alt="">Jason
-     <img class="ds" src="../../assets/images/keshi-02_03.gif" alt="">李四
+   <img class="ds" src="../../assets/images/keshi-02_03.gif" alt="">Jason
+     <img class="dss" src="../../assets/images/keshi-02_03.gif" alt="">李四
 
   </el-form>
   <div slot="footer" class="dialog-footer">
@@ -150,11 +150,18 @@ export default {
     position: fixed;
 }
 .ds{
-    margin-left: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.dss{
+   margin-left: 80px;
+    margin-top: 20px;
 }
 .km{
    margin-left: 20px;
    margin-top: 20px;
+   margin-bottom: -10px;
 }
 
 .lm{
@@ -242,7 +249,7 @@ width: 1385px;
     width: 1383px;
     height: 80px;
     border: 1px solid #e5e5e5;
-    background-color: #f3f6fd;
+   
   }
   .rs{
       width: 120px;
@@ -260,9 +267,10 @@ width: 1385px;
        margin-top: -59px;
        width: 158px;
        height: 53px;
-       background-color: #ffffff;
+       background-color: #fafafa;
       text-align: center;
-      border-radius: 4px;
+      border-radius: 5px;
+      box-shadow: #c5c5c5;
   }
   .el-icon-reading{
     margin-left: 230px;
