@@ -53,6 +53,4 @@ export default {};
   text-align: center;
   line-height: 160px;
 }
-
-
 </style>
