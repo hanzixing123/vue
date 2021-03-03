@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%">
-    <el-footer>
+    <div class=" el-footer1">
       <div class="da">
         <b>学员管理</b>
         <button @click="dialogFormVisible = true"><span /> 添加学员</button>
@@ -23,9 +23,10 @@
           </el-input>
         </div>
       </div>
-    </el-footer>
-
-    <el-main>
+    <!-- </el-footer> -->
+  </div>
+    <div class="el-main1">
+    <!-- <el-main> -->
       <table>
         <tr>
           <td>
@@ -116,7 +117,7 @@
             <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
           </el-tabs>
         </el-form> -->
-          
+
 
 
         <div slot="footer" class="dialog-footer">
@@ -125,7 +126,8 @@
           >
         </div>
       </el-dialog>
-    </el-main>
+    <!-- </el-main> -->
+    </div>
   </div>
 </template>
 
@@ -305,7 +307,7 @@ export default {
   top:10px;
 } */
 
-.el-main table tr td:nth-child(1) {
+.el-main1 table tr td:nth-child(1) {
   width: 80px;
 }
 /* .kuang {
@@ -325,7 +327,7 @@ export default {
   position: relative;
   top: 10px;
 } */
-.el-main table,
+.el-main1 table,
 tr {
   /* border:0; */
   background: #fff;
@@ -336,7 +338,7 @@ tr {
   border-bottom: 1px solid #eff2f7;
 }
 
-.el-main table tr:nth-child(1) {
+.el-main1 table tr:nth-child(1) {
   background: #e9eef3;
   /* line-height: 70px; */
   font-size: 19px;
@@ -344,29 +346,29 @@ tr {
   border-top: 1px solid #e9eef3;
   border-bottom: 1px solid #e9eef3;
 }
-.el-main table tr td:nth-child(2) {
+.el-main1 table tr td:nth-child(2) {
   padding-left: 10px;
   width: 439px;
 }
-.el-main table tr td:nth-child(3) {
+.el-main1 table tr td:nth-child(3) {
   /* padding-left: 10px; */
   width: 170px;
 }
-.el-main table tr td:nth-child(4) {
+.el-main1 table tr td:nth-child(4) {
   /* padding-left: 10px; */
   width: 275px;
 }
-.el-main table tr td:nth-child(5) {
+.el-main1 table tr td:nth-child(5) {
   /* padding-left: 10px; */
   width: 294px;
 }
-.el-footer {
+.el-footer1 {
   background-color: #f5f6fa;
   margin: 0;
   padding: 0;
 }
 
-.el-footer div b {
+.el-footer1 div b {
   width: 144px;
   height: 60px;
   background: #dfe3ec;
@@ -379,7 +381,7 @@ tr {
   background-position: 127px 0px;
 }
 
-.el-footer div button {
+.el-footer1 div button {
   color: #9fa3ac;
   height: 45px;
   border: 0px;
@@ -392,44 +394,44 @@ tr {
   line-height: 40px;
   font-size: 18px;
 }
-.el-footer div button:nth-child(2) {
+.el-footer1 div button:nth-child(2) {
   position: relative;
   top: 3px;
   padding-right: 4px;
   margin-left: 20px;
 }
-.el-footer div button:nth-child(2) span {
+.el-footer1 div button:nth-child(2) span {
   background: url("../../assets/ico.png") 33px 268px;
   display: inline-block;
   width: 27px;
   height: 28px;
 }
-.el-footer div button:nth-child(3) {
+.el-footer1 div button:nth-child(3) {
   position: relative;
   top: 3px;
   padding-right: 4px;
   margin-left: 20px;
 }
-.el-footer div button:nth-child(3) span {
+.el-footer1 div button:nth-child(3) span {
   background: url("../../assets/ico.png") 31px 595px;
   display: inline-block;
   width: 27px;
   height: 28px;
 }
-.el-footer div button:nth-child(4) {
+.el-footer1 div button:nth-child(4) {
   position: relative;
   top: 3px;
   padding-right: 4px;
   margin-left: 20px;
 }
-.el-footer div button:nth-child(4) span {
+.el-footer1 div button:nth-child(4) span {
   background: url("../../assets/ico.png") 31px 595px;
   display: inline-block;
   width: 27px;
   height: 28px;
 }
 
-.el-main {
+.el-main1 {
   background-color: #fff;
   color: #333;
 }
