@@ -62,12 +62,12 @@
         </tr>
         <tr v-for="(item, index) in list" :key="index">
           <td><span class="tu-img" />{{ item.name }}</td>
-          <td>{{ item.kecheng }}</td>
-          <td>{{ item.laoshi }}</td>
-          <td>{{ item.renshu }}</td>
-          <td>{{ item.jihua }}</td>
-          <td>{{ item.yipai }}</td>
-          <td>{{ item.yishang }}</td>
+          <td>{{ item.coursename }}</td>
+          <td>{{ item.teacherslist }}</td>
+          <td>{{ item.students }}</td>
+          <td>{{ item.coursecounts }}</td>
+          <td>{{ item.startdate }}</td>
+          <td>{{ item.enddate }}</td>
           <td><button class="paiban">排课</button></td>
         </tr>
       </table>
@@ -76,55 +76,57 @@
 </template>
 
 <script>
+
+import router from '../../router'
 export default {
   data() {
     return {
       list: [
-        {
-          name: "架子鼓基础班2021",
-          kecheng: "架子鼓课程",
-          laoshi: "王老师",
-          renshu: "0人",
-          jihua: "0",
-          yipai: "23",
-          yishang: "0",
-        },
-        {
-          name: "架子鼓基础班2021",
-          kecheng: "架子鼓课程",
-          laoshi: "王老师",
-          renshu: "0人",
-          jihua: "0",
-          yipai: "23",
-          yishang: "0",
-        },
-        {
-          name: "架子鼓基础班2021",
-          kecheng: "架子鼓课程",
-          laoshi: "王老师",
-          renshu: "0人",
-          jihua: "0",
-          yipai: "23",
-          yishang: "0",
-        },
-        {
-          name: "架子鼓基础班2021",
-          kecheng: "架子鼓课程",
-          laoshi: "王老师",
-          renshu: "0人",
-          jihua: "0",
-          yipai: "23",
-          yishang: "0",
-        },
-        {
-          name: "架子鼓基础班2021",
-          kecheng: "架子鼓课程",
-          laoshi: "王老师",
-          renshu: "0人",
-          jihua: "0",
-          yipai: "23",
-          yishang: "0",
-        },
+        // {
+        //   name: "架子鼓基础班2021",
+        //   kecheng: "架子鼓课程",
+        //   laoshi: "王老师",
+        //   renshu: "0人",
+        //   jihua: "0",
+        //   yipai: "23",
+        //   yishang: "0",
+        // },
+        // {
+        //   name: "架子鼓基础班2021",
+        //   kecheng: "架子鼓课程",
+        //   laoshi: "王老师",
+        //   renshu: "0人",
+        //   jihua: "0",
+        //   yipai: "23",
+        //   yishang: "0",
+        // },
+        // {
+        //   name: "架子鼓基础班2021",
+        //   kecheng: "架子鼓课程",
+        //   laoshi: "王老师",
+        //   renshu: "0人",
+        //   jihua: "0",
+        //   yipai: "23",
+        //   yishang: "0",
+        // },
+        // {
+        //   name: "架子鼓基础班2021",
+        //   kecheng: "架子鼓课程",
+        //   laoshi: "王老师",
+        //   renshu: "0人",
+        //   jihua: "0",
+        //   yipai: "23",
+        //   yishang: "0",
+        // },
+        // {
+        //   name: "架子鼓基础班2021",
+        //   kecheng: "架子鼓课程",
+        //   laoshi: "王老师",
+        //   renshu: "0人",
+        //   jihua: "0",
+        //   yipai: "23",
+        //   yishang: "0",
+        // },
       ],
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -148,6 +150,34 @@ export default {
       value1: "",
       value2: "",
     };
+  },
+  created() {
+    this.hu_list();
+  },
+  watch: {
+    // hq_list(  );
+    // list: {
+    //   // let  that=this
+    //   // let that=this;
+    // },
+  },
+  methods: {
+    hu_list() {
+      
+      let that=this;
+      that.$http.get("/api/classes/list",{page:1},
+      success=>{
+              that.list= success.data.list
+          // console.log(success.data.list);
+      },
+        failure=>{
+            console.log(failure);
+        }
+      )
+    },
+    
+
+
   },
 };
 </script>
