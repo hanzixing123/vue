@@ -191,37 +191,47 @@
               </div>
 
               <div class="san">
-                <div>
-                  *主讲老师 <span>添加助教</span>
+                <div style="width: 140px">
+                  <div>
+                    <font color="red">*</font> 主讲老师<span>添加助教</span>
+                  </div>
                   <div class="xiala">
                     <select name="" id="" placeholder="请选择">
                       <option value="" disabled selected hidden>请选择</option>
                       <option value=""></option>
                     </select>
-                </div>
-                <!-- <div>
-                    *选择课程
-                    <div class="xiala">
-                      <select name="" id="" placeholder="请选择">
-                        <option value="" disabled selected hidden>
-                          请选择
-                        </option>
-                        <option value=""></option>
-                      </select>
-                    </div>
+                  </div>
                 </div>
                 <div>
-                    *选择课程
-                    <div class="xiala">
-                      <select name="" id="" placeholder="请选择">
-                        <option value="" disabled selected hidden>
-                          请选择
-                        </option>
-                        <option value=""></option>
-                      </select>
-                    </div>
-                </div> -->
+                  *教室
+                  <div class="xiala">
+                    <select name="" id="" placeholder="请选择">
+                      <option value="" disabled selected hidden>请选择</option>
+                      <option value=""></option>
+                    </select>
+                  </div>
                 </div>
+                <div>
+                  *单节课扣学员课时
+                  <div class="xiala">
+                    <select name="" id="" placeholder="请选择">
+                      <option value="" disabled selected hidden>请选择</option>
+                      <option value=""></option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              
+              <div class="da">
+                <el-tabs v-model="activeName" @tab-click="handleClick">
+                  <el-tab-pane label="用户管理" name="first"
+                    >用户管理</el-tab-pane
+                  >
+                  <el-tab-pane label="配置管理" name="second"
+                    >配置管理</el-tab-pane
+                  >
+                </el-tabs>
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -232,7 +242,6 @@
           >
         </div>
       </el-dialog>
-      <!-- </el-main> -->
     </div>
   </div>
 </template>
@@ -241,6 +250,7 @@
 export default {
   data() {
     return {
+              activeName: 'second',//一对一排课 选择
       list: [
         {
           id: 1,
@@ -351,13 +361,30 @@ export default {
   },
   methods: {
     xuan() {},
+         handleClick(tab, event) {
+        console.log(tab, event);
+      }
   },
 };
 </script> 
 <style>
-.san div {
+.da{
+  display: block;
+}
+.san{
   float: left;
 }
+.san > div {
+  float: left;
+  margin-top: 20px;
+  margin-right: 50px;
+}
+.san > div span {
+  margin-left: 15px;
+  color: blue;
+  cursor: pointer;
+}
+
 .xiala select {
   width: 140px;
   height: 40px;
