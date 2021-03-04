@@ -73,7 +73,7 @@
           <td>{{ item.coursecounts }}</td>
           <td>{{ item.startdate }}</td>
           <td>{{ item.enddate }}</td>
-          <td><button class="paiban">排课</button></td>
+          <td><button class="paiban">排课</button></td> 
         </tr>
       </table>
     </el-main>
