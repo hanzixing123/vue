@@ -1,15 +1,14 @@
 <template>
-
   <div class="banji-nav">
     <el-footer>
-      <button><span /> 删 除 </button>
+      <button><span /> 删 除</button>
       <button @click="dialogFormVisible = true"><span /> 添加班级</button>
       <div class="banji-option">
         <span class="btn-op">课程</span>
         <span class="btn-img"></span>
       </div>
     </el-footer>
-  
+
     <!-- 弹框 -->
     <el-dialog title="增加班级" :visible.sync="dialogFormVisible">
       <el-form :model="form">
@@ -74,7 +73,6 @@
       </table>
     </el-main>
   </div>
-  
 </template>
 
 <script>
@@ -266,12 +264,12 @@ body {
   width: 447px;
 }
 
-.block{
+.block {
   padding-top: 15px;
   margin-left: 55px;
 }
 
-.el-dialog{
+.el-dialog {
   box-shadow: 0 0 5px #aeafb1;
   border-radius: 5px;
 }
@@ -284,17 +282,16 @@ body {
   outline-style: none;
 }
 
-.paiban{
-    color: blue;
-    border: none;
-    background-color: #fff;
-    display: none;   
-    cursor: pointer;
-    font-size: 15px;
+.paiban {
+  color: blue;
+  border: none;
+  background-color: #fff;
+  display: none;
+  cursor: pointer;
+  font-size: 15px;
 }
-td:hover .paiban{
-    display: inline;
-  
+td:hover .paiban {
+  display: inline;
 }
 </style>
   
