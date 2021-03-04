@@ -9,7 +9,7 @@
         <span class="btn-img"></span>
       </div>
     </el-footer>
-
+      
     <!-- 弹框 -->
     <el-dialog title="增加班级" :visible.sync="dialogFormVisible">
       <el-form :model="form">
