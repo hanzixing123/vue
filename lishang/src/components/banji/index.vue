@@ -70,6 +70,7 @@
           <td>计划课时</td>
           <td>已排课时</td>
           <td>已上课时</td>
+          <td>操作</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
           <td><span class="tu-img" />{{ item.name }}</td>
@@ -79,6 +80,7 @@
           <td>{{ item.jihua }}</td>
           <td>{{ item.yipai }}</td>
           <td>{{ item.yishang }}</td>
+          <td><button class="paiban">排课</button></td>
         </tr>
       </table>
     </el-main>
@@ -223,7 +225,7 @@ body {
   position: relative;
   top: 2px;
   display: inline-block;
-    
+  
 }
 .el-main {
   background-color: #fff;
@@ -259,7 +261,7 @@ body {
   position: relative;
   width: 54px;
   height: 63px;
-  left: 135px;
+  left: 114px;
   top: 10px;
   float: left;
 }
@@ -283,5 +285,18 @@ body {
   height: 40px;
   margin-left: 40px;
   border: none;
+  outline-style: none;
+}
+
+.paiban{
+    color: blue;
+    border: none;
+    background-color: #fff;
+    display: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+td:hover .paiban{
+    display: inline;
 }
 </style>

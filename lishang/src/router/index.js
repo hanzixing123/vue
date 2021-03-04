@@ -12,6 +12,7 @@ export default new Router({
       component: HelloWorld,
       redirect:"/banji"
     },
+   
     {
       path:"/banji",
       name:"banji",
