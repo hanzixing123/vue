@@ -13,9 +13,9 @@
     <el-dialog title="增加班级" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item label="所选课程" :label-width="formLabelWidth">
-          <el-select v-model="form.region" placeholder="请选择">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+          <el-select v-model="form.coursename" placeholder="请选择">
+            <el-option label="少儿舞蹈课" value="少儿舞蹈课"></el-option>
+            <el-option label="跆拳道" value="跆拳道"></el-option>
           </el-select>
         </el-form-item>
 
@@ -24,27 +24,36 @@
         </el-form-item>
 
         <el-form-item label="计划课时" :label-width="formLabelWidth">
-          <el-input v-model="form.data1" placeholder="0"></el-input>
+          <el-input v-model="form.coursecounts" placeholder="0"></el-input>
           <span>课时</span>
         </el-form-item>
 
         <div class="block">
           <span class="demonstration">开班日期</span>
-          <el-date-picker v-model="value1" type="date" placeholder="选择日期">
+          <el-date-picker
+            v-model="form.startdate"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd HH:mm:ss"
+          >
           </el-date-picker>
         </div>
         <div class="block">
           <span class="demonstration">结束日期</span>
-          <el-date-picker v-model="value2" type="date" placeholder="选择日期">
+          <el-date-picker
+            v-model="form.enddate"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd HH:mm:ss"
+          >
           </el-date-picker>
         </div>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false"
-          >确 定</el-button
-        >
+        <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button -->
+        <el-button type="primary" @click="kecheng_add">确定</el-button>
       </div>
     </el-dialog>
 
@@ -76,69 +85,19 @@
 </template>
 
 <script>
-
-import router from '../../router'
+import router from "../../router";
 export default {
   data() {
     return {
-      list: [
-        // {
-        //   name: "架子鼓基础班2021",
-        //   kecheng: "架子鼓课程",
-        //   laoshi: "王老师",
-        //   renshu: "0人",
-        //   jihua: "0",
-        //   yipai: "23",
-        //   yishang: "0",
-        // },
-        // {
-        //   name: "架子鼓基础班2021",
-        //   kecheng: "架子鼓课程",
-        //   laoshi: "王老师",
-        //   renshu: "0人",
-        //   jihua: "0",
-        //   yipai: "23",
-        //   yishang: "0",
-        // },
-        // {
-        //   name: "架子鼓基础班2021",
-        //   kecheng: "架子鼓课程",
-        //   laoshi: "王老师",
-        //   renshu: "0人",
-        //   jihua: "0",
-        //   yipai: "23",
-        //   yishang: "0",
-        // },
-        // {
-        //   name: "架子鼓基础班2021",
-        //   kecheng: "架子鼓课程",
-        //   laoshi: "王老师",
-        //   renshu: "0人",
-        //   jihua: "0",
-        //   yipai: "23",
-        //   yishang: "0",
-        // },
-        // {
-        //   name: "架子鼓基础班2021",
-        //   kecheng: "架子鼓课程",
-        //   laoshi: "王老师",
-        //   renshu: "0人",
-        //   jihua: "0",
-        //   yipai: "23",
-        //   yishang: "0",
-        // },
-      ],
+      list: [],
       dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
         name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
+        coursename: "",
+        coursecounts: "",
+        startdate: "",
+        enddate: "",
       },
       formLabelWidth: "120px",
 
@@ -147,37 +106,48 @@ export default {
           return time.getTime() > Date.now();
         },
       },
-      value1: "",
-      value2: "",
     };
   },
   created() {
     this.hu_list();
   },
-  watch: {
-    // hq_list(  );
-    // list: {
-    //   // let  that=this
-    //   // let that=this;
-    // },
-  },
+  watch: {},
   methods: {
     hu_list() {
-      
-      let that=this;
-      that.$http.get("/api/classes/list",{page:1},
-      success=>{
-              that.list= success.data.list
+      let that = this;
+      that.$http.get(
+        "/api/classes/list",
+        { page: 1 },
+        (success) => {
+          that.list = success.data.list;
           // console.log(success.data.list);
-      },
-        failure=>{
-            console.log(failure);
+        },
+        (failure) => {
+          console.log(failure);
         }
-      )
+      );
     },
-    
-
-
+    kecheng_add() {
+      let that = this;
+      // console.log(this.form);
+      console.log(JSON.stringify(this.form));
+      let data = JSON.stringify(this.form);
+      // console.log(data);
+      that.$http.post("/api/classes/add", data,
+        (success) => {
+          this.dialogFormVisible = false;
+          this.form={ name: "",
+        coursename: "",
+        coursecounts: "",
+        startdate: "",
+        enddate: ""};
+        this.hu_list();
+          // console.log(success);
+        },
+      (failure) => {
+      console.log(failure);
+      });
+    },
   },
 };
 </script>
