@@ -24,18 +24,18 @@
         </el-form-item>
 
         <el-form-item label="计划课时" :label-width="formLabelWidth">
-          <el-input v-model="form.data1" placeholder="0"></el-input>
+          <el-input v-model="form.keshi" placeholder="0"></el-input>
           <span>课时</span>
         </el-form-item>
 
         <div class="block">
           <span class="demonstration">开班日期</span>
-          <el-date-picker v-model="value1" type="date" placeholder="选择日期">
+          <el-date-picker v-model="value1" type="date1" placeholder="选择日期">
           </el-date-picker>
         </div>
         <div class="block">
           <span class="demonstration">结束日期</span>
-          <el-date-picker v-model="value2" type="date" placeholder="选择日期">
+          <el-date-picker v-model="value2" type="date2" placeholder="选择日期">
           </el-date-picker>
         </div>
       </el-form>
@@ -68,9 +68,26 @@
           <td>{{ item.jihua }}</td>
           <td>{{ item.yipai }}</td>
           <td>{{ item.yishang }}</td>
-          <td><button class="paiban">排课</button></td>
+          <td>
+            <button class="paiban" @click="paiKe = true">排课</button>
+            <button class="paiban" >修改</button>
+            <button class="paiban" >删除</button>
+          </td>
         </tr>
       </table>
+      <!-- 排课 -->
+      <el-dialog :visible.sync="paiKe">
+        <span class="el-title">课表</span>
+        <div class="el-name">
+          <span class="el-span"> 架子鼓基础班2021 </span>
+        </div>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false"
+            >确 定</el-button
+          >
+        </div>
+      </el-dialog>
     </el-main>
   </div>
 </template>
@@ -126,13 +143,14 @@ export default {
           yishang: "0",
         },
       ],
-      dialogTableVisible: false,
+      paiKe: false,
       dialogFormVisible: false,
       form: {
         name: "",
         region: "",
         date1: "",
         date2: "",
+        keshi: "",
         delivery: false,
         type: [],
         resource: "",
@@ -163,7 +181,7 @@ body {
 .banji-list {
   width: 100%;
   margin-top: 53px;
-}
+} 
 
 .banji-list td {
   line-height: 70px;
@@ -217,7 +235,7 @@ body {
   background-color: #fff;
   color: #333;
   text-align: center;
-  line-height: 160px;
+  /* line-height: 160px; */
 }
 
 .banji-option {
@@ -268,12 +286,6 @@ body {
   padding-top: 15px;
   margin-left: 55px;
 }
-
-.el-dialog {
-  box-shadow: 0 0 5px #aeafb1;
-  border-radius: 5px;
-}
-
 .btn-sou {
   width: 390px;
   height: 40px;
@@ -293,6 +305,36 @@ body {
 td:hover .paiban {
   display: inline;
 }
+.el-dialog__header {
+  padding: 0;
+}
+.el-dialog {
+  width: 80%;
+  border-radius: 10px;
+}
+
+.el-title {
+  font-size: 20px;
+  color: #000;
+  position: relative;
+  top: -12px;
+  left: -637px;
+}
+
+.el-name {
+  width: 400px;
+  height: 74px;
+  background-color: #1890ff;
+  border-radius: 15px 15px 0 0;
+}
+
+.el-span{
+  color: #fff;
+  font-size: 23px;
+  line-height: 74px;
+  float: left;
+  margin-left:30px ;
+}
 </style>
   
-            
+
