@@ -27,18 +27,42 @@
 
  <p class="rr">今日课表</p>
 
-<div class="hh">
-  <p class="oo">架子鼓基础班2101
+<div class="hht">
+  <p class="oos">架子鼓基础班2101
 
     <i class="el-icon-reading"> 架子鼓课</i>
     <i class="el-icon-time"> 13:30-14:15</i>
     <i class="el-icon-s-custom"> 明明</i>
     <i class="el-icon-folder-checked"> 已到达</i>
-   <el-button type="text" @click="open" class="el-icon-edit-outline"> 签到</el-button>
+   <el-button type="text" @click="dialogFormVisible = true" class="el-icon-edit-outline"> 签到</el-button>
   </p>
   
   
 </div>
+
+
+<el-dialog title="签到" :visible.sync="dialogFormVisible">
+  <el-form :model="form">
+        <el-radio v-model="form.kaoqin" name="kaoqin" :label="1">出勤</el-radio>
+        <el-radio v-model="form.kaoqin" name="kaoqin"  :label="2">迟到</el-radio>
+        <el-radio v-model="form.kaoqin" name="kaoqin"  :label="3">请假</el-radio>
+        <el-radio v-model="form.kaoqin" name="kaoqin"  :label="4">旷课</el-radio>
+        <div class="kk">
+        <el-input
+          type="textarea"
+          :rows="2"
+          placeholder="备注"
+          v-model="textarea">
+        </el-input>
+        </div>
+     
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+ 
+    <el-button type="primary" @click="dialogFormVisible = false"> 保存 </el-button>
+  </div>
+</el-dialog>
+
 
 </div>
   
@@ -52,31 +76,22 @@ export default {
       input2: '',
       input3: '',
       select: '',
-    value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-    value2: ''
+    value1: [new Date(2021, 3, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+    value2: '',
+        dialogFormVisible: false,
+        form: {
+         kaoqin:1
+        },
+        formLabelWidth: '120px',
+        textarea: ''
+
+
     }
   },
 
 
-
    methods: {
-     open() {
-        this.$prompt('备注', '签到', {
-          confirmButtonText: '保存',
-          cancelButtonText: '取消',
-       
-        }).then(({ value }) => {
-          this.$message({
-            type: 'success',
-            message: '签到成功'
-                      });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '签到失败'
-          });       
-        });
-      }
+   
     }
 }
 </script>
@@ -87,6 +102,16 @@ width: 1385px;
  height: 51px;
  background-color: #f5f6fa;
  float: left;
+}
+.kk{
+  margin-top: 60px;
+  width: 400px;
+  margin-left: 190px;
+}
+
+
+.el-radio:nth-child(1){
+  margin-left: 190px;
 }
 
 .xue{
@@ -111,13 +136,14 @@ width: 1385px;
     margin-left: 10px;
     margin-top: 60px;
   }
-  .hh{
+  .hht{
     width: 1383px;
     height: 56px;
     border: 1px solid #e5e5e5;
     border-radius: 5px;
+   
   }
-  .oo{
+  .oos{
     margin-left: 34px;
     margin-top: 10px;
   }
@@ -133,6 +159,7 @@ width: 1385px;
   }
   .el-icon-folder-checked{
     margin-left: 380px;
+    margin-top: -100px;
   }
   .el-icon-edit-outline{
     margin-left: 40px;
