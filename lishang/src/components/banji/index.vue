@@ -1,8 +1,7 @@
 <template>
-
   <div class="banji-nav">
     <el-footer>
-      <button><span /> 删除</button>
+      <button><span /> 删 除</button>
       <button @click="dialogFormVisible = true"><span /> 添加班级</button>
       <div class="banji-option">
         <span class="btn-op">课程</span>
@@ -48,7 +47,6 @@
         >
       </div>
     </el-dialog>
-
     <el-main>
       <table class="banji-list" border="0" cellspacing="0" cellpadding="0">
         <tr class="banji-title">
@@ -59,6 +57,7 @@
           <td>计划课时</td>
           <td>已排课时</td>
           <td>已上课时</td>
+          <td>操作</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
           <td><span class="tu-img" />{{ item.name }}</td>
@@ -68,14 +67,21 @@
           <td>{{ item.enddate }}</td>
           <td>{{ item.startdate}}</td>
           <td>{{ item.yishang }}</td>
+
+          <td>{{ item.teacherslist }}</td>
+          <td>{{ item.students }}</td>
+          <td>{{ item.coursecounts }}</td>
+          <td>{{ item.startdate }}</td>
+          <td>{{ item.enddate }}</td>
+          <td><button class="paiban">排课</button></td>
         </tr>
       </table>
     </el-main>
   </div>
-  
 </template>
-
 <script>
+
+import router from '../../router'
 export default {
   data() {
     return {
@@ -149,6 +155,7 @@ export default {
       value2: "",
     };
   },
+
     created(){
       this.molk();
     },
@@ -164,7 +171,37 @@ export default {
 		  
           },);
      }
-   }
+   },
+
+  created() {
+    this.hu_list();
+  },
+  watch: {
+    // hq_list(  );
+    // list: {
+    //   // let  that=this
+    //   // let that=this;
+    // },
+  },
+  methods: {
+    hu_list() {
+      
+      let that=this;
+      that.$http.get("/api/classes/list",{page:1},
+      success=>{
+              that.list= success.data.list
+          // console.log(success.data.list);
+      },
+        failure=>{
+            console.log(failure);
+        }
+      )
+    },
+    
+
+
+  },
+
 };
 </script>
 
@@ -271,7 +308,7 @@ body {
   position: relative;
   width: 54px;
   height: 63px;
-  left: 135px;
+  left: 114px;
   top: 10px;
   float: left;
 }
@@ -280,14 +317,35 @@ body {
   width: 447px;
 }
 
-.block{
+.block {
   padding-top: 15px;
   margin-left: 55px;
 }
 
-.el-dialog{
+.el-dialog {
   box-shadow: 0 0 5px #aeafb1;
   border-radius: 5px;
-  
+}
+
+.btn-sou {
+  width: 390px;
+  height: 40px;
+  margin-left: 40px;
+  border: none;
+  outline-style: none;
+}
+
+.paiban {
+  color: blue;
+  border: none;
+  background-color: #fff;
+  display: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+td:hover .paiban {
+  display: inline;
 }
 </style>
+  
+            

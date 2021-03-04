@@ -40,6 +40,7 @@ export default new Router({
         }
       ]
     },
+   
     {
       path: '/login',
       // name: 'HelloWorld',

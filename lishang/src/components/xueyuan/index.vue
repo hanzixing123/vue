@@ -222,13 +222,39 @@
                 </div>
               </div>
 
-              
-              <div class="da">
+              <div class="da1">
                 <el-tabs v-model="activeName" @tab-click="handleClick">
-                  <el-tab-pane label="用户管理" name="first"
-                    >用户管理</el-tab-pane
-                  >
-                  <el-tab-pane label="配置管理" name="second"
+                  <el-tab-pane label="单次排课" name="first">
+                    <!-- 用户管理 -->
+                    <div>
+                      *开课日期
+                      <div class="xiala">
+                        <el-date-picker
+                          class="red"
+                          v-model="time"
+                          type="date"
+                          placeholder="选择日期"
+                        >
+                          <!-- time 日期 -->
+                        </el-date-picker>
+                      </div>
+                    </div>
+                    <div>
+                      *上课时间
+                      <div class="xiala">
+                        <el-time-picker
+                          is-range
+                          v-model="time1"
+                          range-separator="至"
+                          start-placeholder="开始时间"
+                          end-placeholder="结束时间"
+                          placeholder="选择时间范围"
+                        >
+                        </el-time-picker>
+                      </div>
+                    </div>
+                  </el-tab-pane>
+                  <el-tab-pane label="批量排课" name="second"
                     >配置管理</el-tab-pane
                   >
                 </el-tabs>
@@ -250,7 +276,9 @@
 export default {
   data() {
     return {
-              activeName: 'second',//一对一排课 选择
+      activeName: "first", //一对一排课 选择
+      time: "",
+     time1: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
       list: [
         {
           id: 1,
@@ -361,17 +389,26 @@ export default {
   },
   methods: {
     xuan() {},
-         handleClick(tab, event) {
-        console.log(tab, event);
-      }
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
   },
 };
 </script> 
 <style>
-.da{
+.da1 {
+  margin-top: 40px;
+  float: left;
   display: block;
+  width: 400px;
+  /* width:400px; */
+  /* width:80%; */
 }
-.san{
+.xiala .red > input {
+  width: 200px;
+}
+
+.san {
   float: left;
 }
 .san > div {
