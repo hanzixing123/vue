@@ -80,7 +80,7 @@
           <td><button class="paiban">排课</button></td>
         </tr>
       </table>
-    </el-main>
+    </el-main> 
   </div>
 </template>
 
@@ -141,6 +141,7 @@ export default {
         coursecounts: "",
         startdate: "",
         enddate: ""};
+        this.hu_list(); 
           // console.log(success);
         },
       (failure) => {
