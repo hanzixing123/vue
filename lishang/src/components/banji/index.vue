@@ -1,8 +1,7 @@
 <template>
-
   <div class="banji-nav">
     <el-footer>
-      <button><span /> 删除</button>
+      <button><span /> 删 除</button>
       <button @click="dialogFormVisible = true"><span /> 添加班级</button>
       <div class="banji-option">
         <span class="btn-op">课程</span>
@@ -59,6 +58,7 @@
           <td>计划课时</td>
           <td>已排课时</td>
           <td>已上课时</td>
+          <td>操作</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
           <td><span class="tu-img" />{{ item.name }}</td>
@@ -68,11 +68,11 @@
           <td>{{ item.jihua }}</td>
           <td>{{ item.yipai }}</td>
           <td>{{ item.yishang }}</td>
+          <td><button class="paiban">排课</button></td>
         </tr>
       </table>
     </el-main>
   </div>
-  
 </template>
 
 <script>
@@ -255,7 +255,7 @@ body {
   position: relative;
   width: 54px;
   height: 63px;
-  left: 135px;
+  left: 114px;
   top: 10px;
   float: left;
 }
@@ -264,14 +264,35 @@ body {
   width: 447px;
 }
 
-.block{
+.block {
   padding-top: 15px;
   margin-left: 55px;
 }
 
-.el-dialog{
+.el-dialog {
   box-shadow: 0 0 5px #aeafb1;
   border-radius: 5px;
-  
+}
+
+.btn-sou {
+  width: 390px;
+  height: 40px;
+  margin-left: 40px;
+  border: none;
+  outline-style: none;
+}
+
+.paiban {
+  color: blue;
+  border: none;
+  background-color: #fff;
+  display: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+td:hover .paiban {
+  display: inline;
 }
 </style>
+  
+            

@@ -33,7 +33,6 @@
 
 				</ul>
 			</div>
-
 			<div class="loginbox-b">
 				<button type="submit" id="btnlogin" class="btn">登录</button>
 			</div>
@@ -85,7 +84,7 @@ export default {
             //    console.log(123);
                
           },failure => {
-			
+		
 			that.messtitle="账号或者密码错误";
             console.log(failure.data);
 		  

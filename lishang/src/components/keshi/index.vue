@@ -38,7 +38,7 @@
 
 <div class="hs">
     <div class="rs">1日(周一)</div>
-  <p class="op">架子鼓基础班2101 <br>
+  <p class="op" @click="dialogFormVisible = true">架子鼓基础班2101 <br>
   13:30 明明
    </p>
 </div>
@@ -67,8 +67,8 @@
          <img class="km" src="../../assets/images/keshi-01_03.gif" alt="">
     </h1>
    
-   <img src="../../assets/images/keshi-02_03.gif" alt="">Jason
-     <img class="ds" src="../../assets/images/keshi-02_03.gif" alt="">李四
+   <img class="ds" src="../../assets/images/keshi-02_03.gif" alt="">Jason
+     <img class="dss" src="../../assets/images/keshi-02_03.gif" alt="">李四
 
   </el-form>
   <div slot="footer" class="dialog-footer">
@@ -149,6 +149,21 @@ export default {
   font-size: 30px;
   color: blue;
   position: fixed;
+}
+
+.ds{
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.dss{
+   margin-left: 80px;
+    margin-top: 20px;
+}
+.km{
+   margin-left: 20px;
+   margin-top: 20px;
+   margin-bottom: -10px;
 }
 .ds {
   margin-left: 10px;
@@ -239,6 +254,55 @@ export default {
   margin-top: 60px;
 }
 
+
+  .hs{
+    width: 1383px;
+    height: 80px;
+    border: 1px solid #e5e5e5;
+   
+  }
+  .rs{
+      width: 120px;
+       height: 80px;
+       background-color: #f3f3f3;
+       text-align: center;
+       line-height: 70px;
+  }
+  .oo{
+    margin-left: 140px;
+    margin-top: -50px;
+  }
+  .op{
+       margin-left: 140px;
+       margin-top: -59px;
+       width: 158px;
+       height: 53px;
+       background-color: #fafafa;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: #c5c5c5;
+  }
+  .el-icon-reading{
+    margin-left: 230px;
+    
+  }
+  .el-icon-time{
+    margin-left: 30px;
+  }
+  .el-icon-s-custom{
+    margin-left: 20px;
+  }
+  .el-icon-folder-checked{
+    margin-left: 380px;
+  }
+  .el-icon-edit-outline{
+    margin-left: 40px;
+  }
+  .lj{
+      margin-left: 700px;
+      margin-top: -50px;
+  }
+
 .hs {
   width: 1383px;
   height: 80px;
@@ -284,4 +348,5 @@ export default {
   margin-left: 700px;
   margin-top: -50px;
 }
+
 </style>
