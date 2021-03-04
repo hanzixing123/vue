@@ -35,7 +35,7 @@
 			</div>
 
 			<div class="loginbox-b">
-				<button type="submit" id="btnlogin" class="btn">登录</button>
+				<button type="submit" id="btnlogin" @click="login" class="btn">登录</button>
 			</div>
 			
              </div>
@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import router from '../router'
+
 export default {
   data () {
     return {
@@ -79,7 +81,7 @@ export default {
           success => {
 
             localStorage.setItem("token",success.data);
-             router.push({path:'list'});
+             router.push({path:'/banji'});
           
 			  
                console.log(success.data);

@@ -10,7 +10,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {'/api':{
-      port:8889,target:'http://localhost:8080/edusystems/api/',   // 要代理的接口地址
+      port:8889,target:'http://www.eshareedu.cn/edusystems/api/',   // 要代理的接口地址
       changeOrigin:true,                            // 允许跨域
       pathRewrite:{'^/api':''}            // 接口名重写
     }
