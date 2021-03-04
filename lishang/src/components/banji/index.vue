@@ -141,10 +141,10 @@ export default {
         coursecounts: "",
         startdate: "",
         enddate: ""};
-        this.hu_list();
           // console.log(success);
         },
       (failure) => {
+
       console.log(failure);
       });
     },
