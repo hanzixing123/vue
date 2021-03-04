@@ -2,7 +2,7 @@
 
   <div class="banji-nav">
     <el-footer>
-      <button><span /> 删除</button>
+      <button><span /> 删 除 </button>
       <button @click="dialogFormVisible = true"><span /> 添加班级</button>
       <div class="banji-option">
         <span class="btn-op">课程</span>
@@ -288,7 +288,7 @@ body {
     color: blue;
     border: none;
     background-color: #fff;
-    display: none;
+    display: none;   
     cursor: pointer;
     font-size: 15px;
 }
@@ -298,4 +298,4 @@ td:hover .paiban{
 }
 </style>
   
-    
+            
