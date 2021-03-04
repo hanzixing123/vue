@@ -16,40 +16,25 @@
 </div>
 </div>
 
-<el-table
-    :data="tableData"
-    style="width: 100%"
-    :default-sort = "{prop: 'date', order: 'descending'}"
-    >
 
 
- <el-table-column
-      prop="date"
-      label="课程名称"
-     
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="name"
-      label="收费模式"
-      
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="单价"
-      :formatter="formatter">
-    </el-table-column>
-    <el-table-column
-      prop="haha"
-      label="上课模式"
-      :formatter="formatter">
-    </el-table-column>
+ <el-main>
+      <table class="banji-lists" border="0" cellspacing="0" cellpadding="0">
+        <tr class="banji-titles">
+          <td>课程名称</td>
+          <td>收费模式</td>
+          <td>单价</td>
+          <td>上课模式</td>
+        </tr>
+        <tr v-for="(item, index) in list" :key="index">
+          <td><span class="tu-img" />{{ item.name }}</td>
+          <td>{{ item.coursename }}</td>
+          <td>{{ item.students }}</td>
+          <td>{{ item.students }}</td>
+        </tr>
+      </table>
+    </el-main>
 
-
-   
-
-  </el-table>
 
 
 
@@ -87,6 +72,8 @@
         >
       </div>
     </el-dialog>
+
+
 </div>
 </template>
 
@@ -94,27 +81,7 @@
 export default {
  data() {
       return {
-        tableData: [{
-          date: '架子鼓课',
-          name: '按课时收费',
-          address: '',
-          haha:'1111',
-        }, {
-          date: '舞蹈课',
-          name: '按课时收费',
-          address: '1500.00/课时',
-          haha:'1111',
-        }, {
-          date: '少儿英语课',
-          name: '按课时收费',
-          address: '9000.00/课时',
-          haha:'1111',
-        }, {
-          date: '钢琴课',
-          name: '按课时收费',
-          address: '9988.00元/课时',
-          haha:'1111',
-        }],
+        list:[],
          input3: '',
           dialogTableVisible: false,
       dialogFormVisible: false,
@@ -146,7 +113,16 @@ export default {
 .el-table{
   background-color: #dee3e9;
 }
+.banji-lists td {
+  line-height: 70px;
+  font-weight: bolder;
+  border-bottom: 1px solid #f5f6fa;
+}
+.banji-titles {
+  background-color: #f5f6fa;
 
+  font-size: 20px;
+}
 .kuang {
   margin:0px 10px;
 }
@@ -164,6 +140,10 @@ export default {
 }
 .uy{
    margin-left: 80px;
+}
+.banji-lists {
+  width: 100%;
+  margin-top: 23px;
 }
 
 .lo{
