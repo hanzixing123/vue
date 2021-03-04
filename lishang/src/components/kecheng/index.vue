@@ -27,10 +27,10 @@
           <td>上课模式</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
-          <td><span class="tu-img" />{{ item.name }}</td>
-          <td>{{ item.coursename }}</td>
-          <td>{{ item.students }}</td>
-          <td>{{ item.students }}</td>
+          <td><i class="tu-img" />{{ item.name }}</td>
+          <td>{{ item.pricetype }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.mode }}</td>
         </tr>
       </table>
     </el-main>
@@ -82,8 +82,7 @@ export default {
  data() {
       return {
         list:[],
-         input3: '',
-          dialogTableVisible: false,
+        input3: '',
       dialogFormVisible: false,
       form: {
         name: "",
@@ -101,11 +100,26 @@ export default {
         formLabelWidth: "120px",
       }
     },
+
+   created(){
+      this.klo();
+    },
     methods: {
       formatter(row, column) {
         return row.address;
+      },
+      klo(){
+        let that=this;
+          that.$http.get("/api/courses/list",{page:1},
+          success => {
+            that.list=success.data.list
+               console.log(success.data.list);
+          },failure => {
+            console.log(failure)
+		  
+          },);
       }
-    }
+    },
 }
 </script>
 
@@ -113,15 +127,27 @@ export default {
 .el-table{
   background-color: #dee3e9;
 }
+
+.tu-img {
+  background: url("./ico.png") 1px 513px;
+  position: relative;
+  width: 54px;
+  height: 63px;
+  left: 350px;
+  top: 10px;
+  float: left;
+}
+
 .banji-lists td {
   line-height: 70px;
   font-weight: bolder;
   border-bottom: 1px solid #f5f6fa;
+  text-align: center;
 }
 .banji-titles {
   background-color: #f5f6fa;
-
   font-size: 20px;
+  
 }
 .kuang {
   margin:0px 10px;

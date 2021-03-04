@@ -69,10 +69,7 @@
           <td>{{ item.yishang }}</td>
 
           <td>{{ item.teacherslist }}</td>
-          <td>{{ item.students }}</td>
-          <td>{{ item.coursecounts }}</td>
-          <td>{{ item.startdate }}</td>
-          <td>{{ item.enddate }}</td>
+         
           <td><button class="paiban">排课</button></td> 
         </tr>
       </table>
@@ -211,11 +208,13 @@ body {
 }
 .banji-nav {
   width: 100%;
+
 }
 
 .banji-list {
   width: 100%;
   margin-top: 53px;
+  text-align: center;
 }
 
 .banji-list td {
