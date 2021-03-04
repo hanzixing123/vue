@@ -33,8 +33,9 @@
 
 				</ul>
 			</div>
+
 			<div class="loginbox-b">
-				<button type="submit" id="btnlogin" class="btn">登录</button>
+				<button type="submit" id="btnlogin" @click="login" class="btn">登录</button>
 			</div>
 			
              </div>
@@ -45,6 +46,8 @@
 </template>
 
 <script>
+import router from '../router'
+
 export default {
   data () {
     return {
@@ -65,6 +68,7 @@ export default {
 	  },
 	  login(){
 		  let that=this;
+            console.log(that.username,that.pass)
 		  if(that.username==""){
 
 			  that.messtitle="请输入账号";
@@ -76,15 +80,22 @@ export default {
             that.messtitle="";
 			  that.$http.post("/api/admin/checklogin",{username:that.username,pass:that.pass},
           success => {
-
             localStorage.setItem("token",success.data);
-             router.push({path:'list'});
+
+             router.push({path:'/banji'});
           
 			  
                console.log(success.data);
+
+             router.push({path:'/banji'});		  
+            //    console.log(success.errCode);
+            //    console.log(123);
+               
+
           },failure => {
-		
+			
 			that.messtitle="账号或者密码错误";
+            console.log(failure.data);
 		  
           },);
 
