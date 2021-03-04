@@ -68,6 +68,7 @@
   <el-form-item class="lp" label="单价:" :label-width="formLabelWidth">
          <el-input v-model="form.name" autocomplete="off"></el-input>
          <span>元/课时</span>
+         
   </el-form-item>
        
  <el-form-item class="uy" label="上课模式:" :label-width="formLabelWidth">
@@ -130,6 +131,7 @@ export default {
       },
 
         radio: 3,
+        formLabelWidth: "120px",
       }
     },
     methods: {
