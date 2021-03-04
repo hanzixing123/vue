@@ -8,7 +8,9 @@ import App from './App'
 
 import axios from 'axios'
 Vue.use(ElementUI)
-// Vue.config.productionTip = false
+Vue.config.productionTip = false
+import HttpRequest from "./http/http.js";
+Vue.http = Vue.prototype.$http = HttpRequest
 
 new Vue({
   el: '#app',
