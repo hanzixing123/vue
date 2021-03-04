@@ -33,7 +33,6 @@
 
 				</ul>
 			</div>
-
 			<div class="loginbox-b">
 				<button type="submit" id="btnlogin" class="btn">登录</button>
 			</div>
