@@ -262,6 +262,20 @@ export default {
           console.log(failure);
         }
       );
+      // /api/ classrooms/list
+//  that.$http.post(
+//         "/api/classrooms/list",
+//         "",
+//         (success) => {
+//           // this.dialogFormVisible = false;
+//         console.log(success);
+//           // this.hu_list();
+//         },
+//         (failure) => {
+//           console.log(failure);
+//         }
+//       );
+
     },
     del(id) {
       let that = this;
@@ -287,7 +301,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .el-select .el-input {
     width: 130px;
   }

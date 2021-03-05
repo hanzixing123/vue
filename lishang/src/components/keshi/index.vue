@@ -142,7 +142,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .el-icon-circle-plus-outline {
   margin-left: 1330px;
   margin-top: -200px;
