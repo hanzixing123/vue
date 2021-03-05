@@ -96,7 +96,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .li{
 width: 1385px;
  height: 51px;

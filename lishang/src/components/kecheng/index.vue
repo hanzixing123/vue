@@ -36,15 +36,20 @@
           <td>{{ item.pricetype }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.mode }}</td>
+<<<<<<< HEAD
           <td>
             <button class="paibans" @click="dels(item.id)">删除</button>
              <button class="paibans" @click="xiugais(index)">修改</button>
           </td>
+=======
+          <td><span style="cursor: pointer" @click="del(index)">删除</span></td>
+          <td><span style="cursor: pointer" @click="xiu(index)">修改</span></td>
+>>>>>>> e25cb6be5eed7058802d5a11dffada3bebc532b0
         </tr>
       </table>
     </el-main>
 
-    <el-dialog title="增加课程" :visible.sync="dialogFormVisible">
+    <el-dialog :title="title" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item class="wq" label="课程名称" :label-width="formLabelWidth">
           <el-input
@@ -96,6 +101,7 @@
 export default {
   data() {
     return {
+      title: "",
       list: [],
       input3: "",
       dialogFormVisible: false,
@@ -173,6 +179,7 @@ export default {
       );
     },
 
+
     dels(id){
       let that=this;
       that.$http.get("/api/courses/delete",
@@ -187,17 +194,49 @@ export default {
 
     xiugais(index){
       
-    }
+    },
+
+    del(index) {
+      console.log(this.list[index]);
+      let that = this;
+      that.$http.get(
+        "/api/courses/delete",
+        { id: that.list[index].id },
+        (success) => {
+          this.klo();
+        },
+        (failure) => {}
+      );
+    },
+    xiu(index) {
+      let that = this;
+      that.dialogFormVisible = true;
+      that.title = "修改课程";
+      if (this.form.pricetype == "按课时收费") {
+        this.list[index].pricetype = 1;
+      } else {
+        this.list[index].pricetype = 2;
+      }
+      if (this.form.mode == "一对一") {
+        this.list[index].mode = 1;
+      } else {
+        this.list[index].mode = 2;
+      }
+
+      that.form = that.list[index];
+      console.log(that.form);
+    },
+
   },
 };
 
 </script>
-
-<style>
-.kecheng_radio{
-  margin:0;
+<style scoped>
+.kecheng_radio {
+  margin: 0;
   /* padding: 0!important  ; */
 }
+
 
 .kecheng_radio .el-radio{
     margin: 0!important;
@@ -214,6 +253,11 @@ export default {
 }
 td:hover .paibans {
   display: inline;
+}
+.kecheng_radio .el-radio {
+  margin: 0 !important;
+  padding: 0;
+  width: 100px;
 }
 .el-table {
   background-color: #dee3e9;
