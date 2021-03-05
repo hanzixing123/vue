@@ -10,12 +10,13 @@
     </el-footer>
 
     <!-- 弹框 -->
-    <el-dialog title="增加班级" :visible.sync="dialogFormVisible">
+    <el-dialog :title="title" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item label="所选课程" :label-width="formLabelWidth">
           <el-select v-model="form.coursename" placeholder="请选择">
             <el-option label="少儿舞蹈课" value="少儿舞蹈课"></el-option>
-            <el-option label="跆拳道" value="跆拳道"></el-option>
+            <el-option label="舞蹈课" value="舞蹈课"></el-option>
+            <el-option label="架子鼓课" value="架子鼓课"></el-option>
           </el-select>
         </el-form-item>
 
@@ -55,8 +56,7 @@
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button -->
-        <el-button type="primary" @click="kecheng_add">确定</el-button>
+        <el-button type="primary" @click="kecheng_add()">确定</el-button>
       </div>
     </el-dialog>
 
@@ -162,21 +162,23 @@
         <tr v-for="(item, index) in list" :key="index">
           <td><span class="tu-img" />{{ item.name }}</td>
           <td>{{ item.coursename }}</td>
+          <td>{{ item.laoshi }}</td>
           <td>{{ item.students }}</td>
           <td>{{ item.coursecounts }}</td>
           <td>{{ item.enddate }}</td>
-          <td>{{ item.startdate}}</td>
-          <td>{{ item.yishang }}</td>
+          <td>{{ item.startdate }}</td>
           <td>
             <button class="paiban" @click="paiKe = true">排课</button>
-            <button class="paiban" >修改</button>
-            <button class="paiban" >删除</button>
+            <button class="paiban" @click="xiu(index)">修改</button>
+            <button class="paiban" @click="del(item.id)">删除</button>
           </td>
+          <!-- <td>{{ item.teacherslist }}</td>
+          <td><button class="paiban">排课</button></td> 
           <td>{{ item.teacherslist }}</td>
-          <td>{{ item.teacherslist }}</td>
+          <td><button class="paiban">排课</button></td> -->
         </tr>
       </table>
-    </el-main> 
+    </el-main>
   </div>
 </template>
 
@@ -192,19 +194,15 @@ export default {
       dialogFormVisibles:false,
       paiKe:false,
       form: {
+        id: 0,
         name: "",
         coursename: "",
         coursecounts: "",
         startdate: "",
         enddate: "",
       },
-     forms:{
-        name:"",
-        radio: '1',
-       
-
-
-     },
+      title: "添加班级",
+      formLabelWidth: "120px",
 
       pickerOptions: {
         disabledDate(time) {
@@ -217,11 +215,17 @@ export default {
     };
   },
 
-
   created() {
     this.hu_list();
   },
-  watch: {},
+  watch: {
+    dialogFormVisible(y, n) {
+      if (y == false) {
+        this.form = {};
+        // console.log(y, n);
+      }
+    },
+  },
   methods: {
     hu_list() {
       let that = this;
@@ -230,7 +234,6 @@ export default {
         { page: 1 },
         (success) => {
           that.list = success.data.list;
-          // console.log(success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -239,25 +242,41 @@ export default {
     },
     kecheng_add() {
       let that = this;
-      // console.log(this.form);
-      console.log(JSON.stringify(this.form));
-      let data = JSON.stringify(this.form);
-      // console.log(data);
-      that.$http.post("/api/classes/add", data,
+      let obj = JSON.parse(JSON.stringify(this.form));
+
+      // console.log(JSON.stringify(this.form));
+      that.$http.post(
+        "/api/classes/add",
+        obj,
         (success) => {
           this.dialogFormVisible = false;
-          this.form={ name: "",
-        coursename: "",
-        coursecounts: "",
-        startdate: "",
-        enddate: ""};
-        this.hu_list(); 
-          // console.log(success);
-        },
-      (failure) => {
 
-      console.log(failure);
-      });
+          this.hu_list();
+        },
+        (failure) => {
+          console.log(failure);
+        }
+      );
+    },
+    del(id) {
+      let that = this;
+      console.log(id);
+      that.$http.get(
+        "/api/classes/delete",
+        { id: id },
+        (success) => {
+          console.log(success);
+          this.hu_list();
+        },
+        (failure) => {}
+      );
+    },
+    xiu(index) {
+      let that = this;
+      that.dialogFormVisible = true;
+      that.title = "修改班级";
+      that.form = that.list[index];
+      console.log(that.form);
     },
   },
 };
@@ -306,7 +325,7 @@ body {
 
 .banji-list {
   width: 100%;
-  margin-top: 53px;
+  margin-top: 52px;
 }
 
 .banji-list td {
