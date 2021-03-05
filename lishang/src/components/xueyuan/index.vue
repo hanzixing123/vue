@@ -9,12 +9,12 @@
 
         <div class="sosuo">
           <el-input
-            style="40px;"
+            style=" width:600px;"
             placeholder="请输入内容"
             v-model="input3"
             class="input-with-select"
           >
-            <el-select v-model="select" slot="prepend" placeholder="请选择">
+            <el-select v-model="select"  style="width:100px;" slot="prepend" placeholder="请选择">
               <el-option label="餐厅名" value="1"></el-option>
               <el-option label="订单号" value="2"></el-option>
               <el-option label="用户电话" value="3"></el-option>
@@ -58,16 +58,6 @@
         :total="1000"
       >
       </el-pagination>
-      <!-- <div class="wei">
-        <ul>
-          <li>共100条</li>
-          <li><button><</button></li>
-          <li><button>1</button></li>
-          <li><button>></button></li>
-          <li>前往 <input type="text">页</li>
-        </ul>
-      </div> -->
-
       <el-dialog title="添加学员" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -396,13 +386,16 @@ export default {
 };
 </script> 
 <style>
+.xueyuan_xialai{
+      width:100px;
+}
 .da1 {
   margin-top: 40px;
   float: left;
   display: block;
-  width: 400px;
+  /* width: 1200px; */
   /* width:400px; */
-  /* width:80%; */
+  width:100%;
 }
 .xiala .red > input {
   width: 200px;
