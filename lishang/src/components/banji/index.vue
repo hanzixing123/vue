@@ -110,7 +110,7 @@
     <div><h1>选择学员</h1></div>
     <div class="um"  @click="dialogFormVisibles = true">添加学员 <img src="./img/images/课时汇总-排课_03.gif" alt=""></div>
     </el-form>
-  <div slot="footer" class="dialog-footer">
+  <div slot="footer" class="dialog-footer"> 
     <el-button type="primary" @click="paiKe = false"> 保存 </el-button>
   </div>
 </el-dialog>
