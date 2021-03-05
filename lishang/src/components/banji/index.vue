@@ -197,6 +197,11 @@ export default {
         startdate: "",
         enddate: "",
       },
+       forms:{
+        name:"",
+        radio: '1',
+     },
+
       title: "添加班级",
       formLabelWidth: "120px",
 
