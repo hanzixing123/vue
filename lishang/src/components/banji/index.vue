@@ -369,7 +369,7 @@ body {
   background-color: #fff;
   position: relative;
   top: -46px;
-  left: 255px;
+  left: 255px; 
   border-radius: 5px;
   background: url("./img/sou.gif") no-repeat 468px;
   cursor: pointer;
