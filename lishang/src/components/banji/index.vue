@@ -72,11 +72,19 @@
         <tr v-for="(item, index) in list" :key="index">
           <td><span class="tu-img" />{{ item.name }}</td>
           <td>{{ item.coursename }}</td>
-          <td>{{ item.teacherslist }}</td>
           <td>{{ item.students }}</td>
           <td>{{ item.coursecounts }}</td>
-          <td>{{ item.startdate }}</td>
           <td>{{ item.enddate }}</td>
+          <td>{{ item.startdate}}</td>
+          <td>{{ item.yishang }}</td>
+          <td>
+            <button class="paiban" @click="paiKe = true">排课</button>
+            <button class="paiban" >修改</button>
+            <button class="paiban" >删除</button>
+          </td>
+          <td>{{ item.teacherslist }}</td>
+          <td><button class="paiban">排课</button></td> 
+          <td>{{ item.teacherslist }}</td>
           <td><button class="paiban">排课</button></td>
         </tr>
       </table>
@@ -108,6 +116,8 @@ export default {
       },
     };
   },
+
+
   created() {
     this.hu_list();
   },
