@@ -44,9 +44,9 @@
          <el-input       v-model="form.name"  class="input1" autocomplete="off"></el-input>
         </el-form-item>
  <el-form-item class="ka" label="收费模式:" :label-width="formLabelWidth">
-           <el-radio-group v-model="radio" >
-    <el-radio class="kuang"  :label="3">按课时收费</el-radio>
-    <el-radio :label="6">按期收费</el-radio>
+           <el-radio-group v-model="form.pricetype" >
+    <el-radio class="kuang"  :label="1">按课时收费</el-radio>
+    <el-radio :label="2">按期收费</el-radio>
   </el-radio-group>
  </el-form-item>
 
@@ -57,19 +57,17 @@
   </el-form-item>
        
  <el-form-item class="uy" label="上课模式:" :label-width="formLabelWidth">
-           <el-radio-group v-model="radios">
-    <el-radio :label="3">一对一</el-radio>
-    <el-radio :label="6">集体班</el-radio>
+           <el-radio-group v-model="form.mode">
+    <el-radio :label="1">一对一</el-radio>
+    <el-radio :label="2">集体班</el-radio>
   </el-radio-group>
  </el-form-item>
 
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-      
-        <el-button type="primary" @click="dialogFormVisible = false"
-          > 保存 </el-button
-        >
+
+            <el-button type="primary" @click="kc_add">确定</el-button>
       </div>
     </el-dialog>
 
@@ -79,52 +77,91 @@
 
 <script>
 export default {
- data() {
-      return {
-        list:[],
-        input3: '',
+  data() {
+    return {
+      list: [],
+      input3: "",
       dialogFormVisible: false,
       form: {
         name: "",
         price: "",
+        pricetype: 1,
+        mode: 1
+      },
+      formLabelWidth: "120px"
+    };
+  },
+  watch: {
+    dialogFormVisible(y, n) {
+      if (y == false) {
+           this.form.pricetype= 1;
+          this.form.mode= 1;
+      }
+    }
+  },
+  created() {
+    this.klo();
+  },
+  methods: {
+    formatter(row, column) {
+      return row.address;
+    },
+    klo() {
+      let that = this;
+      that.$http.get(
+        "/api/courses/list",
+        { page: 1 },
+        success => {
+          that.list = success.data.list;
+          console.log(success.data.list);
+        },
+        failure => {
+          console.log(failure);
+        }
+      );
+    },
+    kc_add() {
+      let that = this;
+      if (this.form.pricetype == 1) {
+        this.form.pricetype = "按课时收费";
+      } else {
+        this.form.pricetype = "按期收费";
+      }
+      if (this.form.mode == 1) {
+        this.form.mode = "一对一";
+      } else {
+        this.form.mode = "集体班";
+      }
+
+
+      console.log(JSON.stringify(this.form));
      
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
-       
-      },
-
-        radio: 3,
-         radios: 6,
-        formLabelWidth: "120px",
-      }
-    },
-
-   created(){
-      this.klo();
-    },
-    methods: {
-      formatter(row, column) {
-        return row.address;
-      },
-      klo(){
-        let that=this;
-          that.$http.get("/api/courses/list",{page:1},
-          success => {
-            that.list=success.data.list
-               console.log(success.data.list);
-          },failure => {
-            console.log(failure)
-		  
-          },);
-      }
-    },
-}
+      let data = JSON.stringify(this.form);
+      that.$http.post(
+        "/api/courses/add",
+        data,
+        success => {
+          this.dialogFormVisible = false;
+          this.form = {
+            name: "",
+            price: "",
+            pricetype: "",
+            mode: ""
+          };
+          this.klo();
+          // console.log(success);
+        },
+        failure => {
+          console.log(failure);
+        }
+      );
+    }
+  }
+};
 </script>
 
 <style>
-.el-table{
+.el-table {
   background-color: #dee3e9;
 }
 
@@ -147,68 +184,63 @@ export default {
 .banji-titles {
   background-color: #f5f6fa;
   font-size: 20px;
-  
 }
 .kuang {
-  margin:0px 10px;
+  margin: 0px 10px;
 }
-.input1{
-    width: 250px;
+.input1 {
+  width: 250px;
 }
-.aa{
-    float: left;
+.aa {
+  float: left;
 }
-.wq{
+.wq {
   margin-left: 80px;
 }
-.lp{
-   margin-left: 80px;
+.lp {
+  margin-left: 80px;
 }
-.uy{
-   margin-left: 80px;
+.uy {
+  margin-left: 80px;
 }
 .banji-lists {
   width: 100%;
   margin-top: 23px;
 }
 
-.lo{
-    width: 1816px;
-    height: 50px;
-    border: 1px solid #dee3e9;
-    background-color: #f5f6fa;
+.lo {
+  width: 1400px;
+  height: 50px;
+  border: 1px solid #dee3e9;
+  background-color: #f5f6fa;
 }
-.el-icon-folder-add{
-    margin-left: 20px;
-    margin-top: 15px;
-    width: 90px;
-    height: 25px;
-    background-color: #ffffff;
-    border: 1px solid #c8ccd5;
-    line-height: 25px;
-    text-align: center;
-    cursor: pointer;
+.el-icon-folder-add {
+  margin-left: 20px;
+  margin-top: 15px;
+  width: 90px;
+  height: 25px;
+  background-color: #ffffff;
+  border: 1px solid #c8ccd5;
+  line-height: 25px;
+  text-align: center;
+  cursor: pointer;
 }
-.input-with-select{
-    width: 300px;
+.input-with-select {
+  width: 300px;
 }
 
-.ka{
+.ka {
   margin-left: 80px;
 }
 
-
-.dh{
-     margin-left: 240px;
- margin-top: -35px;
+.dh {
+  margin-left: 240px;
+  margin-top: -35px;
 }
 
-
-
-.yui{
+.yui {
   width: 600px;
   background-color: #f5f6fa;
   margin-left: 20px;
 }
-
 </style>

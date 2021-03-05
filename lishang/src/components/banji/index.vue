@@ -48,6 +48,9 @@
           >
           </el-date-picker>
         </div>
+
+
+        
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -56,6 +59,89 @@
         <el-button type="primary" @click="kecheng_add">确定</el-button>
       </div>
     </el-dialog>
+
+
+
+<!-- 班级排课 -->
+
+  <el-dialog title="排课" :visible.sync="paiKe" >
+  <el-form :model="forms">
+   
+ <el-form-item label="开课日期"><br>
+      <el-input v-model="forms.name" autocomplete="off" style="width:200px;"></el-input>
+    </el-form-item>
+    
+    <el-form-item label="结束方式" class="jl"><br>
+                  <el-radio v-model="forms.radio" label="1">按课节</el-radio>
+                  <el-radio v-model="forms.radio" label="2">按日期</el-radio>
+    </el-form-item>
+
+     <el-form-item label="* 结课日期" class="uo"><br>
+       <el-input v-model="forms.riqi" placeholder="结束日期" autocomplete="off" style="width:200px;" ></el-input>
+    </el-form-item>
+
+ <el-form-item label="* 日期选择" class="po"><br>
+       <el-checkbox v-model="checked">星期一</el-checkbox>
+        <el-checkbox >星期二</el-checkbox>
+         <el-checkbox>星期三</el-checkbox>
+          <el-checkbox >星期四</el-checkbox>
+           <el-checkbox>星期五</el-checkbox>
+            <el-checkbox v-model="checked">星期六</el-checkbox>
+            <el-checkbox>星期日</el-checkbox>
+    </el-form-item>
+
+<el-form-item label="周六时间">
+     <el-input v-model="forms.name" placeholder="起始时间" autocomplete="off" style="width:120px; top:5px; left:-70px;"></el-input>
+     <el-input v-model="forms.name" placeholder="时长(45分钟)" autocomplete="off" style="width:120px;top:5px; left:-70px;"></el-input>
+     <el-input v-model="forms.name" placeholder="结束时间" autocomplete="off" style="width:120px;top:5px; left:-70px;"></el-input>
+      <p class="el-icon-plus"></p>
+    </el-form-item>
+
+
+<el-form-item label="周日时间" class="pps">
+     <el-input v-model="forms.name" placeholder="起始时间" autocomplete="off" style="width:120px; top:5px; left:-70px;"></el-input>
+     <el-input v-model="forms.name" placeholder="时长(45分钟)" autocomplete="off" style="width:120px;top:5px; left:-70px;"></el-input>
+     <el-input v-model="forms.name" placeholder="结束时间" autocomplete="off" style="width:120px;top:5px; left:-70px;"></el-input>
+      <p class="el-icon-plus"></p>
+    </el-form-item>
+
+
+
+    <div><h1>选择学员</h1></div>
+    <div class="um"  @click="dialogFormVisibles = true">添加学员 <img src="./img/images/课时汇总-排课_03.gif" alt=""></div>
+    </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="paiKe = false"> 保存 </el-button>
+  </div>
+</el-dialog>
+
+
+
+<!-- 添加学员 -->
+<el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
+  <el-form :model="form">
+    <el-form-item label="" :label-width="formLabelWidth">
+    <div style="margin-top: 15px;">
+  <el-input v-model="input3" class="input-with-select">
+    <el-select v-model="select" slot="prepend" placeholder="课程">
+      <el-option label="餐厅名" value="1"></el-option>
+      <el-option label="订单号" value="2"></el-option>
+      <el-option label="用户电话" value="3"></el-option>
+    </el-select>
+    <el-button slot="append" icon="el-icon-search"></el-button>
+  </el-input>
+</div>
+    </el-form-item>
+    <el-form-item label="活动区域" :label-width="formLabelWidth">
+   
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogFormVisibles = false">取 消</el-button>
+    <el-button type="primary" @click="dialogFormVisibles = false">确 定</el-button>
+  </div>
+</el-dialog>
+
 
     <el-main>
       <table class="banji-list" border="0" cellspacing="0" cellpadding="0">
@@ -83,9 +169,7 @@
             <button class="paiban" >删除</button>
           </td>
           <td>{{ item.teacherslist }}</td>
-          <td><button class="paiban">排课</button></td> 
           <td>{{ item.teacherslist }}</td>
-          <td><button class="paiban">排课</button></td>
         </tr>
       </table>
     </el-main> 
@@ -97,9 +181,12 @@ import router from "../../router";
 export default {
   data() {
     return {
+        checked: true,
+      formLabelWidth: "120px",
       list: [],
-      dialogTableVisible: false,
       dialogFormVisible: false,
+      dialogFormVisibles:false,
+      paiKe:false,
       form: {
         name: "",
         coursename: "",
@@ -107,13 +194,22 @@ export default {
         startdate: "",
         enddate: "",
       },
-      formLabelWidth: "120px",
+     forms:{
+        name:"",
+        radio: '1',
+       
+
+
+     },
 
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
         },
       },
+      input3: '',
+      select: '',
+      
     };
   },
 
@@ -164,9 +260,44 @@ export default {
 </script>
 
 <style>
+.el-select .el-input {
+    width: 130px;
+  }
+  .input-with-select .el-input-group__prepend {
+    background-color: #fff;
+  }
+.um{
+  margin-left: 90px;
+  margin-top: -50px;
+  cursor: pointer;
+}
+.pps{
+  margin-left: 470px;
+  margin-top: -110px;
+}
+.el-icon-plus{
+  font-size: 25px;
+  width: 50px;
+  height: 39px;
+  border: 1px solid #dfe4ea;
+  text-align: center;
+  line-height: 40px;
+  position: relative;
+  top:10px;
+  left: -70px;
+}
+.uo{
+  margin-left: 470px;
+  margin-top: -100px;
+}
+.jl{
+  margin-left: 250px;
+  margin-top: -95px;
+}
 body {
   overflow-x: hidden;
 }
+
 .banji-nav {
   width: 100%;
 }
