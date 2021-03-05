@@ -36,15 +36,10 @@
           <td>{{ item.pricetype }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.mode }}</td>
-<<<<<<< HEAD
-          <td>
-            <button class="paibans" @click="dels(item.id)">删除</button>
-             <button class="paibans" @click="xiugais(index)">修改</button>
-          </td>
-=======
+
           <td><span style="cursor: pointer" @click="del(index)">删除</span></td>
           <td><span style="cursor: pointer" @click="xiu(index)">修改</span></td>
->>>>>>> e25cb6be5eed7058802d5a11dffada3bebc532b0
+
         </tr>
       </table>
     </el-main>
@@ -179,23 +174,6 @@ export default {
       );
     },
 
-
-    dels(id){
-      let that=this;
-      that.$http.get("/api/courses/delete",
-      {id:id},
-      (success) => {
-        console.log(success);
-        this.klo();
-      },
-      (failure) => {}
-      );
-    },
-
-    xiugais(index){
-      
-    },
-
     del(index) {
       console.log(this.list[index]);
       let that = this;
@@ -268,7 +246,7 @@ td:hover .paibans {
   position: relative;
   width: 54px;
   height: 63px;
-  left: 120px;
+  left: 20px;
   top: 10px;
   float: left;
 }
