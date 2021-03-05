@@ -126,7 +126,7 @@ export default {
           console.log(failure);
         }
       );
-    },
+    }, 
     kecheng_add() {
       let that = this;
       // console.log(this.form);
@@ -142,7 +142,7 @@ export default {
         startdate: "",
         enddate: ""};
         this.hu_list(); 
-          // console.log(success);
+        3
         },
       (failure) => {
 
@@ -163,7 +163,7 @@ body {
 
 .banji-list {
   width: 100%;
-  margin-top: 53px;
+  margin-top: 52px;
 }
 
 .banji-list td {
