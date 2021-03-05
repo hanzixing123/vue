@@ -204,7 +204,7 @@ export default {
   text-align: center;
   line-height: 33px;
   color: #c1c3cf;
-  margin-left: 1220px;
+  margin-left: 1220px;  
   margin-top: -40px;
   border-radius: 5px 0px 0px 5px;
 }
