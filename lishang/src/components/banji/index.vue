@@ -172,10 +172,7 @@
             <button class="paiban" @click="xiu(index)">修改</button>
             <button class="paiban" @click="del(item.id)">删除</button>
           </td>
-          <!-- <td>{{ item.teacherslist }}</td>
-          <td><button class="paiban">排课</button></td> 
-          <td>{{ item.teacherslist }}</td>
-          <td><button class="paiban">排课</button></td> -->
+        
         </tr>
       </table>
     </el-main>

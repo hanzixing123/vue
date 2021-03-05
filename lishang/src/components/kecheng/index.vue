@@ -29,12 +29,17 @@
           <td>收费模式</td>
           <td>单价</td>
           <td>上课模式</td>
+          <td>操作</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
           <td><i class="tu-imgs" />{{ item.name }}</td>
           <td>{{ item.pricetype }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.mode }}</td>
+          <td>
+            <button class="paibans" @click="dels(item.id)">删除</button>
+             <button class="paibans" @click="xiugais(index)">修改</button>
+          </td>
         </tr>
       </table>
     </el-main>
@@ -167,8 +172,25 @@ export default {
         }
       );
     },
+
+    dels(id){
+      let that=this;
+      that.$http.get("/api/courses/delete",
+      {id:id},
+      (success) => {
+        console.log(success);
+        this.klo();
+      },
+      (failure) => {}
+      );
+    },
+
+    xiugais(index){
+      
+    }
   },
 };
+
 </script>
 
 <style>
@@ -181,8 +203,17 @@ export default {
     margin: 0!important;
     padding:0;
     width:100px;
-
-
+}
+.paibans {
+  color: blue;
+  border: none;
+  background-color: #fff;
+  display: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+td:hover .paibans {
+  display: inline;
 }
 .el-table {
   background-color: #dee3e9;
@@ -193,7 +224,7 @@ export default {
   position: relative;
   width: 54px;
   height: 63px;
-  left: 160px;
+  left: 120px;
   top: 10px;
   float: left;
 }
