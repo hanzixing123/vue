@@ -353,7 +353,7 @@ body {
   text-align: center;
   font-size: 19px;
   padding-right: 10px;
-  border: 1px solid #c8ccd5; 
+  border: 1px solid #c8ccd5;
   display: inline-block;
   cursor: pointer;
   outline: 0 none !important;
