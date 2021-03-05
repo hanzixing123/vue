@@ -70,7 +70,8 @@
           <td>操作</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
-          <td><span class="tu-img" />{{ item.name }}</td>
+        
+          <td>{{ item.name }}</td>
           <td>{{ item.coursename }}</td>
           <td>{{ item.students }}</td>
           <td>{{ item.coursecounts }}</td>
