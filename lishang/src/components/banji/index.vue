@@ -156,7 +156,7 @@
           <td>操作</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
-          <td><span class="tu-img" />{{ item.name }}</td>
+          <td>{{ item.name }}</td>
           <td>{{ item.coursename }}</td>
           <td>{{ item.students }}</td>
           <td>{{ item.coursecounts }}</td>
@@ -392,15 +392,7 @@ body {
   top: 15px;
 }
 
-.tu-img {
-  background: url("./img/ico.png") 1px 513px;
-  position: relative;
-  width: 54px;
-  height: 63px;
-  left: 114px;
-  top: 10px;
-  float: left;
-}
+
 
 .el-input {
   width: 447px;

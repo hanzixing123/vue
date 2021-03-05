@@ -15,7 +15,7 @@ module.exports = {
       pathRewrite:{'^/api':''}            // 接口名重写
     }
  },
-
+  
     proxyTable: {
       '/api': {
         port: 2121, target: 'http://www.eshareedu.cn/edusystems/api/',   // 要代理的接口地址
