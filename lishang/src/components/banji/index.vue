@@ -72,12 +72,7 @@
             <button class="paiban" >修改</button>
             <button class="paiban" >删除</button>
           </td>
-
           <td>{{ item.teacherslist }}</td>
-          <td>{{ item.students }}</td>
-          <td>{{ item.coursecounts }}</td>
-          <td>{{ item.startdate }}</td>
-          <td>{{ item.enddate }}</td>
           <td><button class="paiban">排课</button></td> 
         </tr>
       </table>
@@ -174,23 +169,6 @@ export default {
       value2: "",
     };
   },
-
-    created(){
-      this.molk();
-    },
-   methods:{
-     molk(){
-       let that=this;
-         that.$http.get("/api/classes/list",{page:1},
-          success => {
-            that.list=success.data.list
-               console.log(success.data.list);
-          },failure => {
-            console.log(failure)
-		  
-          },);
-     }
-   },
 
   created() {
     this.hu_list();
