@@ -261,16 +261,7 @@ body {
   top: 15px;
 }
 
-.tu-img {
-  background: url("./img/ico.png") 1px 513px;
-  position: relative;
-  width: 54px;
-  height: 63px;
-  left: 114px;
-  top: 10px;
-  float: left;
-      margin-left: -115px;
-}
+
 
 .el-input {
   width: 447px;
