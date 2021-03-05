@@ -1,5 +1,5 @@
 <template>
-  <div class="banji-nav">
+  <div style="width: 100%">
     <el-footer>
       <button><span /> 删 除</button>
       <button @click="dialogFormVisible = true"><span /> 添加班级</button>
@@ -64,7 +64,8 @@
 
 <!-- 班级排课 -->
 
-  <el-dialog title="排课" :visible.sync="paiKe" >
+<div class="kls">
+<el-dialog title="排课" :visible.sync="paiKe" >
   <el-form :model="forms">
    
  <el-form-item label="开课日期"><br>
@@ -114,6 +115,9 @@
     <el-button type="primary" @click="paiKe = false"> 保存 </el-button>
   </div>
 </el-dialog>
+</div>
+
+  
 
 
 
@@ -156,7 +160,7 @@
           <td>操作</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
-          <td>{{ item.name }}</td>
+          <td><span class="tu-img" />{{ item.name }}</td>
           <td>{{ item.coursename }}</td>
           <td>{{ item.students }}</td>
           <td>{{ item.coursecounts }}</td>
@@ -263,9 +267,7 @@ export default {
 .el-select .el-input {
     width: 130px;
   }
-  .input-with-select .el-input-group__prepend {
-    background-color: #fff;
-  }
+ 
 .um{
   margin-left: 90px;
   margin-top: -50px;
@@ -369,7 +371,7 @@ body {
   background-color: #fff;
   position: relative;
   top: -46px;
-  left: 255px; 
+  left: 255px;
   border-radius: 5px;
   background: url("./img/sou.gif") no-repeat 468px;
   cursor: pointer;
@@ -392,7 +394,15 @@ body {
   top: 15px;
 }
 
-
+.tu-img {
+  background: url("./img/ico.png") 1px 513px;
+  position: relative;
+  width: 54px;
+  height: 63px;
+  left: 114px;
+  top: 10px;
+  float: left;
+}
 
 .el-input {
   width: 447px;

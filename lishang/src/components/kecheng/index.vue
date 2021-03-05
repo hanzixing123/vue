@@ -27,7 +27,7 @@
           <td>上课模式</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
-          <td><i class="tu-img" />{{ item.name }}</td>
+          <td><i class="tu-imgs" />{{ item.name }}</td>
           <td>{{ item.pricetype }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.mode }}</td>
@@ -165,12 +165,12 @@ export default {
   background-color: #dee3e9;
 }
 
-.tu-img {
+.tu-imgs {
   background: url("./ico.png") 1px 513px;
   position: relative;
   width: 54px;
   height: 63px;
-  left: 350px;
+  left: 160px;
   top: 10px;
   float: left;
 }
