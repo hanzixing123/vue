@@ -269,6 +269,7 @@ body {
   left: 114px;
   top: 10px;
   float: left;
+      margin-left: -115px;
 }
 
 .el-input {
