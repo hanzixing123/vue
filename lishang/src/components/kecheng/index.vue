@@ -36,8 +36,10 @@
           <td>{{ item.pricetype }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.mode }}</td>
+
           <td><span style="cursor: pointer" @click="del(index)">删除</span></td>
           <td><span style="cursor: pointer" @click="xiu(index)">修改</span></td>
+
         </tr>
       </table>
     </el-main>
@@ -171,6 +173,7 @@ export default {
         }
       );
     },
+
     del(index) {
       console.log(this.list[index]);
       let that = this;
@@ -201,8 +204,10 @@ export default {
       that.form = that.list[index];
       console.log(that.form);
     },
+
   },
 };
+
 </script>
 <style scoped>
 .kecheng_radio {
@@ -210,6 +215,23 @@ export default {
   /* padding: 0!important  ; */
 }
 
+
+.kecheng_radio .el-radio{
+    margin: 0!important;
+    padding:0;
+    width:100px;
+}
+.paibans {
+  color: blue;
+  border: none;
+  background-color: #fff;
+  display: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+td:hover .paibans {
+  display: inline;
+}
 .kecheng_radio .el-radio {
   margin: 0 !important;
   padding: 0;
@@ -224,7 +246,7 @@ export default {
   position: relative;
   width: 54px;
   height: 63px;
-  left: 160px;
+  left: 20px;
   top: 10px;
   float: left;
 }
