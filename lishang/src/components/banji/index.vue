@@ -87,7 +87,7 @@
          <el-checkbox>星期三</el-checkbox>
           <el-checkbox >星期四</el-checkbox>
            <el-checkbox>星期五</el-checkbox>
-            <el-checkbox v-model="checked">星期六</el-checkbox>
+            <el-checkbox>星期六</el-checkbox>
             <el-checkbox>星期日</el-checkbox>
     </el-form-item>
 
