@@ -20,8 +20,7 @@
 
   </div>
 
- <p class="rr"><p class="el-icon-arrow-left">上一月</p>&#160;&#160;&#160;&#160;&#160;2021年03月&#160;&#160;&#160;&#160;&#160;下一月<p class="el-icon-arrow-right
-"></p> </p>
+ <p class="rr"><p class="el-icon-arrow-left">上一月</p>&#160;&#160;&#160;&#160;&#160;2021年03月&#160;&#160;&#160;&#160;&#160;下一月<p class="el-icon-arrow-right"></p> </p>
 
 <p class="lj">总排课时:&#160;&#160;304&#160;&#160;&#160;&#160;总排学生数:&#160;39位&#160;&#160;&#160;&#160;&#160;&#160;&#160;
  未结果: &#160;303&#160;&#160;&#160;&#160;&#160;&#160;已结果: &#160;0
@@ -99,43 +98,67 @@
 export default {
   data() {
     return {
-          input1: '',
-      input2: '',
-      input3: '',
-      select: '',
-       gridData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
-        dialogTableVisible: false,
-        dialogFormVisible: false,
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+      input1: "",
+      input2: "",
+      input3: "",
+      select: "",
+      gridData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
         },
-        formLabelWidth: '120px'
-    }
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+      ],
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: "",
+      },
+      formLabelWidth: "120px",
+    };
   },
-}
+  created() {
+    this.huo_list();
+  },
+  methods: {
+    huo_list() {
+      let that = this;
+      that.$http.get(
+        "/api/coursetables/search",
+        { month: "10-06", page: 1 },
+        (success) => {
+          that.list = success.data.list;
+          console.log(success.data.list);
+        },
+        (failure) => {
+          console.log(failure);
+        }
+      );
+    },
+  },
+};
 </script>
 
 
@@ -148,19 +171,19 @@ export default {
   position: fixed;
 }
 
-.ds{
-    margin-left: 20px;
-    margin-top: 20px;
+.ds {
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
-.dss{
-   margin-left: 80px;
-    margin-top: 20px;
+.dss {
+  margin-left: 80px;
+  margin-top: 20px;
 }
-.km{
-   margin-left: 20px;
-   margin-top: 20px;
-   margin-bottom: -10px;
+.km {
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: -10px;
 }
 .ds {
   margin-left: 10px;
@@ -258,55 +281,52 @@ export default {
   margin-top: 60px;
 }
 
-
-  .hs{
-    width: 1383px;
-    height: 80px;
-    border: 1px solid #e5e5e5;
-   
-  }
-  .rs{
-      width: 120px;
-       height: 80px;
-       background-color: #f3f3f3;
-       text-align: center;
-       line-height: 70px;
-  }
-  .oo{
-    margin-left: 140px;
-    margin-top: -50px;
-  }
-  .op{
-       margin-left: 140px;
-       cursor: pointer;
-       margin-top: -59px;
-       width: 158px;
-       height: 53px;
-       background-color: #fafafa;
-      text-align: center;
-      border-radius: 5px;
-      box-shadow: #c5c5c5;
-  }
-  .el-icon-reading{
-    margin-left: 230px;
-    
-  }
-  .el-icon-time{
-    margin-left: 30px;
-  }
-  .el-icon-s-custom{
-    margin-left: 20px;
-  }
-  .el-icon-folder-checked{
-    margin-left: 380px;
-  }
-  .el-icon-edit-outline{
-    margin-left: 40px;
-  }
-  .lj{
-      margin-left: 700px;
-      margin-top: -50px;
-  }
+.hs {
+  width: 1383px;
+  height: 80px;
+  border: 1px solid #e5e5e5;
+}
+.rs {
+  width: 120px;
+  height: 80px;
+  background-color: #f3f3f3;
+  text-align: center;
+  line-height: 70px;
+}
+.oo {
+  margin-left: 140px;
+  margin-top: -50px;
+}
+.op {
+  margin-left: 140px;
+  cursor: pointer;
+  margin-top: -59px;
+  width: 158px;
+  height: 53px;
+  background-color: #fafafa;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: #c5c5c5;
+}
+.el-icon-reading {
+  margin-left: 230px;
+}
+.el-icon-time {
+  margin-left: 30px;
+}
+.el-icon-s-custom {
+  margin-left: 20px;
+}
+.el-icon-folder-checked {
+  margin-left: 380px;
+}
+.el-icon-edit-outline {
+  margin-left: 40px;
+}
+.lj {
+  margin-left: 700px;
+  margin-top: -50px;
+}
 
 .hs {
   width: 1383px;
@@ -353,5 +373,4 @@ export default {
   margin-left: 700px;
   margin-top: -50px;
 }
-
 </style>

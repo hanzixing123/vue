@@ -144,13 +144,9 @@
   <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top:-550px;margin-right:30px;margin-left:200px;">
     <el-tab-pane label="单次排课" name="first">
       <el-calendar :range="['2019-03-04', '2019-03-24']">
-        
 </el-calendar>
     </el-tab-pane>
-    <el-tab-pane label="批量排课" name="second">
-      批量排课
-
-    </el-tab-pane>
+    <el-tab-pane label="批量排课" name="second">批量排课</el-tab-pane>
   </el-tabs>
 
 </div>
