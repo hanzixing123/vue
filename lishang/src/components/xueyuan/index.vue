@@ -30,7 +30,7 @@
       <table class="table">
         <tr>
           <td>
-            <input type="checkbox" class="kuang" />
+            <input type="checkbox" class="kuang" @click="checkAll" />
             <!-- <span class="kuang" @click="xuan" /> -->
           </td>
           <td>学员名称</td>
@@ -41,7 +41,7 @@
         </tr>
         <tr v-for="(res, index) in list" :key="index">
           <td>
-            <input type="checkbox" class="kuang" />
+            <input type="checkbox" class="kuang" v-model="selectList" :value="res" />
             <!-- <span class="kuang" @click="xuanzhong(res.id)" /> -->
           </td>
           <td><span class="kuang-1" /> {{ res.name }}</td>
@@ -266,6 +266,7 @@
 export default {
   data() {
     return {
+      selectList:[],
       activeName: "first", //一对一排课 选择
       time: "",
      time1: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
@@ -382,6 +383,15 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
+
+    checkAll(){
+        
+        if(this.selectList.length>0){
+            this.selectList = []
+        }else{
+          this.selectList = this.list.slice(0)
+        }
+    }
   },
 };
 </script> 

@@ -471,7 +471,7 @@ body {
   position: relative;
   width: 54px;
   height: 63px;
-  left: 114px;
+   left: 29px;
   top: 10px;
   float: left;
 }
