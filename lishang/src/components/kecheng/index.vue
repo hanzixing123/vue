@@ -37,8 +37,10 @@
           <td>{{ item.price }}</td>
           <td>{{ item.mode }}</td>
 
-          <td><span style="cursor: pointer" @click="del(index)">删除</span></td>
-          <td><span style="cursor: pointer" @click="xiu(index)">修改</span></td>
+          <td>
+            <button class="paiban" @click="del(index)">删除</button>
+             <button class="paiban" @click="xiu(index)">修改</button>
+          </td>
 
         </tr>
       </table>
@@ -221,7 +223,7 @@ export default {
     padding:0;
     width:100px;
 }
-.paibans {
+.paiban {
   color: blue;
   border: none;
   background-color: #fff;
@@ -229,7 +231,7 @@ export default {
   cursor: pointer;
   font-size: 15px;
 }
-td:hover .paibans {
+td:hover .paiban {
   display: inline;
 }
 .kecheng_radio .el-radio {
