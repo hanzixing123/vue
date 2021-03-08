@@ -4,27 +4,23 @@
    <img src="../../assets/images/li_03.gif" alt="">
 
 
- <div class="jj">
+ <div class="jjs">
+ 
+
+       <el-select v-model="select" slot="prepend" placeholder="请选择">
+      <el-option label="餐厅名" value="1"></el-option>
+      <el-option label="订单号" value="2"></el-option>
+      <el-option label="用户电话" value="3"></el-option>
+    </el-select>
   <el-input placeholder="" v-model="input3" class="input-with-select">
-    <el-select v-model="select" slot="prepend" placeholder="课程">
-      <el-option label="架子鼓课" value="1"></el-option>
-      <el-option label="美术课" value="2"></el-option>
-      <el-option label="瑜伽课" value="3"></el-option>
-    </el-select>
-     <el-select v-model="select" slot="prepend" placeholder="班级">
-      <el-option label="01班" value="1"></el-option>
-      <el-option label="02班" value="2"></el-option>
-      <el-option label="03班" value="3"></el-option>
-    </el-select>
-    <el-button slot="append" icon="el-icon-search"></el-button>
+    <el-button  slot="append" icon="el-icon-search"></el-button>
   </el-input>
 </div>
 
 
   </div>
 
- <p class="rr"><p class="el-icon-arrow-left">上一月</p>&#160;&#160;&#160;&#160;&#160;2021年03月&#160;&#160;&#160;&#160;&#160;下一月<p class="el-icon-arrow-right
-"></p> </p>
+ <p class="rr"><p class="el-icon-arrow-left">上一月</p>&#160;&#160;&#160;&#160;&#160;2021年03月&#160;&#160;&#160;&#160;&#160;下一月<p class="el-icon-arrow-right"></p> </p>
 
 <p class="lj">总排课时:&#160;&#160;304&#160;&#160;&#160;&#160;总排学生数:&#160;39位&#160;&#160;&#160;&#160;&#160;&#160;&#160;
  未结果: &#160;303&#160;&#160;&#160;&#160;&#160;&#160;已结果: &#160;0
@@ -166,7 +162,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .el-icon-circle-plus-outline {
   margin-left: 1330px;
   margin-top: -200px;
@@ -201,7 +197,6 @@ export default {
   margin-top: 50px;
   margin-bottom: 5px;
 }
-
 .yu {
   margin-top: -10px;
 }
@@ -261,17 +256,25 @@ export default {
   margin-top: -25px;
 }
 
-.jj {
+.jjs {
   margin-left: 160px;
   width: 500px;
   margin-top: -48px;
+  position: absolute;
 }
 
 .el-select .el-input {
   width: 130px;
 }
+.input-with-select{
+   margin-left: 225px;
+   position: relative;
+   top: -40px;
+}
 .input-with-select .el-input-group__prepend {
   background-color: #fff;
+ 
+
 }
 .rr {
   margin-left: 10px;

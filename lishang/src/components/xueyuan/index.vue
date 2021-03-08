@@ -385,7 +385,7 @@ export default {
   },
 };
 </script> 
-<style>
+<style scoped>
 .xueyuan_xialai{
       width:100px;
 }

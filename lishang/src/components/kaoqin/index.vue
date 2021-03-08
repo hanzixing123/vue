@@ -101,11 +101,12 @@ export default {
 </script>
 
 <style>
-.li {
-  width: 1385px;
-  height: 51px;
-  background-color: #f5f6fa;
-  float: left;
+
+.li{
+width: 1385px;
+ height: 51px;
+ background-color: #f5f6fa;
+ float: left;
 }
 .kk {
   margin-top: 60px;

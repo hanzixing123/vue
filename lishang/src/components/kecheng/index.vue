@@ -1,84 +1,102 @@
 <template>
-<div>
-<div class="lo">
-<img class="aa" src="../../assets/images/课程01_03.gif" alt="">
+  <div>
+    <div class="lo">
+      <img class="aa" src="../../assets/images/课程01_03.gif" alt="" />
 
-<a class="el-icon-folder-add" @click="dialogFormVisible = true">添加课程</a>
-<div class="dh">
-  <el-input  placeholder="请输入内容" v-model="input3" class="input-with-select">
-   <el-select>
-      <el-option label="餐厅名" value="1"></el-option>
-      <el-option label="订单号" value="2"></el-option>
-      <el-option label="用户电话" value="3"></el-option>
-    </el-select>
-    <el-button slot="append" icon="el-icon-search"></el-button>
-  </el-input>
-</div>
-</div>
+      <a class="el-icon-folder-add" @click="dialogFormVisible = true"
+        >添加课程</a
+      >
+      <div class="dh">
+        <el-input
+          placeholder="请输入内容"
+          v-model="input3"
+          class="input-with-select"
+        >
+          <el-select>
+            <el-option label="餐厅名" value="1"></el-option>
+            <el-option label="订单号" value="2"></el-option>
+            <el-option label="用户电话" value="3"></el-option>
+          </el-select>
+          <el-button slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+      </div>
+    </div>
 
-
-
- <el-main>
+    <el-main>
       <table class="banji-lists" border="0" cellspacing="0" cellpadding="0">
         <tr class="banji-titles">
           <td>课程名称</td>
           <td>收费模式</td>
           <td>单价</td>
           <td>上课模式</td>
+          <td>操作</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
-          <td><i class="tu-img" />{{ item.name }}</td>
+          <td><i class="tu-imgs" />{{ item.name }}</td>
           <td>{{ item.pricetype }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.mode }}</td>
+
+          <td><span style="cursor: pointer" @click="del(index)">删除</span></td>
+          <td><span style="cursor: pointer" @click="xiu(index)">修改</span></td>
+
         </tr>
       </table>
     </el-main>
 
-
-
-
-<el-dialog title="增加课程" :visible.sync="dialogFormVisible">
+    <el-dialog :title="title" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item class="wq" label="课程名称" :label-width="formLabelWidth">
-         <el-input       v-model="form.name"  class="input1" autocomplete="off"></el-input>
+          <el-input
+            v-model="form.name"
+            class="input1"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
- <el-form-item class="ka" label="收费模式:" :label-width="formLabelWidth">
-           <el-radio-group v-model="form.pricetype" >
-    <el-radio class="kuang"  :label="1">按课时收费</el-radio>
-    <el-radio :label="2">按期收费</el-radio>
-  </el-radio-group>
- </el-form-item>
+        <el-form-item
+          class="ka"
+          label="收费模式:"
+          :label-width="formLabelWidth"
+        >
+          <el-radio-group class="kecheng_radio" v-model="form.pricetype">
+            <el-radio class="kuang" :label="1">按课时收费</el-radio>
+            <el-radio :label="2">按期收费</el-radio>
+          </el-radio-group>
+        </el-form-item>
 
-  <el-form-item class="lp" label="单价:" :label-width="formLabelWidth">
-         <el-input v-model="form.price"  class="input1" autocomplete="off"></el-input>
-         <span>元/课时</span>
-         
-  </el-form-item>
-       
- <el-form-item class="uy" label="上课模式:" :label-width="formLabelWidth">
-           <el-radio-group v-model="form.mode">
-    <el-radio :label="1">一对一</el-radio>
-    <el-radio :label="2">集体班</el-radio>
-  </el-radio-group>
- </el-form-item>
+        <el-form-item class="lp" label="单价:" :label-width="formLabelWidth">
+          <el-input
+            v-model="form.price"
+            class="input1"
+            autocomplete="off"
+          ></el-input>
+          <span>元/课时</span>
+        </el-form-item>
 
+        <el-form-item
+          class="uy"
+          label="上课模式:"
+          :label-width="formLabelWidth"
+        >
+          <el-radio-group class="kecheng_radio" v-model="form.mode">
+            <el-radio :label="1">一对一</el-radio>
+            <el-radio :label="2">集体班</el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-
-            <el-button type="primary" @click="kc_add">确定</el-button>
+        <el-button type="primary" @click="kc_add">确定</el-button>
       </div>
     </el-dialog>
-
-
-</div>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
+      title: "",
       list: [],
       input3: "",
       dialogFormVisible: false,
@@ -86,18 +104,18 @@ export default {
         name: "",
         price: "",
         pricetype: 1,
-        mode: 1
+        mode: 1,
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
     };
   },
   watch: {
     dialogFormVisible(y, n) {
       if (y == false) {
-           this.form.pricetype= 1;
-          this.form.mode= 1;
+        this.form.pricetype = 1;
+        this.form.mode = 1;
       }
-    }
+    },
   },
   created() {
     this.klo();
@@ -111,11 +129,11 @@ export default {
       that.$http.get(
         "/api/courses/list",
         { page: 1 },
-        success => {
+        (success) => {
           that.list = success.data.list;
           console.log(success.data.list);
         },
-        failure => {
+        (failure) => {
           console.log(failure);
         }
       );
@@ -133,44 +151,102 @@ export default {
         this.form.mode = "集体班";
       }
 
-
       console.log(JSON.stringify(this.form));
-     
+
       let data = JSON.stringify(this.form);
       that.$http.post(
         "/api/courses/add",
         data,
-        success => {
+        (success) => {
           this.dialogFormVisible = false;
           this.form = {
             name: "",
             price: "",
             pricetype: "",
-            mode: ""
+            mode: "",
           };
           this.klo();
           // console.log(success);
         },
-        failure => {
+        (failure) => {
           console.log(failure);
         }
       );
-    }
-  }
-};
-</script>
+    },
 
-<style>
+    del(index) {
+      console.log(this.list[index]);
+      let that = this;
+      that.$http.get(
+        "/api/courses/delete",
+        { id: that.list[index].id },
+        (success) => {
+          this.klo();
+        },
+        (failure) => {}
+      );
+    },
+    xiu(index) {
+      let that = this;
+      that.dialogFormVisible = true;
+      that.title = "修改课程";
+      if (this.form.pricetype == "按课时收费") {
+        this.list[index].pricetype = 1;
+      } else {
+        this.list[index].pricetype = 2;
+      }
+      if (this.form.mode == "一对一") {
+        this.list[index].mode = 1;
+      } else {
+        this.list[index].mode = 2;
+      }
+
+      that.form = that.list[index];
+      console.log(that.form);
+    },
+
+  },
+};
+
+</script>
+<style scoped>
+.kecheng_radio {
+  margin: 0;
+  /* padding: 0!important  ; */
+}
+
+
+.kecheng_radio .el-radio{
+    margin: 0!important;
+    padding:0;
+    width:100px;
+}
+.paibans {
+  color: blue;
+  border: none;
+  background-color: #fff;
+  display: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+td:hover .paibans {
+  display: inline;
+}
+.kecheng_radio .el-radio {
+  margin: 0 !important;
+  padding: 0;
+  width: 100px;
+}
 .el-table {
   background-color: #dee3e9;
 }
 
-.tu-img {
+.tu-imgs {
   background: url("./ico.png") 1px 513px;
   position: relative;
   width: 54px;
   height: 63px;
-  left: 350px;
+  left: 20px;
   top: 10px;
   float: left;
 }
