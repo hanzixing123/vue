@@ -508,7 +508,7 @@ body {
 }
 td:hover .paiban {
   display: inline;
-}
+} 
 </style>
   
             
