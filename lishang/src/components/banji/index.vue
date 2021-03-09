@@ -52,9 +52,6 @@
           >
           </el-date-picker>
         </div>
-
-
-        
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -63,129 +60,232 @@
       </div>
     </el-dialog>
 
+    <!-- 班级排课 -->
 
+    <div class="kls">
+      <el-dialog title="排课" :visible.sync="paiKe">
+        <el-form :model="forms">
+          <div>
+            <table>
+              <tr class="tab">
+                <td>主讲老师 助教老师</td>
+                <td>助教老师</td>
+                <td>教室</td>
+                <td>单节课扣学员课时</td>
+              </tr>
+              <tr>
+                <td>
+                  <select name="" id="" style="width: 100px; height: 40px">
+                    <option value="请选择">请选择</option>
+                  </select>
+                </td>
+                <td>
+                  <select name="" id="" style="width: 100px; height: 40px">
+                    <option value="请选择">请选择</option>
+                  </select>
+                </td>
+                <td>
+                  <select name="" id="" style="width: 100px; height: 40px">
+                    <option value="请选择">请选择</option>
+                  </select>
+                </td>
+                <td>
+                  <input type="text" style="width: 100px; height: 30px" />
+                </td>
+              </tr>
+            </table>
+          </div>
 
-<!-- 班级排课 -->
+          <el-tabs @tab-click="handleClick">
+            <el-tab-pane label="单次排课" name="second">
+              <!-- 日期选择 -->
+              <div>
+                <span>开学时间</span>
+                <el-date-picker
+                  type="datetime"
+                  placeholder="选择日期时间"
+                  style="width: 240px"
+                >
+                </el-date-picker>
+              </div>
+              <!-- 日期选择 -->
 
-<div class="kls">
-<el-dialog title="排课" :visible.sync="paiKe" >
-  <el-form :model="forms">
-   
- <el-form-item label="开课日期"><br>
-      <el-input v-model="forms.name" autocomplete="off" style="width:200px;"></el-input>
-    </el-form-item>
-    
-    <el-form-item label="结束方式" class="jl"><br>
-                  <el-radio v-model="forms.radio" label="1">按课节</el-radio>
-                  <el-radio v-model="forms.radio" label="2">按日期</el-radio>
-    </el-form-item>
+              <div style="margin-top: 20px">
+                <span>开学时间</span>
+                <el-time-picker
+                  style="width: 240px"
+                  v-model="time1"
+                  :picker-options="{
+                    selectableRange: '18:30:00 - 20:30:00',
+                  }"
+                  placeholder="开始时间"
+                >
+                </el-time-picker>
+                <el-time-picker
+                  style="width: 240px"
+                  arrow-control
+                  v-model="time2"
+                  :picker-options="{
+                    selectableRange: '18:30:00 - 20:30:00',
+                  }"
+                  placeholder="结束时间"
+                >
+                </el-time-picker>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="批量排课" name="first">
+              <div>
+                <span>开学时间</span>
+                <el-date-picker
+                  type="datetime"
+                  placeholder="选择日期时间"
+                  style="width: 240px"
+                >
+                </el-date-picker>
+                结束方式
+                <el-radio v-model="form1.radio" label="1">按课节</el-radio>
+                <el-radio v-model="form1.radio" label="2">按日期</el-radio>
+                排课总量
+                <input type="text" style="width: 100px; height: 30px" />
+              </div>
+              <div v-if="form1.radio == 1" style="margin-top: 30px">
+                <span>上课时间</span>
+                <el-time-picker
+                  style="width: 240px"
+                  v-model="time1"
+                  :picker-options="{
+                    selectableRange: '18:30:00 - 20:30:00',
+                  }"
+                  placeholder="起始时间"
+                >
+                </el-time-picker>
+                <el-time-picker
+                  style="width: 240px"
+                  arrow-control
+                  v-model="time2"
+                  :picker-options="{
+                    selectableRange: '18:30:00 - 20:30:00',
+                  }"
+                  placeholder="结束时间"
+                >
+                </el-time-picker>
+              </div>
+              <div v-if="form1.radio == 2">
+                <el-form-item label="* 日期选择" class="po"
+                  ><br />
+                  <el-checkbox v-model="checked">星期一</el-checkbox>
+                  <el-checkbox>星期二</el-checkbox>
+                  <el-checkbox>星期三</el-checkbox>
+                  <el-checkbox>星期四</el-checkbox>
+                  <el-checkbox>星期五</el-checkbox>
+                  <el-checkbox>星期六</el-checkbox>
+                  <el-checkbox>星期日</el-checkbox>
+                </el-form-item>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+          <div><h1>选择学员</h1></div>
+          <div class="um" @click="dialogFormVisibles = true">
+            添加学员 <img src="./img/images/课时汇总-排课_03.gif" alt="" />
+          </div>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="paiKe = false"> 保存 </el-button>
+        </div>
+      </el-dialog>
+    </div>
 
-     <el-form-item label="* 结课日期" class="uo"><br>
-       <el-input v-model="forms.riqi" placeholder="结束日期" autocomplete="off" style="width:200px;" ></el-input>
-    </el-form-item>
+    <!-- 课表 -->
+    <el-dialog title="课表" :visible.sync="kebiao">
+      <div class="uy">
+        <div class="lxt"><p class="klss">架子鼓基础班2101</p></div>
+        <div class="yut">
+          课程: 架子鼓课<br />
+          <p class="ytr">老师: 希希,老师傅</p>
+          <p>教室:</p>
+          <p>人数: 2/30</p>
+          <el-progress
+            :text-inside="true"
+            style="width: 75%"
+            :stroke-width="20"
+            :percentage="50"
+            status="exception"
+          ></el-progress>
+          <p>
+            以上2节课&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;已排4节课
+          </p>
+        </div>
 
- <el-form-item label="* 日期选择" class="po"><br>
-       <el-checkbox v-model="checked">星期一</el-checkbox>
-        <el-checkbox >星期二</el-checkbox>
-         <el-checkbox>星期三</el-checkbox>
-          <el-checkbox >星期四</el-checkbox>
-           <el-checkbox>星期五</el-checkbox>
-            <el-checkbox>星期六</el-checkbox>
-            <el-checkbox>星期日</el-checkbox>
-    </el-form-item>
+        <div class="zuoxai">
+          <h1 style="margin-top: 50px; margin-left: 20px; padding-top: 20px">
+            班级学员(2)
+            <p style="margin-left: 225px" class="el-icon-user-solid"></p>
+          </h1>
 
-<el-form-item label="周六时间">
-     <el-input v-model="forms.name" placeholder="起始时间" autocomplete="off" style="width:120px; top:5px; left:-70px;"></el-input>
-     <el-input v-model="forms.name" placeholder="时长(45分钟)" autocomplete="off" style="width:120px;top:5px; left:-70px;"></el-input>
-     <el-input v-model="forms.name" placeholder="结束时间" autocomplete="off" style="width:120px;top:5px; left:-70px;"></el-input>
-      <p class="el-icon-plus"></p>
-    </el-form-item>
+          <div>
+            <img
+              src="../../assets/images/keshi-02_03.gif"
+              alt=""
+              style="margin-left: 20px"
+            />
+            <p style="margin-top: -50px; margin-left: 70px">
+              李四<br />
+              已排3节, 已上1节
+            </p>
+          </div>
+          <div>
+            <img
+              src="../../assets/images/keshi-02_03.gif"
+              alt=""
+              style="margin-left: 20px; margin-top: 20px"
+            />
+            <p style="margin-top: -50px; margin-left: 70px">
+              李四<br />
+              已排本班课节3, 其中上了1节
+            </p>
+          </div>
+        </div>
+      </div>
 
+      <div class="yous">
+        <el-tabs
+          v-model="activeName"
+          @tab-click="handleClick"
+          style="margin-top: -550px; margin-right: 30px; margin-left: 200px"
+        >
+          <el-tab-pane label="单次排课" name="first">
+            <el-calendar :range="['2019-03-04', '2019-03-24']"> </el-calendar>
+          </el-tab-pane>
+          <el-tab-pane label="批量排课" name="second">批量排课</el-tab-pane>
+        </el-tabs>
+      </div>
+    </el-dialog>
 
-<el-form-item label="周日时间" class="pps">
-     <el-input v-model="forms.name" placeholder="起始时间" autocomplete="off" style="width:120px; top:5px; left:-70px;"></el-input>
-     <el-input v-model="forms.name" placeholder="时长(45分钟)" autocomplete="off" style="width:120px;top:5px; left:-70px;"></el-input>
-     <el-input v-model="forms.name" placeholder="结束时间" autocomplete="off" style="width:120px;top:5px; left:-70px;"></el-input>
-      <p class="el-icon-plus"></p>
-    </el-form-item>
-
-
-
-    <div><h1>选择学员</h1></div>
-    <div class="um"  @click="dialogFormVisibles = true">添加学员 <img src="./img/images/课时汇总-排课_03.gif" alt=""></div>
-    </el-form>
-  <div slot="footer" class="dialog-footer"> 
-    <el-button type="primary" @click="paiKe = false"> 保存 </el-button>
-  </div>
-</el-dialog>
-</div>
-
-  
-
-<!-- 课表 -->
-
-<el-dialog title="课表" :visible.sync="kebiao" >
-  <div class="uy">
- <div class="lxt"><p class="klss">架子鼓基础班2101</p></div>
- <div class="yut">课程: 架子鼓课<br>
- <p class="ytr">老师: 希希,老师傅</p>
- <p>教室: </p><p>人数: 2/30</p>
- <el-progress :text-inside="true" style="width:75%;" :stroke-width="20" :percentage="50" status="exception"></el-progress>
- <p>以上2节课&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;已排4节课</p>
- </div>
-
-<div class="zuoxai">
-<h1 style="margin-top:50px;margin-left:20px; padding-top: 20px;">班级学员(2) <p style="margin-left:225px;" class="el-icon-user-solid"></p></h1>
-
-<div><img src="../../assets/images/keshi-02_03.gif" alt="" style="margin-left:20px;"><p style="margin-top:-50px;margin-left:70px;"> 李四<br> 已排3节, 已上1节</p></div>
-<div><img src="../../assets/images/keshi-02_03.gif" alt="" style="margin-left:20px;margin-top:20px;"><p style="margin-top:-50px;margin-left:70px;"> 李四<br> 已排本班课节3, 其中上了1节</p></div>
-</div>
-</div>
-
-
-<div class="yous">
-  <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top:-550px;margin-right:30px;margin-left:200px;">
-    <el-tab-pane label="单次排课" name="first">
-      <el-calendar :range="['2019-03-04', '2019-03-24']">
-</el-calendar>
-    </el-tab-pane>
-    <el-tab-pane label="批量排课" name="second">批量排课</el-tab-pane>
-  </el-tabs>
-
-</div>
-
-
-</el-dialog>
-
-
-
-
-
-
-<!-- 添加学员 -->
-<el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
-  <el-form :model="form">
-    <el-form-item label="" :label-width="formLabelWidth">
-    <div style="margin-top: 15px;">
-  <el-input v-model="input3" class="input-with-select">
-    <el-select v-model="select" slot="prepend" placeholder="课程">
-      <el-option label="餐厅名" value="1"></el-option>
-      <el-option label="订单号" value="2"></el-option>
-      <el-option label="用户电话" value="3"></el-option>
-    </el-select>
-    <el-button slot="append" icon="el-icon-search"></el-button>
-  </el-input>
-</div>
-    </el-form-item>
-    <el-form-item label="活动区域" :label-width="formLabelWidth">
-   
-    </el-form-item>
-  </el-form>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="dialogFormVisibles = false">取 消</el-button>
-    <el-button type="primary" @click="dialogFormVisibles = false">确 定</el-button>
-  </div>
-</el-dialog>
+    <!-- 添加学员 -->
+    <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
+      <el-form :model="form">
+        <el-form-item label="" :label-width="formLabelWidth">
+          <div style="margin-top: 15px">
+            <el-input v-model="input3" class="input-with-select">
+              <el-select v-model="select" slot="prepend" placeholder="课程">
+                <el-option label="餐厅名" value="1"></el-option>
+                <el-option label="订单号" value="2"></el-option>
+                <el-option label="用户电话" value="3"></el-option>
+              </el-select>
+              <el-button slot="append" icon="el-icon-search"></el-button>
+            </el-input>
+          </div>
+        </el-form-item>
+        <el-form-item label="活动区域" :label-width="formLabelWidth">
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisibles = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisibles = false"
+          >确 定</el-button
+        >
+      </div>
+    </el-dialog>
 
     <!-- 添加学员 -->
     <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
@@ -207,7 +307,7 @@
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
           <ul
-            style="height: 400px; width: 440px; overflow: auto"
+            style="height: 400px; width: 400px; overflow: auto"
             class="scroll"
           >
             <li
@@ -220,7 +320,12 @@
               v-for="(res, index) in xueyuan_list"
               :key="index"
             >
-              <input type="checkbox" class="kuang" v-model="xueyuan_list1" :value="res.name" />
+              <input
+                type="checkbox"
+                class="kuang"
+                v-model="xueyuan_list1"
+                :value="res.name"
+              />
               <span class="rento"></span>
               {{ res.name }}
             </li>
@@ -236,23 +341,27 @@
               left: 390px;
               top: 8px;
               display: inline-block;
-            ">清空</span>
+            "
+            >清空</span
+          >
 
-                 <ul
+          <ul
             style="height: 400px; width: 500px; overflow: auto"
             class="scroll"
           >
             <li
               style="
                 height: 50px;
-                width: 350px;
+                width: 460px;
                 line-height: 50px;
                 border-bottom: 1px solid red;
               "
-             v-for="(res, index) in xueyuan_list1" :key="index"
-            > <span class="rento"></span>
+              v-for="(res, index) in xueyuan_list1"
+              :key="index"
+            >
+              <span class="rento"></span>
               <span class="lj1"></span>
-              {{res}}
+              {{ res }}
             </li>
           </ul>
         </div>
@@ -305,14 +414,17 @@ export default {
       checked: true,
       xueyuan_list: [],
       // formLabelWidth: "120px",
-         activeName: 'second',
-        checked: true,
+      activeName: "second",
+      checked: true,
       formLabelWidth: "100%",
       list: [],
       dialogFormVisible: false,
-      dialogFormVisibles:false,
-      paiKe:false,
-      kebiao:false,
+      dialogFormVisibles: false,
+      paiKe: false,
+      kebiao: false,
+      bj_jiaoshi: "",
+      bj_zhujiao: "",
+      bj_jiaoshi: "",
       form: {
         id: 0,
         name: "",
@@ -321,10 +433,13 @@ export default {
         startdate: "",
         enddate: "",
       },
-       forms:{
-        name:"",
-        radio: '1',
-     },
+      forms: {
+        name: "",
+        radio: "1",
+      },
+      form1: {
+        radio: "1",
+      },
 
       title: "添加班级",
       formLabelWidth: "120px",
@@ -356,8 +471,8 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-        console.log(tab, event);
-      },
+      console.log(tab, event);
+    },
     hu_list() {
       let that = this;
       that.$http.get(
@@ -406,8 +521,6 @@ export default {
           console.log(failure);
         }
       );
-
-
     },
     del(id) {
       let that = this;
@@ -445,14 +558,15 @@ export default {
           }
         );
       }
-
     },
-   
   },
 };
 </script>
 
 <style scoped>
+.tab td {
+  width: 150px;
+}
 .scroll {
   margin: 0 auto;
   /* border: 1px solid #000; */
@@ -505,8 +619,8 @@ export default {
   left: 400px;
   display: inline-block;
 }
-.lj1{
-    background: url("../../assets/ico.png") 34px 675px;
+.lj1 {
+  background: url("../../assets/ico.png") 34px 675px;
   width: 40px;
   height: 24px;
   position: relative;
@@ -527,21 +641,20 @@ export default {
   width: 130px;
 }
 
-.uy{
+.uy {
   width: 50%;
 }
-.ytr{
+.ytr {
   margin-top: 10px;
 }
-.yut{
+.yut {
   margin-left: 20px;
   margin-top: 20px;
-  
 }
-.klss{
+.klss {
   margin-left: 20px;
 }
-.lxt{
+.lxt {
   width: 399px;
   height: 75px;
   background-color: #1890ff;
@@ -550,22 +663,22 @@ export default {
   font-size: 20px;
   line-height: 75px;
   margin-left: 10px;
-  
 }
 .el-select .el-input {
-    width: 100%;
-  }
- 
-.um{
+  width: 100%;
+}
+
+.um {
   margin-left: 90px;
   margin-top: -50px;
+  width: 90px;
   cursor: pointer;
 }
-.pps{
+.pps {
   margin-left: 470px;
   margin-top: -110px;
 }
-.el-icon-plus{
+.el-icon-plus {
   font-size: 25px;
   width: 50px;
   height: 39px;
@@ -573,14 +686,14 @@ export default {
   text-align: center;
   line-height: 40px;
   position: relative;
-  top:10px;
+  top: 10px;
   left: -70px;
 }
-.uo{
+.uo {
   margin-left: 470px;
   margin-top: -100px;
 }
-.jl{
+.jl {
   margin-left: 250px;
   margin-top: -95px;
 }
@@ -697,7 +810,7 @@ body {
   position: relative;
   width: 54px;
   height: 63px;
-   left: 29px;
+  left: 29px;
   top: 10px;
   float: left;
 }
