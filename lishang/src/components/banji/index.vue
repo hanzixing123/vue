@@ -161,7 +161,7 @@
                 </el-time-picker>
                 <el-time-picker
                   style="width: 240px"
-                  arrow-control
+                  arrow-control 
                   v-model="time2"
                   :picker-options="{
                     selectableRange: '18:30:00 - 20:30:00',
