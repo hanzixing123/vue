@@ -344,7 +344,7 @@ export default {
 }
 .da1 {
   margin-top: 40px;
-  float: left;
+  float: left;     
   display: block;
   /* width: 1200px; */
   /* width:400px; */
