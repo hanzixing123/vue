@@ -374,6 +374,9 @@
       </div>
     </el-dialog>
 
+
+
+
     <el-main>
       <table class="banji-list" border="0" cellspacing="0" cellpadding="0">
         <tr class="banji-title">
@@ -411,6 +414,9 @@ import router from "../../router";
 export default {
   data() {
     return {
+
+       value: new Date(),
+
       checked: true,
       xueyuan_list: [],
       // formLabelWidth: "120px",
