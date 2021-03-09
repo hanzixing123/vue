@@ -69,7 +69,7 @@
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false"> 取消课程 </el-button>
-    <el-button type="primary" @click="dialogFormVisible = false"> 保存修改 </el-button>
+    <el-button type="primary" @click="dialogFormVisible = false"> 保存 </el-button>
   </div>
 </el-dialog>
 

@@ -49,9 +49,6 @@
           >
           </el-date-picker>
         </div>
-
-
-        
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -59,6 +56,7 @@
         <el-button type="primary" @click="kecheng_add()">确定</el-button>
       </div>
     </el-dialog>
+
 
 
 
@@ -107,7 +105,6 @@
     </el-form-item>
 
 
-
     <div><h1>选择学员</h1></div>
     <div class="um"  @click="dialogFormVisibles = true">添加学员 <img src="./img/images/课时汇总-排课_03.gif" alt=""></div>
     </el-form>
@@ -119,8 +116,8 @@
 
   
 
-<!-- 课表 -->
 
+<!-- 课表 -->
 <el-dialog title="课表" :visible.sync="kebiao" >
   <div class="uy">
  <div class="lxt"><p class="klss">架子鼓基础班2101</p></div>
@@ -140,18 +137,16 @@
 </div>
 
 
+
+
 <div class="yous">
-  <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top:-550px;margin-right:30px;margin-left:200px;">
-    <el-tab-pane label="单次排课" name="first">
-      <el-calendar :range="['2019-03-04', '2019-03-24']">
+  <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top:-650px;margin-right:30px;margin-left:200px;">
+ <el-calendar v-model="value">
 </el-calendar>
-    </el-tab-pane>
-    <el-tab-pane label="批量排课" name="second">批量排课</el-tab-pane>
+
+    
   </el-tabs>
-
 </div>
-
-
 </el-dialog>
 
 
@@ -183,6 +178,9 @@
     <el-button type="primary" @click="dialogFormVisibles = false">确 定</el-button>
   </div>
 </el-dialog>
+
+
+
 
 
     <el-main>
@@ -223,7 +221,7 @@ import router from "../../router";
 export default {
   data() {
     return {
-      
+       value: new Date(),
          activeName: 'second',
         checked: true,
       formLabelWidth: "100%",
