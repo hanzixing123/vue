@@ -168,7 +168,7 @@
                   }"
                   placeholder="结束时间"
                 >
-                </el-time-picker>
+                </el-time-picker>   
               </div>
               <div v-if="form1.radio == 2">
                 <el-form-item label="* 日期选择" class="po"
