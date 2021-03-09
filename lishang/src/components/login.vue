@@ -117,7 +117,7 @@ export default {
             localStorage.setItem("token", success.data);
             router.push({ path: "/banji" });
             //    console.log(success.errCode);
-            //    console.log(123);
+               console.log(123);
           },
           (failure) => {
             that.messtitle = "账号或者密码错误";
