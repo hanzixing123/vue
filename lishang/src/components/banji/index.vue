@@ -14,9 +14,12 @@
       <el-form :model="form">
         <el-form-item label="所选课程" :label-width="formLabelWidth">
           <el-select v-model="form.coursename" placeholder="请选择">
-            <el-option  v-for="(res,index) in  options"  :key="index" :label="res.name" :value="res.name"></el-option>
-            <!-- <el-option label="舞蹈课" value="舞蹈课"></el-option>
-            <el-option label="架子鼓课" value="架子鼓课"></el-option> -->
+            <el-option
+              v-for="(res, index) in options"
+              :key="index"
+              :label="res.name"
+              :value="res.name"
+            ></el-option>
           </el-select>
         </el-form-item>
 
@@ -155,22 +158,74 @@
 
     <!-- 添加学员 -->
     <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
-      <el-form :model="form">
-        <el-form-item label="" :label-width="formLabelWidth">
-          <div style="margin-top: 15px">
-            <el-input v-model="input3" class="input-with-select">
-              <el-select v-model="select" slot="prepend" placeholder="课程">
-                <el-option label="餐厅名" value="1"></el-option>
-                <el-option label="订单号" value="2"></el-option>
-                <el-option label="用户电话" value="3"></el-option>
-              </el-select>
-              <el-button slot="append" icon="el-icon-search"></el-button>
-            </el-input>
-          </div>
-        </el-form-item>
-        <el-form-item label="活动区域" :label-width="formLabelWidth">
-        </el-form-item>
-      </el-form>
+      <h2></h2>
+      <div style="height: 440px">
+        <!-- 左 -->
+        <div style="width: 405px; float: left">
+          <el-input
+            placeholder="请输入内容"
+            v-model="input3"
+            style="width: 400px; margin-bottom: 5px"
+            class="input-with-select"
+          >
+            <el-select v-model="select" slot="prepend" placeholder="请选择">
+              <el-option label="餐厅名" value="1"></el-option>
+              <el-option label="订单号" value="2"></el-option>
+              <el-option label="用户电话" value="3"></el-option>
+            </el-select>
+            <el-button slot="append" icon="el-icon-search"></el-button>
+          </el-input>
+          <ul
+            style="height: 400px; width: 440px; overflow: auto"
+            class="scroll"
+          >
+            <li
+              style="
+                height: 50px;
+                width: 350px;
+                line-height: 50px;
+                border-bottom: 1px solid red;
+              "
+              v-for="(res, index) in xueyuan_list"
+              :key="index"
+            >
+              <input type="checkbox" class="kuang" v-model="xueyuan_list1" :value="res.name" />
+              <span class="rento"></span>
+              {{ res.name }}
+            </li>
+          </ul>
+        </div>
+        <!-- 右 -->
+        <div style="float: left; margin-left: 30px">
+          <span> 已选学员( {{ xueyuan_list1.length }} ) </span>
+          <span class="lj"></span>
+          <span
+            style="
+              position: relative;
+              left: 390px;
+              top: 8px;
+              display: inline-block;
+            ">清空</span>
+
+                 <ul
+            style="height: 400px; width: 500px; overflow: auto"
+            class="scroll"
+          >
+            <li
+              style="
+                height: 50px;
+                width: 350px;
+                line-height: 50px;
+                border-bottom: 1px solid red;
+              "
+             v-for="(res, index) in xueyuan_list1" :key="index"
+            > <span class="rento"></span>
+              <span class="lj1"></span>
+              {{res}}
+            </li>
+          </ul>
+        </div>
+      </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisibles = false">取 消</el-button>
         <el-button type="primary" @click="dialogFormVisibles = false"
@@ -204,7 +259,6 @@
             <button class="paiban" @click="xiu(index)">修改</button>
             <button class="paiban" @click="del(item.id)">删除</button>
           </td>
-        
         </tr>
       </table>
     </el-main>
@@ -217,6 +271,7 @@ export default {
   data() {
     return {
       checked: true,
+      xueyuan_list: [],
       formLabelWidth: "120px",
       list: [],
       dialogFormVisible: false,
@@ -245,12 +300,14 @@ export default {
       },
       input3: "",
       select: "",
-      options:[]
+      options: [],
+      xueyuan_list1: [],
     };
   },
   created() {
     this.hu_list();
     this.kc_list();
+    this.xueyuan__list();
   },
   watch: {
     dialogFormVisible(y, n) {
@@ -277,10 +334,11 @@ export default {
     kc_list() {
       let that = this;
       that.$http.post(
-        "/api/classrooms/list",{page:1},
+        "/api/classrooms/list",
+        { page: 1 },
         (success) => {
           // this.dialogFormVisible = false;
-          this.options=success.data.list;
+          this.options = success.data.list;
           console.log(success.data.list);
           console.log(1234);
           // this.options=success.data.name;
@@ -330,11 +388,100 @@ export default {
       that.form = that.list[index];
       console.log(that.form);
     },
+    xueyuan__list() {
+      let that = this;
+      for (var i = 1; i <= 4; i++) {
+        that.$http.get(
+          "/api/students/list",
+          { page: i },
+          (success) => {
+            for (var i = 0; i < success.data.list.length; i++) {
+              that.xueyuan_list.push(success.data.list[i]);
+            }
+          },
+          (failure) => {
+            console.log("123");
+          }
+        );
+      }
+
+    },
+   
   },
 };
 </script>
 
 <style scoped>
+.scroll {
+  margin: 0 auto;
+  /* border: 1px solid #000; */
+
+  width: 200px;
+
+  height: 300px;
+
+  overflow: auto;
+}
+.scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+/*正常情况下滑块的样式*/
+.scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+/*鼠标悬浮在该类指向的控件上时滑块的样式*/
+.scroll:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+/*鼠标悬浮在滑块上时滑块的样式*/
+.scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+/*正常时候的主干部分*/
+.scroll::-webkit-scrollbar-track {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+  background-color: white;
+}
+/*鼠标悬浮在滚动条上的主干部分*/
+.scroll::-webkit-scrollbar-track:hover {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+.lj {
+  background: url("../../assets/ico.png") 34px 675px;
+  width: 40px;
+  height: 24px;
+  position: relative;
+  top: 10px;
+  left: 400px;
+  display: inline-block;
+}
+.lj1{
+    background: url("../../assets/ico.png") 34px 675px;
+  width: 40px;
+  height: 24px;
+  position: relative;
+  top: 10px;
+  left: 400px;
+  display: inline-block;
+}
+
+.kuang {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  position: relative;
+  top: 4px;
+}
+
 .el-select .el-input {
   width: 130px;
 }
@@ -428,6 +575,16 @@ body {
   top: 2px;
   display: inline-block;
 }
+.rento {
+  background: url("../../assets/ico.png") 0px 420px;
+  width: 30px;
+  height: 30px;
+  padding-right: 5px;
+  position: relative;
+  top: 8px;
+  display: inline-block;
+}
+
 .el-main {
   background-color: #fff;
   color: #333;
