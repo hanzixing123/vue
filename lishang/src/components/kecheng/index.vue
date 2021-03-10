@@ -44,6 +44,17 @@
 
         </tr>
       </table>
+      <div style="margin-left:550px;">
+        <div v-if="counts <=8">
+          <div class="page">
+            共<font class="page-num">{{counts}}</font>条记录
+          </div>
+        </div>
+        <div v-else>
+          <el-pagination class="pagination" :page-size="pagesize" background layout="prev, pager, next" :total="counts" @current-change="changess">
+          </el-pagination>
+        </div>
+      </div>
     </el-main>
 
     <el-dialog :title="title" :visible.sync="dialogFormVisible">
@@ -98,6 +109,9 @@
 export default {
   data() {
     return {
+      counts:0,
+      pagesize:7,
+      pagenum:1,
       title: "",
       list: [],
       input3: "",
@@ -126,12 +140,18 @@ export default {
     formatter(row, column) {
       return row.address;
     },
+    changess(currPage){
+      this.pagenum=currPage;
+      this.klo();
+    },
+
     klo() {
       let that = this;
       that.$http.get(
         "/api/courses/list",
-        { page: 1 },
+        { page: this.pagenum,psize:this.pagesize },
         (success) => {
+           that.counts = success.data.counts
           that.list = success.data.list;
           console.log(success.data.list);
         },

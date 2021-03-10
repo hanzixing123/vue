@@ -102,6 +102,24 @@
           </tr>
         </tbody>
       </table>
+
+
+
+      <div style="margin-left:550px;">
+      <div v-if="counts <= 8">
+        <div class="page">
+          共<font class="page-num">{{ counts }}</font>条记录
+        </div>
+      </div>
+      <div v-else>
+        <el-pagination class="pagenation" :page-size="pagesize" background layout="prev, pager, next" :total="counts" @current-change="handleCurrentChange">
+        </el-pagination>
+      </div>
+    </div>
+
+
+
+
       <!-- 课表 -->
        <el-dialog title="课表" :visible.sync="dialogVisible3" width="70%" :before-close="handleClose">
                 <div class="main">
@@ -615,6 +633,9 @@
 export default {
   data() {
     return {
+        counts:0,
+      pagesize:7,
+      pagenum:1,
       formLabelWidth:'100%',
       pickerOptions: {
         disabledDate(time) {
@@ -812,8 +833,9 @@ export default {
       let that = this;
       that.$http.get(
         "/api/classes/list",
-        { page: 1 },
+        {page:this.pagenum,psize:this.pagesize},
         (success) => {
+          that.counts = success.data.counts
           that.list = success.data.list;
           // console.log(success.data.list);
         },
@@ -1069,6 +1091,10 @@ export default {
         }
       );
     },
+    handleCurrentChange(currPage){
+				this.pagenum = currPage;
+				this.loaddata();
+			},
   },
 };
 </script>

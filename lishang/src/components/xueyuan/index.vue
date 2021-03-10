@@ -85,45 +85,70 @@
 
 
   <!-- 购买课程 -->
- <el-dialog :title="title" :visible.sync="gouke">
-      <el-form :model="form">
-        <el-form-item class="wq" label="合约类型" :label-width="formLabelWidth"><br>
-          <el-radio v-model="radio" label="1">课时卡</el-radio>
-          <el-radio v-model="radio" label="2">时段卡</el-radio>
+  
+<el-dialog :title="title" :visible.sync="gouke">
+      <el-form :model="form2">
+        <el-form-item class="wqs" label="合约类型" :label-width="formLabelWidth"><br>
+          <el-radio v-model="form2.radio" label="1" style="margin-left:-60px;">课时卡</el-radio>
+          <el-radio v-model="form2.radio" label="2">时段卡</el-radio>
         </el-form-item>
-        <el-form-item
-          class="ka"
-          label="收费模式:"
-          :label-width="formLabelWidth"
-        >
-       
+        <el-form-item class="kas" label="* 签约时间:" :label-width="formLabelWidth"><br>
+           <el-input v-model="form.shijian" autocomplete="off" style="margin-left:-80px;"></el-input>
         </el-form-item>
 
-        <el-form-item class="lp" label="单价:" :label-width="formLabelWidth">
-          <el-input
-            v-model="form.price"
-            class="input1"
-            autocomplete="off"
-          ></el-input>
-          <span>元/课时</span>
-        </el-form-item>
+        <el-form-item class="kiu" label="结束时间" :label-width="formLabelWidth"><br>
+            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          </el-form-item>
 
-        <el-form-item
-          class="uy"
-          label="上课模式:"
-          :label-width="formLabelWidth"
-        >
-          <el-radio-group class="kecheng_radio" v-model="form.mode">
-            <el-radio :label="1">一对一</el-radio>
-            <el-radio :label="2">集体班</el-radio>
-          </el-radio-group>
-        </el-form-item>
+        <el-form-item class="kiuhs" label="* 签约课程" :label-width="formLabelWidth"><br>
+           
+        <el-select style="margin-left:-70px;" v-model="value" placeholder="请选择">
+        <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+        </el-option>
+      </el-select>
+      <div class="yuts el-icon-plus"></div>
+          </el-form-item>
+           <el-form-item style="margin-left:280px;margin-top:-100px;width:250px;" label="课时数" :label-width="formLabelWidth"><br>
+            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          </el-form-item>
+          <el-form-item style="margin-left:420px;margin-top:-100px;width:250px;" label="课程单价" :label-width="formLabelWidth"><br>
+            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          </el-form-item>
+          <el-form-item style="margin-left:560px;margin-top:-100px;width:250px;" label="* 课程金额" :label-width="formLabelWidth"><br>
+            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          </el-form-item>
+
+          <el-form-item style="margin-left:-20px;" label="折扣方式" :label-width="formLabelWidth"><br>
+            <el-radio v-model="form2.radios" label="1" style="margin-left:-60px;">直减</el-radio>
+          <el-radio v-model="form2.radios" label="2">折扣</el-radio>
+          </el-form-item>
+
+
+       <el-form-item label="优惠金额" style="width:300px;margin-left:200px;margin-top:-100px;" :label-width="formLabelWidth"><br>
+            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          </el-form-item>
+
+
+        <el-form-item label="备注" style="margin-left:-50px;" :label-width="formLabelWidth"><br>
+                      <el-input style="margin-left:-50px; width:250px;"
+              type="textarea"
+              :rows="2"
+              placeholder="请输入内容"
+              v-model="form2.textarea">
+</el-input>
+          </el-form-item>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" >确定</el-button>
       </div>
     </el-dialog>
+  
+ 
 
 
      
@@ -168,6 +193,9 @@
           >
         </div>
       </el-dialog>
+
+
+
 
       <el-dialog title="放学员名称..." :visible.sync="dialogFormVisible1">
         <el-form :model="form1">
@@ -354,7 +382,7 @@ export default {
       list: [],
       input3: "",
       select: "",
-      radio: "1",
+     
       dialogTableVisible: false,
       dialogTableVisible1: false,
       dialogFormVisible1: false,
@@ -375,7 +403,28 @@ export default {
         desc: "",
       },
       form1: {},
+      form2:{
+         radio: "1",
+         textarea: '',
+      },
       formLabelWidth: "120px",
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        value: ''
     };
   },
   methods: {
@@ -414,6 +463,33 @@ export default {
 };
 </script> 
 <style scoped>
+.el-icon-plus{
+  font-size: 30px;
+  text-align: center;
+  line-height: 40px;
+ 
+}
+.kiuhs{
+  margin-left: -20px;
+  margin-top: 40px;
+ 
+}
+.yuts{
+  width: 40px;
+  height: 40px;
+  background-color: #dfe3ec;
+  border: 1px solid #dfe3ec;
+  position: relative;
+  top: 5px;
+}
+.kas{
+  margin-left: 200px;
+  margin-top: -100px;
+  width: 300px;
+}
+.wqs{
+  margin-left: -20px;
+}
 td {
   width: 20%;
 }
@@ -458,6 +534,12 @@ td:hover .paiban {
   width: 200px;
 }
 
+.kiu{
+  margin-left: 400px;
+  margin-top: -100px;
+  width: 300px;
+  
+}
 .san {
   float: left;
 }
