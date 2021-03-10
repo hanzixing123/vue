@@ -81,7 +81,6 @@ export default {
 </script>
 
 
-<<<<<<< HEAD
 <style>
 .el-icon-circle-plus-outline {
   margin-left: 1330px;
@@ -241,9 +240,6 @@ export default {
   margin-left: 700px;
   margin-top: -50px;
 }
-=======
-<style scoped>
->>>>>>> e34ccca5a70938233b585ef2e79c5de9ef039389
 
 .is-selected {
     color: #1989FA;
