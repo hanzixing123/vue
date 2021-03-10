@@ -61,37 +61,100 @@
           <td>{{ res.num }}</td>
           <td>{{ res.shengyu }}</td>
           <td>
-            <el-button type="primary" @click="goumai = true"
+            <el-button class="paiban" @click="gouke = true"
               >购买课程</el-button
             >
           </td>
         </tr>
       </table>
 
-      <el-pagination
-        style="margin-top: 30px; margin-left: 490px"
-        background
-        layout="prev, pager, next"
-        :total="1000"
-      >
-      </el-pagination>
-      <el-dialog title="购课" :visible.sync="goumai">
-        <div class="one">
-          <p style="color: #000">合约类型</p>
-          <el-radio v-model="radio" label="1">课时卡</el-radio>
-          <el-radio v-model="radio" label="2">时段卡</el-radio>
+      <div style="margin-left:550px;">
+      <div v-if="counts <= 8">
+        <div class="page">
+          共<font class="page-num">{{ counts }}</font>条记录
         </div>
-        <div class="two">
-          <p style="color: #000;width:80px;">签约日期</p>
-          <el-date-picker v-model="value1" type="date" placeholder="选择日期">
-          </el-date-picker>
+      </div>
+      <div v-else>
+        <el-pagination class="pagenation" :page-size="pagesize" background layout="prev, pager, next" :total="counts" @current-change="handleCurrentChange">
+        </el-pagination>
+      </div>
+    </div>
 
-          <span style="width:80px">结束日期</span>
-          <el-date-picker v-model="value1" type="date" placeholder="选择日期">
-          </el-date-picker>
-        </div>
 
-      </el-dialog>
+
+
+
+  <!-- 购买课程 -->
+  
+<el-dialog :title="title" :visible.sync="gouke">
+      <el-form :model="form2">
+        <el-form-item class="wqs" label="合约类型" :label-width="formLabelWidth"><br>
+          <el-radio v-model="form2.radio" label="1" style="margin-left:-60px;">课时卡</el-radio>
+          <el-radio v-model="form2.radio" label="2">时段卡</el-radio>
+        </el-form-item>
+        <el-form-item class="kas" label="* 签约时间:" :label-width="formLabelWidth"><br>
+           <el-input v-model="form.shijian" autocomplete="off" style="margin-left:-80px;"></el-input>
+        </el-form-item>
+
+        <el-form-item class="kiu" label="结束时间" :label-width="formLabelWidth"><br>
+            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          </el-form-item>
+
+        <el-form-item class="kiuhs" label="* 签约课程" :label-width="formLabelWidth"><br>
+           
+        <el-select style="margin-left:-70px;" v-model="value" placeholder="请选择">
+        <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+        </el-option>
+      </el-select>
+      <div class="yuts el-icon-plus"></div>
+          </el-form-item>
+           <el-form-item style="margin-left:280px;margin-top:-100px;width:250px;" label="课时数" :label-width="formLabelWidth"><br>
+            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          </el-form-item>
+          <el-form-item style="margin-left:420px;margin-top:-100px;width:250px;" label="课程单价" :label-width="formLabelWidth"><br>
+            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          </el-form-item>
+          <el-form-item style="margin-left:560px;margin-top:-100px;width:250px;" label="* 课程金额" :label-width="formLabelWidth"><br>
+            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          </el-form-item>
+
+          <el-form-item style="margin-left:-20px;" label="折扣方式" :label-width="formLabelWidth"><br>
+            <el-radio v-model="form2.radios" label="1" style="margin-left:-60px;">直减</el-radio>
+          <el-radio v-model="form2.radios" label="2">折扣</el-radio>
+          </el-form-item>
+
+
+       <el-form-item label="优惠金额" style="width:300px;margin-left:200px;margin-top:-100px;" :label-width="formLabelWidth"><br>
+            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          </el-form-item>
+
+
+        <el-form-item label="备注" style="margin-left:-50px;" :label-width="formLabelWidth"><br>
+                      <el-input style="margin-left:-50px; width:250px;"
+              type="textarea"
+              :rows="2"
+              placeholder="请输入内容"
+              v-model="form2.textarea">
+</el-input>
+          </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" >确定</el-button>
+      </div>
+    </el-dialog>
+  
+ 
+
+
+     
+
+     <!-- 添加学员 -->
+
       <el-dialog title="添加学员" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -130,6 +193,9 @@
           >
         </div>
       </el-dialog>
+
+
+
 
       <el-dialog title="放学员名称..." :visible.sync="dialogFormVisible1">
         <el-form :model="form1">
@@ -304,6 +370,11 @@ export default {
 
   data() {
     return {
+      title: "购课",
+      counts:0,
+      pagesize:7,
+      pagenum:1,
+      value:"",
       selectList: [],
       activeName: "first", //一对一排课 选择
       time: "",
@@ -311,12 +382,12 @@ export default {
       list: [],
       input3: "",
       select: "",
-      radio: "1",
+     
       dialogTableVisible: false,
       dialogTableVisible1: false,
       dialogFormVisible1: false,
       dialogFormVisible: false,
-      goumai: false,
+      gouke: false,
       form: {
         id: "", //学员编号
         name: "", //名称
@@ -332,7 +403,28 @@ export default {
         desc: "",
       },
       form1: {},
+      form2:{
+         radio: "1",
+         textarea: '',
+      },
       formLabelWidth: "120px",
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        value: ''
     };
   },
   methods: {
@@ -342,21 +434,24 @@ export default {
     },
     xuyuan_list() {
       let that = this;
-      for (var i = 1; i <= 4; i++) {
         that.$http.get(
           "/api/students/list",
-          { page: i },
+          { page:this.pagenum,psize:this.pagesize },
           (success) => {
-            for (var i = 0; i < success.data.list.length; i++) {
-              that.list.push(success.data.list[i]);
-            }
+            that.counts = success.data.counts
+            that.list=success.data.list
           },
           (failure) => {
-            console.log("123");
+            console.log(failure);
           }
         );
-      }
+     
     },
+    handleCurrentChange(currPage){
+				this.pagenum = currPage;
+				this.xuyuan_list();
+			},
+
     checkAll() {
       if (this.selectList.length > 0) {
         this.selectList = [];
@@ -368,6 +463,33 @@ export default {
 };
 </script> 
 <style scoped>
+.el-icon-plus{
+  font-size: 30px;
+  text-align: center;
+  line-height: 40px;
+ 
+}
+.kiuhs{
+  margin-left: -20px;
+  margin-top: 40px;
+ 
+}
+.yuts{
+  width: 40px;
+  height: 40px;
+  background-color: #dfe3ec;
+  border: 1px solid #dfe3ec;
+  position: relative;
+  top: 5px;
+}
+.kas{
+  margin-left: 200px;
+  margin-top: -100px;
+  width: 300px;
+}
+.wqs{
+  margin-left: -20px;
+}
 td {
   width: 20%;
 }
@@ -379,6 +501,18 @@ td {
   /* float: left; */
   font-size: 14px;
   display: inline-block;
+}
+
+.paiban {
+  color: blue;
+  border: none;
+  background-color: #fff;
+  display: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+td:hover .paiban {
+  display: inline;
 }
 
 .two {
@@ -400,6 +534,12 @@ td {
   width: 200px;
 }
 
+.kiu{
+  margin-left: 400px;
+  margin-top: -100px;
+  width: 300px;
+  
+}
 .san {
   float: left;
 }

@@ -4,10 +4,6 @@ import HelloWorld from '@/components/HelloWorld'
 import banji from '@/components/banji/index'
 Vue.use(Router)
 
-const originalPush = Router.prototype.push
-Router.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-}
 export default new Router({
   routes: [
     {
@@ -22,7 +18,6 @@ export default new Router({
           // name:"banji",
           component: () => import ("@/components/banji/index.vue")
         },
-     
         {
           path:"/kecheng",
           // name:"kecheng",
