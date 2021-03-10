@@ -47,7 +47,7 @@
       <div style="margin-left:550px;">
         <div v-if="counts <=8">
           <div class="page">
-            共<font class="page-num">{{counts}}</font>条记录
+            共<font class="page-num">{{counts}}</font>条记录 
           </div>
         </div>
         <div v-else>
