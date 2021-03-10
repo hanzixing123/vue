@@ -95,7 +95,8 @@ export default {
           },
           checked: {
             backgroundPosition: "31px -1190px",
-          },
+
+},
           unchecked: {
             backgroundPosition: "-112px -1190px",
           },

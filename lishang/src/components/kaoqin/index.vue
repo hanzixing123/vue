@@ -30,11 +30,10 @@
     </div>
 
     <p class="rr">今日课表</p>
-
+    
     <div class="hht">
       <p class="oos">
         架子鼓基础班2101
-
         <i class="el-icon-reading"> 架子鼓课</i>
         <i class="el-icon-time"> 13:30-14:15</i>
         <i class="el-icon-s-custom"> 明明</i>
