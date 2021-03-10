@@ -455,6 +455,10 @@ export default {
 </script>
 
 <style scoped>
+.yous{
+  margin-left: 220px;
+  margin-top: 60px;
+}
 .scroll {
   margin: 0 auto;
   /* border: 1px solid #000; */
