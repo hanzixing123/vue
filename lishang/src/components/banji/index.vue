@@ -7,10 +7,8 @@
           <span>删除</span>
         </div>
         <el-button type="text" @click="dialogFormVisible = true" class="right-two">
-          <!-- <img src="@/assets/007.png" /> -->
           <span>添加班级</span>
         </el-button>
-        <!-- Form -->
         <el-dialog :title="title" :visible.sync="dialogFormVisible">
           <el-form v-model="form">
             <el-form-item label="所选课程">
@@ -890,7 +888,7 @@ export default {
     },
     xueyuan__list() {
       let that = this;
-      for (var i = 1; i <= 4; i++) {
+      for (var i = 1; i <= 5; i++) {
         that.$http.get(
           "/api/students/list",
           { page: i },
@@ -968,9 +966,9 @@ export default {
       });
       console.log(11);
     },
-    //点击减号给给ind这个组的list，减少一个list[]模板
+    //点击减号给给ind这个组的list 减少一个list[] 模板
     deltime(ind, index) {
-      this.weekArray[ind].list.splice(index, 1);
+      this.weekArray[ind].list.splice(index,-1);
     },
 
     //点击星期选中(取消选中)
