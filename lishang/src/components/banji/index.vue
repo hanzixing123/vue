@@ -671,7 +671,7 @@ export default {
 }
 
 .el-select .el-input {
-  width: 130px;
+  width: 130px; 
 }
 
 .uy {
