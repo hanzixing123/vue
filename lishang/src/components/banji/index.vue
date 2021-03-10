@@ -327,7 +327,7 @@
           <ul
             style="height: 400px; width: 100%; overflow: auto"
             class="scroll"
-          >
+          > 
             <li
               style="
                 height: 50px;
@@ -580,7 +580,7 @@ export default {
             }
           },
           (failure) => {       
-            
+
             console.log("123");
           }
         );
@@ -593,6 +593,10 @@ export default {
 <style scoped>
 .tab td {
   width: 150px;
+  }
+.yous{
+  margin-left: 220px;
+  margin-top: 60px;
 }
 .scroll {
   margin: 0 auto;

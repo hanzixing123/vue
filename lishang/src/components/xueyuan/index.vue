@@ -43,6 +43,7 @@
           <td>所选课程</td>
           <td>购买数量</td>
           <td>剩余课程</td>
+          <td>操作</td>
         </tr>
         <tr v-for="(res, index) in list" :key="index">
           <td>
@@ -56,13 +57,20 @@
           <td>{{ res.shengyu }}</td>
         </tr>
       </table>
-      <el-pagination
-        style="margin-top: 30px; margin-left: 490px"
-        background
-        layout="prev, pager, next"
-        :total="1000"
-      >
-      </el-pagination>
+
+        <div style="margin-left:550px;">
+      <div v-if="counts <= 8">
+        <div class="page">
+          共<font class="page-num">{{ counts }}</font>条记录
+        </div>
+      </div>
+      <div v-else>
+        <el-pagination class="pagenation" :page-size="pagesize" background layout="prev, pager, next" :total="counts" @current-change="handleCurrentChange">
+        </el-pagination>
+      </div>
+    </div>
+
+
       <el-dialog title="添加学员" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -276,6 +284,9 @@ export default {
 
   data() {
     return {
+      counts:0,
+      pagesize:7,
+      pagenum:1,
       selectList:[],
       activeName: "first", //一对一排课 选择
       time: "",
@@ -307,37 +318,40 @@ export default {
     };
   },
   methods: {
+    handleCurrentChange(currPage){
+				this.pagenum = currPage;
+				this.xuyuan_list();
+      },
+
     xuan() {},
     handleClick(tab, event) {
       console.log(tab, event);
     },
     xuyuan_list() {
       let that = this;
-      for (var i = 1; i <= 4; i++) {
         that.$http.get(
           "/api/students/list",
-          { page: i },
+          { page: this.pagenum,psize:this.pagesize },
           (success) => {
-            for (var i = 0; i < success.data.list.length; i++) {
-              that.list.push(success.data.list[i]);
-            }
+              that.counts = success.data.counts
+              that.list=success.data.list
           },
           (failure) => {
-            console.log("123");
+            console.log(failure);
           }
         );
-      }
-    },
-    checkAll(){
+      },
+        checkAll(){
         
         if(this.selectList.length>0){
             this.selectList = []
         }else{
           this.selectList = this.list.slice(0)
         }
-    }
-  },
-};
+    },
+    },
+  
+  }
 </script> 
 <style scoped>
 .xueyuan_xialai {
@@ -350,6 +364,7 @@ export default {
   /* width: 1200px; */
   /* width:400px; */
   width: 100%;
+ 
 }
 .xiala .red > input {
   width: 200px;
