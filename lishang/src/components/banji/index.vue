@@ -1,286 +1,504 @@
 <template>
-  <div style="width: 100%">
-    <el-footer>
-      <button><span /> 删 除</button>
-      <button @click="dialogFormVisible = true"><span /> 添加班级</button>
-      <div class="banji-option">
-        <span class="btn-op">课程</span>
-        <span class="btn-img"></span>
-      </div>
-    </el-footer>
-
-    <!-- 弹框 -->
-    <el-dialog :title="title" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="所选课程" :label-width="formLabelWidth">
-          <el-select v-model="form.coursename" placeholder="请选择">
-            <el-option
-              v-for="(res, index) in options"
-              :key="index"
-              :label="res.name"
-              :value="res.name"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="班级名称:" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
-        </el-form-item>
-
-        <el-form-item label="计划课时" :label-width="formLabelWidth">
-          <el-input v-model="form.coursecounts" placeholder="0"></el-input>
-          <span>课时</span>
-        </el-form-item>
-
-        <div class="block">
-          <span class="demonstration">开班日期</span>
-          <el-date-picker
-            v-model="form.startdate"
-            type="date"
-            placeholder="选择日期"
-            value-format="yyyy-MM-dd HH:mm:ss"
-          >
-          </el-date-picker>
+  <el-container>
+    <el-main class="ac">
+      <div class="right-a">
+        <div class="right-one">
+          <img src="@/components/banji/img/images/006.png" />
+          <span>删除</span>
         </div>
-        <div class="block">
-          <span class="demonstration">结束日期</span>
-          <el-date-picker
-            v-model="form.enddate"
-            type="date"
-            placeholder="选择日期"
-            value-format="yyyy-MM-dd HH:mm:ss"
-          >
-          </el-date-picker>
-        </div>
-      </el-form>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="kecheng_add()">确定</el-button>
-      </div>
-    </el-dialog>
-
-    <!-- 班级排课 -->
-
-    <div class="kls">
-      <el-dialog title="排课" :visible.sync="paiKe">
-        <el-form :model="forms">
-          <div>
-            <table>
-              <tr class="tab">
-                <td>主讲老师 助教老师</td>
-                <td>助教老师</td>
-                <td>教室</td>
-                <td>单节课扣学员课时</td>
-              </tr>
-              <tr>
-                <td>
-                  <select
-                    name=""
-                    v-model="form2.jiaoshi"
-                    
-                    style="width: 100px; height: 40px"
-                  >
-                    <option value="请选择">请选择</option>
-                  </select>
-                </td>
-                <td>
-                  <select
-                    v-model="form2.zhujiao"
-                   
-                    style="width: 100px; height: 40px"
-                  >
-                    <option value="请选择">请选择</option>
-                  </select>
-                </td>
-                <td>
-                  <select
-                    v-model="form2.jiaoshi"
-                    style="width: 100px; height: 40px"
-                  >
-                    <option value="请选择">请选择</option>
-                  </select>
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    v-model="form2.keshi"
-                    style="width: 100px; height: 30px"
-                  />
-                </td>
-              </tr>
-            </table>
+        <el-button type="text" @click="dialogFormVisible = true" class="right-two">
+          <!-- <img src="@/assets/007.png" /> -->
+          <span>添加班级</span>
+        </el-button>
+        <!-- Form -->
+        <el-dialog :title="title" :visible.sync="dialogFormVisible">
+          <el-form v-model="form">
+            <el-form-item label="所选课程">
+              <el-select v-model="form.coursename" placeholder="请选择">
+                <el-option v-for="(item,indexs) in liet" :key="indexs" :label="item.name" :value="item.id"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="班级名称">
+              <el-input v-model="form.name" autocomplete="off" class="inputs"></el-input>
+            </el-form-item>
+            <el-form-item label="计划课时">
+              <el-input
+                v-model="form.coursecounts"
+                autocomplete="off"
+                class="inputs"
+                placeholder="0"
+              ></el-input>
+              <span class="inputs-a">课时</span>
+            </el-form-item>
+            <div class="block">
+              <span class="demonstration">开班日期</span>
+              <el-date-picker
+                v-model="form.startdate"
+                value-format="yyyy-MM-dd"
+                align="right"
+                type="date"
+                placeholder="选择日期"
+                :picker-options="pickerOptions"
+              ></el-date-picker>
+            </div>
+            <div class="block">
+              <span class="demonstration">结班日期</span>
+              <el-date-picker
+                v-model="form.enddate"
+                value-format="yyyy-MM-dd"
+                align="right"
+                type="date"
+                placeholder="选择日期"
+                :picker-options="pickerOptionss"
+              ></el-date-picker>
+            </div>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="add">确 定</el-button>
           </div>
+        </el-dialog>
+        <div class="right-three">
+          <div style="margin-top: 15px;">
+            <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
+              <el-select v-model="select" slot="prepend" placeholder="课程" >
+                <el-option v-for="(item,indexs) in liet" :key="indexs" :label="item.name" :value="item.id"></el-option>
+              </el-select>
+              <el-button slot="append" icon="el-icon-search"></el-button>
+            </el-input>
+          </div>
+        </div>
+      </div>
+      <table class="tab" id="datalist">
+        <tbody>
+          <tr>
+            <th class="textleft" width="300px">班级名称</th>
+            <th>课程</th>
+            <th>老師</th>
+            <th>人数</th>
+            <th>计划课时</th>
+            <th>已排课时</th>
+            <th>已上课时</th>
+            <th>操作</th>
+          </tr>
+          <tr class="edit-tr" v-for="(item,index) in list" :key="index">
+            <td class="textleft" style="position: relative">
+              <img src="@/components/banji/img/09.png" />
+              {{item.name}}
+              <input type="hidden" value="item.id">
+            <td>{{item.coursename}}</td>
+            <td>{{item.teacherslist}}</td>
+            <td>{{item.students}}</td>
+            <td>{{item.coursecounts}}</td>
+            <td>{{item.schcourses}}</td>
+            <td>{{item.endcourses}}</td>
+            <td>
+              <el-button type="primary" @click="dialogFormVisible1 = true">排课</el-button>
+              <el-button type="info" @click="dialogVisible3 = true">课表</el-button>
+              <!-- <el-button type="success" @click="dialogVisible = true">单次排课</el-button> -->
+              <el-button type="danger" @click="del(item.id)">删除</el-button>
+              <el-button type="warning" @click="uplad(index)">修改</el-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- 课表 -->
+       <el-dialog title="课表" :visible.sync="dialogVisible3" width="70%" :before-close="handleClose">
+                <div class="main">
+                  <div class="main-left">
+                  <div class="main-left-top">
+                        <p class="top-t">架子鼓基础班2101</p>
+                          <li><b>课程：</b>架子鼓课</li>
+                          <li><b>老师：</b>希希、老师傅</li>
+                          <li><b>教室：</b></li>
+                          <li><b>人数：</b>2/30</li>
+                          <li><el-progress :text-inside="true" :stroke-width="24" :percentage="50" status="success"></el-progress></li>
+                          <li> <b class="yi">已上2节课</b> <b>已排4节课</b> </li>
+                  </div>
+                   <div class="main-left-bottom">
+                      <p class="top-b">班级学员<b>(2)</b> <i class="el-icon-s-custom"></i> </p>
+                       <table style="height:100px;">
+                          <tr>
+                            <td rowspan="2">  <i class="el-icon-dish">  </i></td>
+                            <td class="dd">李四</td>
+                          </tr>
+                          <tr>
+                            <td>已排3节，已上1节</td>
+                          </tr>
+                          <tr>
+                            <td rowspan="2">  <i class="el-icon-dish">  </i></td>
+                            <td class="dd">李四</td>
+                          </tr>
+                          <tr>
+                            <td>已排本班课节3，其中上了1节</td>
+                          </tr>
+                       </table>
+                  </div> 
+                  </div>
+                  <div class="main-right">
+                      <li class="main-right-p">
+                        <el-button type="text" class="uu">单次排课</el-button> 
+                        <el-button type="text">批量排课</el-button>
+                      </li>
 
-          <el-tabs v-model="paike" @tab-click="handleClick">
-            <el-tab-pane label="单次排课" name="second">
-              <!-- 日期选择 -->
-              <div>
-                <span>开学时间</span>
-                <el-date-picker
-                  v-model="form2.ks_rq"
-                  type="datetime"
-                  placeholder="选择日期时间"
-                  style="width: 240px"
-                >
-                </el-date-picker>
-              </div>
-              <!-- 日期选择 -->
+                      <div class="main-right-main">
+                        <el-calendar :range="['2019-03-01', '2019-03-31']">
+                       </el-calendar>
+                      </div>
+                      <div class="ke">
+                        <li>架子鼓课</li><li>09:01在</li>
+                      </div>
+                  </div>
+                </div>
+                <span slot="footer" class="dialog-footer">
+                  <el-button @click="dialogVisible3 = false">取 消</el-button>
+                  <el-button type="primary" @click="dialogVisible3= false">确 定</el-button>
+                </span>
+      </el-dialog>
 
-              <div style="margin-top: 20px">
-                <span>上课时间</span>
-                <el-time-picker
-                  style="width: 240px"
-                  v-model="form2.time1"
-                  :picker-options="{
-                    selectableRange: '18:30:00 - 20:30:00',
-                  }"
-                  placeholder="开始时间"
-                >
-                </el-time-picker>
-                <el-time-picker
-                  style="width: 240px"
-                  arrow-control
-                  v-model="form2.time2"
-                  :picker-options="{
-                    selectableRange: '18:30:00 - 20:30:00',
-                  }"
-                  placeholder="结束时间"
-                >
-                </el-time-picker>
+      <!-- 排课 -->
+      <el-dialog title1="排课" :visible.sync="dialogFormVisible1">
+        <div class="group">
+          <tr class="top">
+            <td>
+              <span>主讲老师</span>
+              <span
+                style="float: right;  cursor: pointer;margin-left:10px;"
+                @click="addTeachingAssistants"
+                :style="isAddAssistant == true ? 'color:#3e9eff' : ''"
+                >添加助教</span
+              >
+            </td>
+            <td
+              :class="
+                isAddAssistant == true ? `clickaddHelpteacher` : `addchange`
+              "
+            >
+              助教老师
+            </td>
+            <td>教室</td>
+            <td><font style="color: red">*</font>单节课扣学员课时</td>
+          </tr>
+          <tr class="top">
+            <td>
+              <!-- 主讲老师 -->
+              <el-select v-model="scheduleList.teacherid">
+                <el-option
+                  v-for="(item, index) in teacherList"
+                  :key="index.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </td>
+            <td
+              :class="
+                isAddAssistant == true ? `clickaddHelpteacher` : `addchange`
+              "
+            >
+              <!-- 助教老师 -->
+              <el-select v-model="scheduleList.assistant">
+                <el-option
+                  v-for="item in teacherAssistantsList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </td>
+            <td>
+              <!-- 教室列表 -->
+              <el-select v-model="scheduleList.classrooms">
+                <el-option
+                  v-for="item in classroomList"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.name"
+                ></el-option>
+              </el-select>
+            </td>
+            <td>
+              <el-input v-model="scheduleList.pricecounts"></el-input>
+            </td>
+          </tr>
+        </div>
+
+        <!-- tab选项卡 -->
+        <div class="group">
+          <tr>
+            <div class="middle">
+              <td class="tabTitle">
+                <template v-for="(item, index) in tabList">
+                  <span
+                    :key="index.id"
+                    @click="changetab(index)"
+                    :class="{ changetab: checktab == index }"
+                    >{{ item.name }}</span
+                  >
+                </template>
+              </td>
+            </div>
+          </tr>
+          <!-- 单次排课 -->
+          <div v-if="isschedule == 0">
+            <tr>
+              <div class="middle center">
+                <td>开课日期</td>
               </div>
-            </el-tab-pane>
-            <el-tab-pane label="批量排课" name="first">
-              <div>
-                <span>开学时间</span>
-                <el-date-picker
-                  type="datetime"
-                  v-model="form2.ks_rq"
-                  placeholder="选择日期时间"
-                  style="width: 240px"
-                >
-                </el-date-picker>
-                结束方式
-                <el-radio v-model="form2.radio" label="1">按课节</el-radio>
-                <el-radio v-model="form2.radio" label="2">按日期</el-radio>
-                排课总量
-                <input type="text" style="width: 100px; height: 30px" />
+            </tr>
+            <tr>
+              <div class="middle checkcontont">
+                <td>
+                  <el-date-picker
+                    v-model="scheduleList.begindate"
+                    type="date"
+                    placeholder="选择日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </td>
               </div>
-              <div v-if="form2.radio == 1" style="margin-top: 30px">
-                <span>上课时间</span>
-                <el-time-picker
-                  style="width: 240px"
-                  v-model="form2.time1"
-                  :picker-options="{
-                    selectableRange: '18:30:00 - 20:30:00',
-                  }"
-                  placeholder="起始时间"
-                >
-                </el-time-picker>
-                <el-time-picker
-                  style="width: 240px"
-                  arrow-control
-                  v-model="form2.time2"
-                  :picker-options="{
-                    selectableRange: '18:30:00 - 20:30:00',
-                  }"
-                  placeholder="结束时间"
-                >
-                </el-time-picker>
+            </tr>
+            <tr>
+              <td>上课时间</td>
+            </tr>
+            <template v-for="(item, index) in this.scheduleList.weektime">
+              <tr :key="index.id">
+                <td class="time">
+                  <el-time-select
+                    placeholder="起始时间"
+                    v-model="item.begintime"
+                    format="yyyy-MM-dd"
+                    :picker-options="{
+                      start: '08:30',
+                      step: '00:15',
+                      end: '18:30',
+                    }"
+                  >
+                  </el-time-select>
+                  -
+                  <el-time-select
+                    placeholder="结束时间"
+                    v-model="item.endtime"
+                    :picker-options="{
+                      start: '08:30',
+                      step: '00:15',
+                      end: '18:30',
+                      minTime: startTime,
+                    }"
+                  >
+                  </el-time-select>
+                  <template v-if="index == 0">
+                    <span
+                      class="el-icon-plus create"
+                      @click="addOnceTime"
+                    ></span>
+                  </template>
+                  <template v-else>
+                    <span
+                      class="el-icon-minus create"
+                      @click="delOnceTime(index)"
+                    ></span>
+                  </template>
+                </td>
+              </tr>
+            </template>
+          </div>
+          <!-- 批量排课 -->
+          <div v-else>
+            <tr>
+              <div class="middle center">
+                <td>开课日期</td>
+                <td>结束日期</td>
+                <td>
+                  {{ scheduleList.jsfs == "按课节" ? "排课总数" : "结束课程" }}
+                </td>
               </div>
-              <div v-if="form2.radio == 2">
-                <el-form-item label="* 日期选择" class="po"
-                  ><br />
-                  <el-checkbox v-model="checked">星期一</el-checkbox>
-                  <el-checkbox>星期二</el-checkbox>
-                  <el-checkbox>星期三</el-checkbox>
-                  <el-checkbox>星期四</el-checkbox>
-                  <el-checkbox>星期五</el-checkbox>
-                  <el-checkbox>星期六</el-checkbox>
-                  <el-checkbox>星期日</el-checkbox>
-                </el-form-item>
+            </tr>
+            <tr>
+              <div class="middle checkcontont">
+                <td>
+                  <el-date-picker
+                    v-model="scheduleList.begindate"
+                    type="date"
+                    placeholder="选择日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </td>
+                <td>
+                  <el-radio-group
+                    v-model="scheduleList.jsfs"
+                    @change="changejsfs"
+                    class="font"
+                  >
+                    <el-radio :label="'按课节'"></el-radio>
+                    <el-radio :label="'按日期'"></el-radio>
+                  </el-radio-group>
+                </td>
+                <td>
+                  <!-- 按课节 -->
+                  <div v-if="scheduleList.jsfs == '按课节'">
+                    <el-input v-model="scheduleList.coursescount"></el-input>
+                  </div>
+                  <!-- 按日期 -->
+                  <div v-else>
+                    <el-date-picker
+                      v-model="scheduleList.enddate"
+                      type="date"
+                      placeholder="选择日期"
+                      value-format="yyyy-MM-dd"
+                    >
+                    </el-date-picker>
+                  </div>
+                </td>
               </div>
-            </el-tab-pane>
-          </el-tabs>
-          <div><h1>选择学员</h1></div>
+            </tr>
+            <tr>
+              <td>
+                <font style="color: red">*</font
+                >{{ scheduleList.jsfs == "按课节" ? "上课时间" : "星期选择" }}
+              </td>
+            </tr>
+            <tr>
+              <!-- 按课节(选择时间) -->
+              <div v-if="scheduleList.jsfs == '按课节'">
+                <template v-for="(item, index) in this.scheduleList.weektime">
+                  <div :key="index.id">
+                    <td class="time">
+                      <el-time-select
+                        placeholder="起始时间"
+                        v-model="item.begintime"
+                        :picker-options="{
+                          start: '08:30',
+                          step: '00:15',
+                          end: '18:30',
+                        }"
+                      >
+                      </el-time-select>
+                      -
+                      <el-time-select
+                        placeholder="结束时间"
+                        v-model="item.endtime"
+                        :picker-options="{
+                          start: '08:30',
+                          step: '00:15',
+                          end: '18:30',
+                          minTime: startTime,
+                        }"
+                      >
+                      </el-time-select>
+                      <template v-if="index == 0">
+                        <span
+                          class="el-icon-plus create"
+                          @click="addOnceTime"
+                        ></span>
+                      </template>
+                      <template v-else>
+                        <span
+                          class="el-icon-minus create"
+                          @click="delOnceTime(index)"
+                        ></span>
+                      </template>
+                    </td>
+                  </div>
+                </template>
+              </div>
+              <!-- 按星期(选择时间) -->
+              <div class="week" v-else>
+                <div class="check-time">
+                  <el-checkbox
+                    v-for="(item, index) in weekArray"
+                    :key="index.id"
+                    v-model="item.isCheck"
+                    :label="'星期' + item.name"
+                    @change="changeWeek(index)"
+                  >
+                  </el-checkbox>
+                </div>
+
+                <template v-for="(w, ind) in weekArray">
+                  <div v-if="w.list.length > 0" :key="w.id" class="every-time">
+                    <span class="zoutime">周{{ w.name }}时间</span>
+                    <div
+                      class="week-time"
+                      v-for="(item, index) in w.list"
+                      :key="index.id"
+                    >
+                      <el-time-select
+                        placeholder="起始时间"
+                        class="weekTime"
+                        v-model="item.begintime"
+                        :picker-options="{
+                          start: '08:30',
+                          step: '00:15',
+                          end: '18:30',
+                        }"
+                      >
+                      </el-time-select>
+                      <el-input
+                        class="weekTime"
+                        placeholder="时长(45分钟)"
+                      ></el-input>
+                      <el-time-select
+                        placeholder="结束时间"
+                        class="weekTime"
+                        v-model="item.endtime"
+                        :picker-options="{
+                          start: '08:30',
+                          step: '00:15',
+                          end: '18:30',
+                          minTime: startTime,
+                        }"
+                      >
+                      </el-time-select>
+                      <template v-if="index == 0">
+                        <span
+                          @click="addtime(ind)"
+                          class="el-icon-plus create"
+                        ></span>
+                      </template>
+                      <template v-else>
+                        <span
+                          @click="deltime(ind, index)"
+                          class="el-icon-minus create"
+                        ></span>
+                      </template>
+                    </div>
+                  </div>
+                </template>
+                <div></div>
+              </div>
+            </tr>
+          </div>
+        </div>
+        <div>
+            <h1>选择学员({{xueyuan_list1.length}})</h1>
+           
+          
+         <el-form>
           <div class="um" @click="dialogFormVisibles = true">
-            添加学员 <img src="./img/images/课时汇总-排课_03.gif" alt="" />
+             <img src="./img/11.png" style="margin-left:5px;cursor: pointer;" alt="">
+            添加学员
           </div>
         </el-form>
+        </div>
+         <div style="width:100%;height:100px;">
+             <ul style="margin-top:20px;">
+            <li v-for="(item,index) in xueyuan_list1" :key="index" style="float:left;margin-right:10px;">
+              <img src="./img/10.png" width="30px" height="30px" alt="">
+              {{item}} 
+              <!-- </li>
+              </ul> -->
+              
+            </li>
+          </ul>
+        </div>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="paiKe = false"> 保存 </el-button>
+          <el-button type="primary" @click="dialogFormVisible1 = false">保存</el-button>
         </div>
       </el-dialog>
-    </div>
-
-    <!-- 课表 -->
-    <el-dialog title="课表" :visible.sync="kebiao">
-      <div class="uy">
-        <div class="lxt"><p class="klss">架子鼓基础班2101</p></div>
-        <div class="yut">
-          课程: 架子鼓课<br />
-          <p class="ytr">老师: 希希,老师傅</p>
-          <p>教室:</p>
-          <p>人数: 2/30</p>
-          <el-progress
-            :text-inside="true"
-            style="width: 75%"
-            :stroke-width="20"
-            :percentage="50"
-            status="exception"
-          ></el-progress>
-          <p>
-            以上2节课&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;已排4节课
-          </p>
-        </div>
-
-        <div class="zuoxai">
-          <h1 style="margin-top: 50px; margin-left: 20px; padding-top: 20px">
-            班级学员(2)
-            <p style="margin-left: 225px" class="el-icon-user-solid"></p>
-          </h1>
-
-          <div>
-            <img
-              src="../../assets/images/keshi-02_03.gif"
-              alt=""
-              style="margin-left: 20px"
-            />
-            <p style="margin-top: -50px; margin-left: 70px">
-              李四<br />
-              已排3节, 已上1节
-            </p>
-          </div>
-          <div>
-            <img
-              src="../../assets/images/keshi-02_03.gif"
-              alt=""
-              style="margin-left: 20px; margin-top: 20px"
-            />
-            <p style="margin-top: -50px; margin-left: 70px">
-              李四<br />
-              已排本班课节3, 其中上了1节
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="yous">
-        <el-tabs
-          v-model="activeName"
-          @tab-click="handleClick"
-          style="margin-top: -550px; margin-right: 30px; margin-left: 200px"
-        >
-          <el-tab-pane label="单次排课" name="first">
-            <el-calendar :range="['2019-03-04', '2019-03-24']"> </el-calendar>
-          </el-tab-pane>
-          <el-tab-pane label="批量排课" name="second">批量排课</el-tab-pane>
-        </el-tabs>
-      </div>
-    </el-dialog>
-
-    <!-- 添加学员 -->
-    <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
+           <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
       <el-form :model="form">
         <el-form-item label="" :label-width="formLabelWidth">
           <div style="margin-top: 15px">
@@ -388,185 +606,287 @@
       </div>
     </el-dialog>
 
-    <el-main>
-      <table class="banji-list" border="0" cellspacing="0" cellpadding="0">
-        <tr class="banji-title">
-          <td>班级名称</td>
-          <td>课程</td>
-          <td>老师</td>
-          <td>人数</td>
-          <td>计划课时</td>
-          <td>已排课时</td>
-          <td>已上课时</td>
-          <td>操作</td>
-        </tr>
-        <tr v-for="(item, index) in list" :key="index">
-          <td><span class="tu-img" />{{ item.name }}</td>
-          <td>{{ item.coursename }}</td>
-          <td>{{ item.laoshi }}</td>
-          <td>{{ item.students }}</td>
-          <td>{{ item.coursecounts }}</td>
-          <td>{{ item.enddate }}</td>
-          <td>{{ item.startdate }}</td>
-          <td>
-            <button class="paiban" @click="paiKe = true">排课</button>
-            <button class="paiban" @click="kebiao = true">课表</button>
-            <button class="paiban" @click="xiu(index)">修改</button>
-            <button class="paiban" @click="del(item.id)">删除</button>
-          </td>
-        </tr>
-      </table>
+      <!-- </el-dialog> -->
+      <!-- <router-view></router-view> -->
     </el-main>
-  </div>
+  </el-container>
 </template>
-
 <script>
-import router from "../../router";
 export default {
   data() {
     return {
-      value: new Date(),
-
-      checked: true,
-      xueyuan_list: [],
-      // formLabelWidth: "120px",
-      activeName: "second",
-      paike: "second",
-      checked: true,
-      formLabelWidth: "100%",
-      list: [],
-      dialogFormVisible: false,
-      dialogFormVisibles: false,
-      paiKe: false,
-      kebiao: false,
-      bj_jiaoshi: "",
-      bj_zhujiao: "",
-      bj_jiaoshi: "",
-      form: {
-        id: 0,
-        name: "",
-        coursename: "",
-        coursecounts: "",
-        startdate: "",
-        enddate: "",
-      },
-      forms: {
-        name: "",
-        radio: "1",
-      },
-      form1: {
-        radio: "1",
-      },
-      form2: {
-        jiaoshi: "",
-        jiangshi: "",
-        keshi: "",
-        zhujiao: "",
-        radio: "1",
-        time1: "",
-        time2: "",
-        ks_rq: "",
-      },
-
-      title: "添加班级",
-      formLabelWidth: "120px",
-
+      formLabelWidth:'100%',
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
         },
       },
+      //是否添加学员
+      isAddStu: false,
+      //是否添加助教(默认不添加)
+      isAddAssistant: false,
+      // 选择排课
+      checktab: "",
+      //tab选项卡(单次排课 && 批量排课)
+      tabList: [{ name: "单次排课" }, { name: "批量排课" }],
+      //上课起始时间
+      startTime: "",
+      //上课结束时间
+      endTime: "",
+      //排课状态(0:单次排课;1:批量排课)
+      isschedule: 0,
+      // 主讲老师列表
+      teacherList: [],
+      // 助教老师列表
+      teacherAssistantsList: [],
+      // 教室列表
+      classroomList: [],
+      //排课列表
+      scheduleList: {
+        //单次排课:one 批量排课:more
+        addtype: "one",
+        //学生id
+        studentid: 0,
+        //班级id
+        classid: this.id,
+        //主讲老师id
+        teacherid: "",
+        //助教老师id
+        assistant: "",
+        //教室id
+        classrooms: "",
+        // 单节课扣学员课时
+        pricecounts: "",
+        //开课日期
+        begindate: "",
+        //结课日期
+        enddate: "",
+        //结束方法按课节(0:按课节: 按日期)
+        jsfs: "按课节",
+        //排课总数
+        coursescount: 0,
+        //上课时间
+        weektime: [
+          {
+            week: 0,
+            begintime: "",
+            endtime: "",
+          },
+        ],
+      },
+
+      //星期选择week
+      weekArray: [
+        {
+          name: "一",
+          isCheck: false,
+          list: [],
+        },
+        {
+          name: "二",
+          isCheck: false,
+          list: [],
+        },
+        {
+          name: "三",
+          isCheck: false,
+          list: [],
+        },
+        {
+          name: "四",
+          isCheck: false,
+          list: [],
+        },
+        {
+          name: "五",
+          isCheck: false,
+          list: [],
+        },
+        {
+          name: "六",
+          isCheck: false,
+          list: [],
+        },
+        {
+          name: "日",
+          isCheck: false,
+          list: [],
+        },
+      ],
+      name: "",
+      checked: true,
+      forms: {
+        radio: "1",
+      },
+      checked: "",
+      litt:"",
+      relative: "",
+      list: [],
+      liet: [],
+      xueyuan_list1:[],
+      xueyuan_list:[],
+      value01:"",
+      value02:"",
+      startTime: "",
+      endTime: "",
+      startTimes: "",
+      endTimes: "",
       input3: "",
       select: "",
-      options: [],
-      xueyuan_list1: [],
+      dd: "",
+      ee: "",
+      cc: "",
+      bb: "",
+      input: "",
+      dialogFormVisible: false,
+      dialogFormVisible1: false,
+      dialogFormVisibles: false,
+      dialogVisible3: false,
+      dialogVisible: false,
+      title: "增加班级",
+      form: {
+        id: 0,
+        coursename: "",
+        name: "",
+        enddate: "",
+        startdate: "",
+        coursecounts: "",
+      },
+      pickerOptionss: {
+        disabledDates(time) {
+          return time.getTime() >= Date.now();
+        },
+      },
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: "今天",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            },
+          },
+          {
+            text: "昨天",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            },
+          },
+          {
+            text: "一周前",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            },
+          },
+        ],
+      },
     };
   },
-
   created() {
-    this.hu_list();
-    this.kc_list();
-    this.xueyuan__list();
-  },
-  watch: {
-    dialogFormVisible(y, n) {
-      if (y == false) {
-        this.form = {};
-        // console.log(y, n);
-      }
-    },
+    this.loaddata();
+    this.courses();
+    this.xueyuan__list()
+    //初始化主讲老师列表
+    this.addTeacherList();
+    //初始化助教老师列表
+    this.addAssistantTeacherList();
+    //初始化教室列表
+    this.addClassroomList();
   },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then((_) => {
+          done();
+        })
+        .catch((_) => {});
     },
-    hu_list() {
+    loaddata() {
+      //使用axios 调用班级管理api接口数据
       let that = this;
       that.$http.get(
         "/api/classes/list",
         { page: 1 },
         (success) => {
           that.list = success.data.list;
+          // console.log(success.data.list);
         },
         (failure) => {
           console.log(failure);
         }
       );
     },
-    kc_list() {
+    courses() {
+      //使用axios 调用api接口数据
       let that = this;
-      that.$http.post(
-        "/api/classrooms/list",
+      that.$http.get(
+        "/api/courses/list",
         { page: 1 },
         (success) => {
-          // this.dialogFormVisible = false;
-          this.options = success.data.list;
-          console.log(success.data.list);
-          console.log(1234);
-          // this.options=success.data.name;
-          // this.hu_list();
+          that.liet = success.data.list;
+          // console.log(success.data.list);
         },
         (failure) => {
           console.log(failure);
         }
       );
     },
-    kecheng_add() {
+    tearch() {
+      //使用axios 调用api接口数据
       let that = this;
-      let obj = JSON.parse(JSON.stringify(this.form));
-
-      that.$http.post(
-        "/api/classes/add",
-        obj,
+      that.$http.get(
+        "/api/teachers/list",
+        { page: 1 },
         (success) => {
-          this.dialogFormVisible = false;
-
-          this.hu_list();
+          that.litt = success.data.list;
+          // console.log(success.data.list);
         },
         (failure) => {
           console.log(failure);
+        }
+      );
+    },
+    add: function () {
+      let that = this;
+      // console.log(that.form);
+      that.$http.post(
+        "/api/classes/add",
+        JSON.stringify(this.form),
+        (success) => {
+          that.dialogFormVisible = false;
+          that.form = {
+            coursename: "",
+            name: "",
+            enddate: "",
+            startdate: "",
+            coursecounts: "",
+          };
+          that.loaddata();
+        },
+        (failure) => {
+          // alert(failure)
         }
       );
     },
     del(id) {
       let that = this;
-      console.log(id);
+      // console.log(id)
       that.$http.get(
         "/api/classes/delete",
         { id: id },
         (success) => {
-          console.log(success);
-          this.hu_list();
+          that.loaddata();
         },
-        (failure) => {}
+        (failure) => {
+          alert(failure);
+        }
       );
-    },
-    xiu(index) {
-      let that = this;
-      that.dialogFormVisible = true;
-      that.title = "修改班级";
-      that.form = that.list[index];
-      console.log(that.form);
     },
     xueyuan__list() {
       let that = this;
@@ -585,19 +905,175 @@ export default {
           }
         );
       }
+
+      console.log("学员列表", this.xueyuan_list);
+    },
+
+    
+    uplad(index) {
+      let that = this;
+      that.title = "修改班级";
+      that.dialogFormVisible = true;
+      that.form = that.list[index];
+      // console.log(that.form)
+    },
+       //是否添加助教
+    addTeachingAssistants() {
+      if (this.isAddAssistant) {
+        this.isAddAssistant = false;
+      } else {
+        this.isAddAssistant = true;
+      }
+    },
+    //给选中tab添加样式
+    changetab(index) {
+      this.checktab = index;
+      this.isschedule = index;
+      console.log(index);
+      if (index == 0) {
+        this.scheduleList.addtype = "one";
+      } else {
+        this.scheduleList.addtype = "more";
+        this.scheduleList.jsfs == "按课节"
+      }
+      this.scheduleList.weektime = [
+        {
+          week: 0,
+          begintime: "",
+          endtime: "",
+        },
+      ];
+    },
+
+    //单次排课，点击加号加入数据
+    addOnceTime() {
+      this.scheduleList.weektime.push({
+        week: 0,
+        begintime: "",
+        endtime: "",
+      });
+    },
+
+    //单次排课，点击减号减除数据
+    delOnceTime(index){
+       this.scheduleList.weektime.splice(index,1)
+    },
+
+    //点击加号给星期index，添加一个新的list[]模板
+    addtime(index) {
+      this.weekArray[index].list.push({
+        week: index,
+        begintime: "",
+        endtime: "",
+      });
+      console.log(11);
+    },
+    //点击减号给给ind这个组的list，减少一个list[]模板
+    deltime(ind, index) {
+      this.weekArray[ind].list.splice(index, 1);
+    },
+
+    //点击星期选中(取消选中)
+    changeWeek(index) {
+      if (this.weekArray[index].isCheck) {
+        this.weekArray[index].list.push({
+          week: index,
+          begintime: "",
+          endtime: "",
+        });
+      } else {
+        this.weekArray[index].list = [];
+      }
+    },
+
+    //获取主讲老师
+    addTeacherList() {
+      this.$http.get(
+        "/api/teachers/list",
+        { cat: 1, page: 1 },
+        (success) => {
+          this.teacherList = success.data.list;
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
+    },
+    //获取助教老师
+    addAssistantTeacherList() {
+      this.$http.get(
+        "/api/teachers/list",
+        { cat: 2, page: 1 },
+        (success) => {
+          this.teacherAssistantsList = success.data.list;
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
+    },
+    //获取教室
+    addClassroomList() {
+      this.$http.get(
+        "/api/classrooms/list",
+        { page: 1 },
+        (success) => {
+          this.classroomList = success.data.list;
+          console.log(success.data.list);
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
+    },
+    //获取结算方式
+    changejsfs() {
+      if (this.scheduleList.jsfs == "按课节") {
+        this.scheduleList.enddate = null;
+      } else {
+        this.scheduleList.coursescount = "";
+      }
+    },
+
+    //添加学生选中数据成功
+    checkStuInfo(val){
+      this.isAddStu = false
+      this.scheduleList.studentlist = val
+    },
+    //保存
+    commit() {
+      for (var i = 0; i < this.weekArray.length; i++) {
+        if (this.weekArray[i].list.length > 0) {
+          for (var j in this.weekArray[i].list) {
+            this.scheduleList.weektime.push(this.weekArray[i].list[j]);
+          }
+        }
+      }
+
+      console.log(JSON.stringify(this.scheduleList));
+
+      this.$http.post(
+        "/api/coursetables/add",
+        this.scheduleList,
+        (success) => {
+          this.$message({
+            message: "恭喜你，排课成功",
+            type: "success",
+          });
+          this.scheduleList = {};
+          this.$emit("addSched");
+          console.log(success);
+        },
+        (fail) => {
+          this.$message.error("班级排课失败");
+          console.log(fail);
+        }
+      );
     },
   },
 };
 </script>
-
 <style scoped>
-.tab td {
-  width: 150px;
-  }
-.yous{
-  margin-left: 220px;
-  margin-top: 60px;
-}
 .scroll {
   margin: 0 auto;
   /* border: 1px solid #000; */
@@ -670,217 +1146,487 @@ export default {
   top: 4px;
 }
 
-.el-select .el-input {
-  width: 130px; 
+
+
+
+
+.week-time {
+  margin: 20px 20px 20px 0px;
+  float: left;
 }
 
-.uy {
-  width: 50%;
-}
-.ytr {
-  margin-top: 10px;
-}
-.yut {
-  margin-left: 20px;
-  margin-top: 20px;
-}
-.klss {
-  margin-left: 20px;
-}
-.lxt {
-  width: 399px;
-  height: 75px;
-  background-color: #1890ff;
-  color: #ffffff;
-  border-radius: 10px 10px 0px 0px;
-  font-size: 20px;
-  line-height: 75px;
-  margin-left: 10px;
-}
-.el-select .el-input {
+.zoutime {
+  float: left;
   width: 100%;
 }
+.weekTime {
+  width: 125px;
+}
+.every-time {
+  width: 100%;
+  height: auto;
+}
 
-.um {
-  margin-left: 90px;
-  margin-top: -50px;
-  width: 90px;
-  cursor: pointer;
+.check-time {
+  width: 100%;
+  margin-bottom: 20px;
 }
-.pps {
-  margin-left: 470px;
-  margin-top: -110px;
+
+
+  table {
+    font-size: 19px;
+    width: 100%;
+  }
+  .group {
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+  }
+
+  .top td > .el-select {
+    margin: 11px 0px;
+  }
+
+  .top td {
+    padding-right: 40px;
+  }
+
+  .addchange {
+    display: none;
+  }
+  .clickaddHelpteacher {
+    display: block;
+  }
+
+  /* 中间 */
+  .middle {
+    margin-top: 20px;
+  }
+
+  .middle .tabTitle {
+    width: 220px;
+    cursor: pointer;
+  }
+  .changetab {
+    /* 选中tab */
+    height: 40px;
+    border-bottom: 2px solid #3e9eff;
+    display: inline-block;
+  }
+  .middle:first-of-type td span:nth-of-type(2) {
+    float: right;
+  }
+  .center td {
+    padding-right: 180px;
+  }
+
+  .checkcontont td {
+    width: 230px;
+    padding-right: 25px;
+    padding-bottom: 30px;
+  }
+
+  .time {
+    padding-top: 14px;
+  }
+  .add {
+    position: relative;
+    top: 10px;
+  }
+
+  /* 引入精灵图 */
+  .elf {
+    width: 24px;
+    height: 24px;
+    background-image: url("./img/10.png");
+    background-repeat: no-repeat ;
+  }
+  .userCap {
+    display: inline-block;
+    background-position: -2px -630px;
+  }
+  .box .user > div {
+    margin-top: 30px;
+    margin-right: 100px;
+    float: left;
+  }
+  /* 引入精灵图 */
+
+  .box tr td {
+    width: 100%;
+    float: left;
+  }
+  .box tr td .students {
+    font-size: 20px;
+    margin-top: 26px;
+  }
+  .box tr td .students span {
+    margin-left: 30px;
+  }
+  .box tr td .students a {
+    margin-left: 7px;
+    text-decoration: none;
+    color: #4281fc;
+    font-weight: normal;
+  }
+  .box tr td:nth-of-type(2) div {
+    float: left;
+    background: url("./img/10.png");
+    /* background-repeat: no-repeat ; */
+    background-position: 0px -620px;
+    margin: 27px 100px 20px 10px;
+    padding-left: 32px;
+  }
+  .box tr td:nth-of-type(2) {
+    height: auto;
+    line-height: 50px;
+  }
+  @font-face {
+    font-family: "iconfont";
+    src: url("//at.alicdn.com/t/font_2397874_f8g10mwklol.eot?t=1614758616054"); /* IE9 */
+    src: url("//at.alicdn.com/t/font_2397874_f8g10mwklol.eot?t=1614758616054#iefix")
+        format("embedded-opentype"),
+      /* IE6-IE8 */
+        url("data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAMMAAsAAAAABrgAAAK9AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCCcAqBPIFQATYCJAMICwYABCAFhG0HOBv+BVGUrMkO2Y/D2D1SYi3a4ITDp+0RE/PHJoKn/dJ5+/cwBCoFAAksAUnWhWWJhCO0VXFRlYCadWtv+/00JRY258uyqh2wQv8g7wPnp3R+Tk+p+bFws5u8dpsW7XymAw2y5sc9vkZxikWS/cXhtHneBTK/wbnMNTDqAoy3BjrWoMgKJPSG6VXDpYQBPE6gbqKxyoaLu0doy/C4QFwMPAXtnFeWw0RVKNcszeKWkmq6nN7hpvp+/LU0qiSlAi7ZevrcwvrHfJJSjDRGHBQIPgJaXUKB+UAmdtZGN6uJEF9Tj9ZNBfsqDH7MbzSEXuxVI8K/Duc3gz7IvSce499qfgIZ9q4ADo66npzq62qO/joY7bOWqd9rY4ea3H86DiCarg5V0+XHZ/f7a+fIven9t7Pp/bSHio8W2dr84d5VucXKNyN5ojOmTmu7k7btU5e238kxTm+f1nHnLi0Z/5rMg9IUhCWuh/2bNg6PF8vHinghivX/f5v7U1nxIweT6Q8VGqgOBmQ7nA61IjlgDUBjJCuG/+pvLGr9Hx8ZrfhXbcrg+ynzrvj97KB6blvwD3k9a3IswIp0NVxkS1Zk3BKwoI4G7Oz0O1bZc8PmUM3xQkgqJkChajoyY+dDSZPlUFa1GurmuVzdpAuriVzDXC8AQrtXSFqNQaHdGzJjf6Ck1x+UtUcBdbuja8smM+Ncdz2TErKojxiYLHXUIF1deE/eNlacFSjCM3EZBHCxcHExcUkp8Rwzyp23FHHoOEvwApxGcZxhzllIRqa+SL6aLTpd96apyRLoWo8RRRALaUcoYGRSTjQW3dLn7xHPVkzhlqoR8zPCSkH/aGFq3gN5KU17Vd3LK6Udz5IQDnJYJoEuwCASi2VQXj8oRAwx5Y8I51ZmpJ7rK52uL0++bhPUYVUKUlJovRSoNGSVTOlxq1IAAAAA")
+        format("woff2"),
+      url("//at.alicdn.com/t/font_2397874_f8g10mwklol.woff?t=1614758616054")
+        format("woff"),
+      url("//at.alicdn.com/t/font_2397874_f8g10mwklol.ttf?t=1614758616054")
+        format("truetype"),
+      /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+        url("//at.alicdn.com/t/font_2397874_f8g10mwklol.svg?t=1614758616054#iconfont")
+        format("svg"); /* iOS 4.1- */
+  }
+
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 18px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .icon-tianjiarenyuan:before {
+    content: "\e62c";
+    color: #4281fc;
+  }
+
+  .create {
+    cursor: pointer;
+    color: #e3e3e3;
+    border: 1px solid #e3e3e3;
+    width: 37px;
+    height: 37px;
+    border-radius: 3px;
+    text-align: center;
+    line-height: 37px;
+    position: relative;
+    top: 3px;
+  }
+  .week {
+    padding-top: 25px;
+    padding-left: 7px;
+  }
+
+.btn {
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  margin-top: 50px;
+  height: 50px;
 }
-.el-icon-plus {
-  font-size: 25px;
-  width: 50px;
-  height: 39px;
-  border: 1px solid #dfe4ea;
-  text-align: center;
-  line-height: 40px;
+
+.preservation {
+  width: 150px;
+  float: right;
+  margin-top: 20px;
+}
+.rt {
+  float: right;
+  margin-top: -18px;
+}
+.right {
+  width: 480px;
+  height: 520px;
+  float: right;
   position: relative;
-  top: 10px;
-  left: -70px;
+  bottom: 520px;
 }
-.uo {
-  margin-left: 470px;
-  margin-top: -100px;
+.stu {
+  overflow-y: scroll;
+  width: 430px;
+  height: 480px;
+}
+.stu::-webkit-scrollbar {
+  width: 4px;
+}
+.stu::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.stu::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.1);
+}
+.stu td {
+  border-bottom: 1px solid #f0f0f0;
+  line-height: 55px;
+  width: 430px;
 }
 .jl {
   margin-left: 250px;
   margin-top: -95px;
 }
-body {
-  overflow-x: hidden;
+
+.uo {
+  margin-left: 470px;
+  margin-top: -100px;
 }
 
-.banji-nav {
-  width: 100%;
+.pps {
+  margin-left: 470px;
+  margin-top: -94px;
 }
 
-.banji-list {
-  width: 100%;
-  margin-top: 52px;
-}
-
-.banji-list td {
-  line-height: 70px;
-  font-weight: bolder;
-  border-bottom: 1px solid #f5f6fa;
-}
-.banji-title {
-  background-color: #f5f6fa;
-
-  font-size: 20px;
-}
-
-.el-footer {
-  background-color: #f5f6fa;
-  border: 1px solid #dee3e9;
-  position: absolute;
-  width: 100%;
-}
-.el-footer button {
-  margin-top: 14px;
-  margin-left: 10px;
-  background-color: #ffffff;
-  line-height: 32px;
-  text-align: center;
-  font-size: 19px;
-  padding-right: 10px;
-  border: 1px solid #c8ccd5;
-  display: inline-block;
+.um {
+  margin-left: 90px;
+  margin-top: -18px;
   cursor: pointer;
-  outline: 0 none !important;
-  color: #a0a3aa;
-}
-.el-footer button:nth-child(1) span {
-  background: url("../../assets/ico.png") 34px 675px;
-  width: 25px;
-  height: 24px;
-  position: relative;
-  top: 2px;
-  display: inline-block;
-}
-.el-footer button:nth-child(2) span {
-  background: url("../../assets/ico.png") 33px 590px;
-  width: 25px;
-  height: 23px;
-  padding-right: 5px;
-  position: relative;
-  top: 2px;
-  display: inline-block;
-}
-.rento {
-  background: url("../../assets/ico.png") 0px 420px;
-  width: 30px;
-  height: 30px;
-  padding-right: 5px;
-  position: relative;
-  top: 8px;
-  display: inline-block;
-}
-
-.el-main {
-  background-color: #fff;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
-
-.banji-option {
-  width: 510px;
-  height: 45px;
-  border: 1px solid #dfe4ea;
-  background-color: #fff;
-  position: relative;
-  top: -46px;
-  left: 255px;
-  border-radius: 5px;
-  background: url("./img/sou.gif") no-repeat 468px;
-  cursor: pointer;
-}
-
-.btn-op {
-  font-size: 20px;
-  height: 45px;
-  line-height: 45px;
-  color: #aca3a8;
-}
-
-.btn-img {
-  background: url("./img/xia.gif") no-repeat;
-  position: relative;
-  float: left;
-  width: 30px;
-  height: 23px;
-  left: 85px;
-  top: 15px;
-}
-
-.tu-img {
-  background: url("./img/ico.png") 1px 513px;
-  position: relative;
-  width: 54px;
-  height: 63px;
-  left: 29px;
-  top: 10px;
-  float: left;
-}
-
-.el-input {
-  width: 447px;
-}
-
-.block {
-  padding-top: 15px;
-  margin-left: 55px;
-}
-
-.el-dialog {
-  box-shadow: 0 0 5px #aeafb1;
-  border-radius: 5px;
-}
-
-.btn-sou {
-  width: 390px;
-  height: 40px;
-  margin-left: 40px;
-  border: none;
-  outline-style: none;
-}
-
-.paiban {
   color: blue;
-  border: none;
-  background-color: #fff;
-  display: none;
+  font-size: 14px;
+}
+
+.el-select {
+  width: 100px;
+}
+.right-a {
+  height: 100px;
+  background-color: #f5f6fa;
+  margin-top: -20px;
+  border: 1px solid #dee3e9;
+  margin-bottom: 20px;
+}
+.right-one {
+  float: left;
+  width: 110px;
+  height: 40px;
+  background-color: #ffffff;
+  margin-top: 40px;
+  margin-left: 20px;
+  border: 1px solid #dee3e9;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 15px;
 }
-td:hover .paiban {
-  display: inline;
+.right-one img {
+  width: 23px;
+  margin-left: 10px;
+  margin-top: 10px;
 }
+.right-one span {
+  font-size: 20px;
+  margin-left: 2px;
+  color: #ada2b2;
+}
+.right-two {
+  float: left;
+  width: 150px;
+  height: 40px;
+  background-color: #ffffff;
+  margin-top: 40px;
+  margin-left: 20px;
+  border: 1px solid #dee3e9;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.right-two img {
+  width: 23px;
+  height: 23px;
+  margin-right: 25px;
+  margin-top: -3px;
+}
+.right-two span {
+  margin-left: -20px;
+  color: #ada2b2;
+}
+.tab {
+  width: 98%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 10px;
+}
+.tab td,
+.tab th {
+  border-bottom: solid 1px #ececec;
+  padding: 8px;
+  text-align: left;
+  line-height: 40px;
+}
+.tab th {
+  background: #f5f6fa;
+  height: 65px;
+  font-weight: normal;
+}
+.tab img {
+  width: 30px;
+  margin-right: 10px;
+}
+.inputs {
+  width: 400px;
+}
+.inputs-a {
+  margin-left: 10px;
+}
+.block {
+  margin-bottom: 20px;
+  margin-left: 17px;
+}
+.demonstration {
+  margin-right: 10px;
+}
+.right-three {
+  width: 40%;
+  float: left;
+  margin-top: 25px;
+  margin-left: 20px;
+}
+.right-threes {
+  width: 40%;
+}
+.main {
+  width: 1100px;
+  height: 700px;
+  overflow-y: scroll;
+}
+
+.main-left {
+  width: 300px;
+  float: left;
+  margin-right: 50px;
+}
+.main-right {
+  width: 700px;
+  float: left;
+  position: relative;
+}
+
+.top-t {
+  height: 50px;
+  background-color: #1890ff;
+  padding-top: 5px;
+  padding-left: 15px;
+  color: #fff;
+  border-radius: 7px 7px 0 0;
+}
+
+.main-left-bottom {
+  margin-top: 50px;
+}
+
+.main-left-bottom b {
+  color: #ada2b2;
+  font-size: 14px;
+}
+
+.main-right-main {
+  text-align: center;
+}
+.top-b {
+  height: 50px;
+  border-bottom: 1px solid #e5e5e5;
+  padding-top: 5px;
+  padding-left: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.el-icon-s-custom {
+  margin-left: 150px;
+  color: #1890ff;
+}
+
+.el-icon-dish {
+  color: #1890ff;
+  font-size: 20px;
+}
+table td {
+  height: 1px;
+}
+
+.dd {
+  color: #1890ff;
+  display: block;
+}
+
+li {
+  list-style: none;
+}
+.main-left-top li {
+  color: #000;
+  font-weight: bold;
+}
+.main-left-top b {
+  color: #7e8b9b;
+}
+
+.yi {
+  margin-right: 150px;
+}
+
+.uu {
+  margin-right: 30px;
+}
+
+.ke {
+  width: 80px;
+  height: 40px;
+  border-radius: 8px;
+  border-left: 10px #1890ff solid;
+  position: absolute;
+  left: 400px;
+  top: 180px;
+}
+
+.ke li {
+  height: 20px;
+  margin-top: -6px;
+  font-size: 10px;
+  color: #ada2b2;
+  padding-left: 5px;
+}
+.ke li:first-of-type {
+  color: #000;
+  font-size: 13px;
+  font-weight: bold;
+  padding-left: 5px;
+}
+/* 他那个排课 */
+.block {
+  margin-bottom: 20px;
+  margin-left: 17px;
+}
+.xueyuan {
+  cursor: pointer;
+}
+.demonstration {
+  margin-right: 10px;
+}
+.tpaike table tr td {
+  padding-right: 30px;
+}
+.dpaike table tr td {
+  padding-right: 15px;
+}
+.dpaike table {
+  margin-bottom: 20px;
+}
+.el-icon-user-solid {
+  color: #1890ff;
+  font-size: 14px;
+}
+
+
+
+
+
+
 </style>
-  
-            

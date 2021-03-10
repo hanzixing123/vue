@@ -30,6 +30,7 @@
     </div>
 
     <p class="rr">今日课表</p>
+    
    
          <el-checkbox style="margin-left:20px; margin-bottom: 10px;">全选</el-checkbox>
         <el-button type="primary" @click="dialogFormVisible = true" style="margin-bottom:10px;margin-left:8px;">考勤</el-button>

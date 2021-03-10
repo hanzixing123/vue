@@ -33,7 +33,7 @@
     <div class="el-main1">
       <!-- <el-main> -->
       <table class="table">
-        <tr>
+        <tr align="center">
           <td>
             <input type="checkbox" class="kuang" @click="checkAll" />
             <!-- <span class="kuang" @click="xuan" /> -->
@@ -45,9 +45,14 @@
           <td>剩余课程</td>
           <td>操作</td>
         </tr>
-        <tr v-for="(res, index) in list" :key="index">
+        <tr v-for="(res, index) in list" :key="index" align="center">
           <td>
-            <input type="checkbox" class="kuang" v-model="selectList" :value="res" />
+            <input
+              type="checkbox"
+              class="kuang"
+              v-model="selectList"
+              :value="res"
+            />
             <!-- <span class="kuang" @click="xuanzhong(res.id)" /> -->
           </td>
           <td><span class="kuang-1" /> {{ res.name }}</td>
@@ -55,22 +60,38 @@
           <td>{{ res.kecheng }}</td>
           <td>{{ res.num }}</td>
           <td>{{ res.shengyu }}</td>
+          <td>
+            <el-button type="primary" @click="goumai = true"
+              >购买课程</el-button
+            >
+          </td>
         </tr>
       </table>
 
-        <div style="margin-left:550px;">
-      <div v-if="counts <= 8">
-        <div class="page">
-          共<font class="page-num">{{ counts }}</font>条记录
+      <el-pagination
+        style="margin-top: 30px; margin-left: 490px"
+        background
+        layout="prev, pager, next"
+        :total="1000"
+      >
+      </el-pagination>
+      <el-dialog title="购课" :visible.sync="goumai">
+        <div class="one">
+          <p style="color: #000">合约类型</p>
+          <el-radio v-model="radio" label="1">课时卡</el-radio>
+          <el-radio v-model="radio" label="2">时段卡</el-radio>
         </div>
-      </div>
-      <div v-else>
-        <el-pagination class="pagenation" :page-size="pagesize" background layout="prev, pager, next" :total="counts" @current-change="handleCurrentChange">
-        </el-pagination>
-      </div>
-    </div>
+        <div class="two">
+          <p style="color: #000;width:80px;">签约日期</p>
+          <el-date-picker v-model="value1" type="date" placeholder="选择日期">
+          </el-date-picker>
 
+          <span style="width:80px">结束日期</span>
+          <el-date-picker v-model="value1" type="date" placeholder="选择日期">
+          </el-date-picker>
+        </div>
 
+      </el-dialog>
       <el-dialog title="添加学员" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -284,21 +305,19 @@ export default {
 
   data() {
     return {
-      counts:0,
-      pagesize:7,
-      pagenum:1,
-      selectList:[],
+      selectList: [],
       activeName: "first", //一对一排课 选择
       time: "",
       time1: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
-      list: [
-      ],
+      list: [],
       input3: "",
       select: "",
+      radio: "1",
       dialogTableVisible: false,
       dialogTableVisible1: false,
       dialogFormVisible1: false,
       dialogFormVisible: false,
+      goumai: false,
       form: {
         id: "", //学员编号
         name: "", //名称
@@ -318,54 +337,66 @@ export default {
     };
   },
   methods: {
-    handleCurrentChange(currPage){
-				this.pagenum = currPage;
-				this.xuyuan_list();
-      },
-
     xuan() {},
     handleClick(tab, event) {
       console.log(tab, event);
     },
     xuyuan_list() {
       let that = this;
+      for (var i = 1; i <= 4; i++) {
         that.$http.get(
           "/api/students/list",
-          { page: this.pagenum,psize:this.pagesize },
+          { page: i },
           (success) => {
-              that.counts = success.data.counts
-              that.list=success.data.list
+            for (var i = 0; i < success.data.list.length; i++) {
+              that.list.push(success.data.list[i]);
+            }
           },
           (failure) => {
-            console.log(failure);
+            console.log("123");
           }
         );
-      },
-        checkAll(){
-        
-        if(this.selectList.length>0){
-            this.selectList = []
-        }else{
-          this.selectList = this.list.slice(0)
-        }
+      }
     },
+    checkAll() {
+      if (this.selectList.length > 0) {
+        this.selectList = [];
+      } else {
+        this.selectList = this.list.slice(0);
+      }
     },
-  
-  }
+  },
+};
 </script> 
 <style scoped>
+td {
+  width: 20%;
+}
 .xueyuan_xialai {
   width: 100px;
 }
+
+.one {
+  /* float: left; */
+  font-size: 14px;
+  display: inline-block;
+}
+
+.two {
+  /* float: left;  */
+  display: inline-block;
+  margin-left: 50px;
+}
+
 .da1 {
   margin-top: 40px;
-  float: left;     
+  float: left;
   display: block;
   /* width: 1200px; */
   /* width:400px; */
   width: 100%;
- 
 }
+
 .xiala .red > input {
   width: 200px;
 }
@@ -431,38 +462,7 @@ export default {
   /* top:12px;
   left: -5px; */
 }
-/* .wei {
-  float: left;
-  width:100%;
 
-}
-.wei ul{
-  float: left;
-    margin-left:490px;
-    margin-top:40px ;
-}
-.wei ul li{
-  
-  float: left;
-  color:#5f6364; 
-  margin-left: 10px;
-}
-.wei ul li button{
-      width:30px;
-      height:30px;
-      background: #f4f4f6;
-      border:0;
-       outline: 0 none;
-  cursor: pointer;  
-}
-.wei ul li input{
-    width:30px;
-    height:20px;
-    margin-right:4px;
-} */
-/* .el-form-item{
-  margin:0;
-} */
 .kuang {
   width: 25px;
   height: 25px;
@@ -524,7 +524,7 @@ tr {
   background: #e9eef3;
   /* line-height: 70px; */
   font-size: 19px;
-
+    
   border-top: 1px solid #e9eef3;
   border-bottom: 1px solid #e9eef3;
 }
