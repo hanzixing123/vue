@@ -9,12 +9,17 @@
 
         <div class="sosuo">
           <el-input
-            style=" width:600px;"
+            style="width: 600px"
             placeholder="请输入内容"
             v-model="input3"
             class="input-with-select"
           >
-            <el-select v-model="select"  style="width:100px;" slot="prepend" placeholder="请选择">
+            <el-select
+              v-model="select"
+              style="width: 100px"
+              slot="prepend"
+              placeholder="请选择"
+            >
               <el-option label="餐厅名" value="1"></el-option>
               <el-option label="订单号" value="2"></el-option>
               <el-option label="用户电话" value="3"></el-option>
@@ -264,56 +269,18 @@
 
 <script>
 export default {
+  created() {
+    this.xuyuan_list();
+  },
+
   data() {
     return {
       selectList:[],
       activeName: "first", //一对一排课 选择
       time: "",
-     time1: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
+      time1: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
       list: [
-        {
-          id: 1,
-          name: "lishang",
-          sex: "18",
-          kecheng: "",
-          num: "2",
-          shengyu: "1",
-        },
-        {
-          id: 2,
-          name: "lishang",
-          sex: "18",
-          kecheng: "",
-          num: "2",
-          shengyu: "1",
-        },
-        {
-          id: 3,
-          name: "lishang",
-          sex: "18",
-          kecheng: "",
-          num: "2",
-          shengyu: "1",
-        },
-        {
-          id: 4,
-          name: "lishang",
-          sex: "18",
-          kecheng: "",
-          num: "2",
-          shengyu: "1",
-        },
-        {
-          id: 5,
-          name: "lishang",
-          sex: "18",
-          kecheng: "",
-          num: "2",
-          shengyu: "1",
-        },
       ],
-
-      // list_xuan:[],
       input3: "",
       select: "",
       dialogTableVisible: false,
@@ -343,7 +310,23 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
-
+    xuyuan_list() {
+      let that = this;
+      for (var i = 1; i <= 4; i++) {
+        that.$http.get(
+          "/api/students/list",
+          { page: i },
+          (success) => {
+            for (var i = 0; i < success.data.list.length; i++) {
+              that.list.push(success.data.list[i]);
+            }
+          },
+          (failure) => {
+            console.log("123");
+          }
+        );
+      }
+    },
     checkAll(){
         
         if(this.selectList.length>0){
@@ -356,16 +339,16 @@ export default {
 };
 </script> 
 <style scoped>
-.xueyuan_xialai{
-      width:100px;
+.xueyuan_xialai {
+  width: 100px;
 }
 .da1 {
   margin-top: 40px;
-  float: left;
+  float: left;     
   display: block;
   /* width: 1200px; */
   /* width:400px; */
-  width:100%;
+  width: 100%;
 }
 .xiala .red > input {
   width: 200px;

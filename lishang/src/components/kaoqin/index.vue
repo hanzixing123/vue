@@ -31,20 +31,58 @@
 
     <p class="rr">今日课表</p>
     
+   
+         <el-checkbox style="margin-left:20px; margin-bottom: 10px;">全选</el-checkbox>
+        <el-button type="primary" @click="dialogFormVisible = true" style="margin-bottom:10px;margin-left:8px;">考勤</el-button>
+      
     <div class="hht">
+
       <p class="oos">
+       <el-checkbox></el-checkbox>
         架子鼓基础班2101
         <i class="el-icon-reading"> 架子鼓课</i>
         <i class="el-icon-time"> 13:30-14:15</i>
         <i class="el-icon-s-custom"> 明明</i>
+      
+      </p>
+      
+      <p> <el-checkbox style="margin-left:33px;margin-top:10px;"></el-checkbox>
+      <img class="kil" src="../../assets/images/keshi-02_03.gif" alt="">&#160;&#160;&#160;&#160;&#160;&#160;李三
+        <i class="el-icon-folder-checked" style="margin-left:950px;"> 已到达</i>
+        <el-button type="text" @click="dialogFormVisible = true" class="el-icon-edit-outline">签到</el-button>
+      </p>
+        <p> <el-checkbox style="margin-left:33px;margin-top:10px;"></el-checkbox>
+      <img class="kil" src="../../assets/images/keshi-02_03.gif" alt="">&#160;&#160;&#160;&#160;&#160;&#160;李三
+        <i class="el-icon-folder-checked" style="margin-left:950px;"> 已到达</i>
+        <el-button type="text" @click="dialogFormVisible = true" class="el-icon-edit-outline">签到</el-button>
+      </p>
+    </div>
+
+
+
+<div class="hhts">
+      <p class="oos">
+       <el-checkbox></el-checkbox>
+      <img class="kil" src="../../assets/images/keshi-02_03.gif" alt="">&#160;&#160;&#160;&#160;&#160;&#160;李三
+     &#160;&#160;&#160;&#160;&#160;
+        <i class="el-icon-reading"> 架子鼓课</i>
+        <i class="el-icon-time"> 13:30-14:15</i>
+        <i class="el-icon-s-custom"> 明明</i>
         <i class="el-icon-folder-checked"> 已到达</i>
-        <el-button
-          type="text"
-          @click="dialogFormVisible = true"
-          class="el-icon-edit-outline"
-        >
-          签到</el-button
-        >
+        <el-button type="text" @click="dialogFormVisible = true" class="el-icon-edit-outline">签到</el-button>
+      </p>
+    </div>
+
+<div class="hhtss">
+      <p class="oos">
+       <el-checkbox></el-checkbox>
+      <img class="kil" src="../../assets/images/keshi-02_03.gif" alt="">&#160;&#160;&#160;&#160;&#160;&#160;李三
+     &#160;&#160;&#160;&#160;&#160;
+        <i class="el-icon-reading"> 架子鼓课</i>
+        <i class="el-icon-time"> 13:30-14:15</i>
+        <i class="el-icon-s-custom"> 明明</i>
+        <i class="el-icon-folder-checked"> 已到达</i>
+        <el-button type="text" @click="dialogFormVisible = true" class="el-icon-edit-outline">签到</el-button>
       </p>
     </div>
 
@@ -100,7 +138,11 @@ export default {
 </script>
 
 <style>
-
+.kil{
+  position: relative;
+  top: 20px;
+  left: 20px;
+}
 .li{
 width: 1385px;
  height: 51px;
@@ -139,9 +181,20 @@ width: 1385px;
 }
 .hht {
   width: 1383px;
-  height: 56px;
   border: 1px solid #e5e5e5;
   border-radius: 5px;
+}
+.hhts {
+  width: 1383px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.hhtss {
+  width: 1383px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  margin-top: 10px;
 }
 .oos {
   margin-left: 34px;
