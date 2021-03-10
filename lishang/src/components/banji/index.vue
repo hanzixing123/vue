@@ -1145,7 +1145,15 @@ export default {
   position: relative;
   top: 4px;
 }
-
+.rento {
+  background: url("../../assets/ico.png") 0px 420px;
+  width: 30px;
+  height: 30px;
+  padding-right: 5px;
+  position: relative;
+  top: 8px;
+  display: inline-block;
+}
 
 
 
