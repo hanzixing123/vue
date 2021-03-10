@@ -75,33 +75,50 @@
               </tr>
               <tr>
                 <td>
-                  <select name="" id="" style="width: 100px; height: 40px">
+                  <select
+                    name=""
+                    v-model="form2.jiaoshi"
+                    
+                    style="width: 100px; height: 40px"
+                  >
                     <option value="请选择">请选择</option>
                   </select>
                 </td>
                 <td>
-                  <select name="" id="" style="width: 100px; height: 40px">
+                  <select
+                    v-model="form2.zhujiao"
+                   
+                    style="width: 100px; height: 40px"
+                  >
                     <option value="请选择">请选择</option>
                   </select>
                 </td>
                 <td>
-                  <select name="" id="" style="width: 100px; height: 40px">
+                  <select
+                    v-model="form2.jiaoshi"
+                    style="width: 100px; height: 40px"
+                  >
                     <option value="请选择">请选择</option>
                   </select>
                 </td>
                 <td>
-                  <input type="text" style="width: 100px; height: 30px" />
+                  <input
+                    type="text"
+                    v-model="form2.keshi"
+                    style="width: 100px; height: 30px"
+                  />
                 </td>
               </tr>
             </table>
           </div>
 
-          <el-tabs @tab-click="handleClick">
+          <el-tabs v-model="paike" @tab-click="handleClick">
             <el-tab-pane label="单次排课" name="second">
               <!-- 日期选择 -->
               <div>
                 <span>开学时间</span>
                 <el-date-picker
+                  v-model="form2.ks_rq"
                   type="datetime"
                   placeholder="选择日期时间"
                   style="width: 240px"
@@ -111,10 +128,10 @@
               <!-- 日期选择 -->
 
               <div style="margin-top: 20px">
-                <span>开学时间</span>
+                <span>上课时间</span>
                 <el-time-picker
                   style="width: 240px"
-                  v-model="time1"
+                  v-model="form2.time1"
                   :picker-options="{
                     selectableRange: '18:30:00 - 20:30:00',
                   }"
@@ -124,7 +141,7 @@
                 <el-time-picker
                   style="width: 240px"
                   arrow-control
-                  v-model="time2"
+                  v-model="form2.time2"
                   :picker-options="{
                     selectableRange: '18:30:00 - 20:30:00',
                   }"
@@ -138,21 +155,22 @@
                 <span>开学时间</span>
                 <el-date-picker
                   type="datetime"
+                  v-model="form2.ks_rq"
                   placeholder="选择日期时间"
                   style="width: 240px"
                 >
                 </el-date-picker>
                 结束方式
-                <el-radio v-model="form1.radio" label="1">按课节</el-radio>
-                <el-radio v-model="form1.radio" label="2">按日期</el-radio>
+                <el-radio v-model="form2.radio" label="1">按课节</el-radio>
+                <el-radio v-model="form2.radio" label="2">按日期</el-radio>
                 排课总量
                 <input type="text" style="width: 100px; height: 30px" />
               </div>
-              <div v-if="form1.radio == 1" style="margin-top: 30px">
+              <div v-if="form2.radio == 1" style="margin-top: 30px">
                 <span>上课时间</span>
                 <el-time-picker
                   style="width: 240px"
-                  v-model="time1"
+                  v-model="form2.time1"
                   :picker-options="{
                     selectableRange: '18:30:00 - 20:30:00',
                   }"
@@ -161,16 +179,16 @@
                 </el-time-picker>
                 <el-time-picker
                   style="width: 240px"
-                  arrow-control 
-                  v-model="time2"
+                  arrow-control
+                  v-model="form2.time2"
                   :picker-options="{
                     selectableRange: '18:30:00 - 20:30:00',
                   }"
                   placeholder="结束时间"
                 >
-                </el-time-picker>   
+                </el-time-picker>
               </div>
-              <div v-if="form1.radio == 2">
+              <div v-if="form2.radio == 2">
                 <el-form-item label="* 日期选择" class="po"
                   ><br />
                   <el-checkbox v-model="checked">星期一</el-checkbox>
@@ -307,7 +325,7 @@
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
           <ul
-            style="height: 400px; width: 400px; overflow: auto"
+            style="height: 400px; width: 100%; overflow: auto"
             class="scroll"
           >
             <li
@@ -332,35 +350,31 @@
           </ul>
         </div>
         <!-- 右 -->
-        <div style="float: left; margin-left: 30px">
+        <div style="float: left; margin-left: 30px;width:50%">
           <span> 已选学员( {{ xueyuan_list1.length }} ) </span>
           <span class="lj"></span>
           <span
             style="
               position: relative;
-              left: 390px;
+              left: 280px;
               top: 8px;
               display: inline-block;
-            "
+                cursor: pointer;
+            " @click="xueyuan_list1=[]"
             >清空</span
           >
 
           <ul
-            style="height: 400px; width: 500px; overflow: auto"
+            style="height: 400px; width: 100%; overflow: auto"
             class="scroll"
           >
             <li
-              style="
-                height: 50px;
-                width: 460px;
-                line-height: 50px;
-                border-bottom: 1px solid red;
-              "
+              style="height: 50px; width: 400px; line-height: 50px;border-bottom: 1px solid red;"
               v-for="(res, index) in xueyuan_list1"
               :key="index"
             >
               <span class="rento"></span>
-              <span class="lj1"></span>
+              <span class="lj1" @click=" xueyuan_list1.splice(index,1)"></span>
               {{ res }}
             </li>
           </ul>
@@ -373,9 +387,6 @@
         >
       </div>
     </el-dialog>
-
-
-
 
     <el-main>
       <table class="banji-list" border="0" cellspacing="0" cellpadding="0">
@@ -414,13 +425,13 @@ import router from "../../router";
 export default {
   data() {
     return {
-
-       value: new Date(),
+      value: new Date(),
 
       checked: true,
       xueyuan_list: [],
       // formLabelWidth: "120px",
       activeName: "second",
+      paike: "second",
       checked: true,
       formLabelWidth: "100%",
       list: [],
@@ -445,6 +456,16 @@ export default {
       },
       form1: {
         radio: "1",
+      },
+      form2: {
+        jiaoshi: "",
+        jiangshi: "",
+        keshi: "",
+        zhujiao: "",
+        radio: "1",
+        time1: "",
+        time2: "",
+        ks_rq: "",
       },
 
       title: "添加班级",
@@ -514,7 +535,6 @@ export default {
       let that = this;
       let obj = JSON.parse(JSON.stringify(this.form));
 
-      // console.log(JSON.stringify(this.form));
       that.$http.post(
         "/api/classes/add",
         obj,
@@ -622,7 +642,7 @@ export default {
   height: 24px;
   position: relative;
   top: 10px;
-  left: 400px;
+  left: 295px;
   display: inline-block;
 }
 .lj1 {
@@ -631,8 +651,10 @@ export default {
   height: 24px;
   position: relative;
   top: 10px;
-  left: 400px;
+  left: 340px;
   display: inline-block;
+  cursor: pointer;
+
 }
 
 .kuang {
