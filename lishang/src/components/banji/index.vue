@@ -579,7 +579,8 @@ export default {
               that.xueyuan_list.push(success.data.list[i]);
             }
           },
-          (failure) => {
+          (failure) => {       
+            
             console.log("123");
           }
         );
