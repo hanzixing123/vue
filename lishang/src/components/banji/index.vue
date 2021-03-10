@@ -487,7 +487,7 @@
              <ul style="margin-top:20px;">
             <li v-for="(item,index) in xueyuan_list1" :key="index" style="float:left;margin-right:10px;">
               <img src="./img/10.png" width="30px" height="30px" alt="">
-              {{item}}
+              {{item}} 
               <!-- </li>
               </ul> -->
               
