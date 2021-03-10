@@ -523,7 +523,7 @@ tr {
   background: #e9eef3;
   /* line-height: 70px; */
   font-size: 19px;
-
+    
   border-top: 1px solid #e9eef3;
   border-bottom: 1px solid #e9eef3;
 }
