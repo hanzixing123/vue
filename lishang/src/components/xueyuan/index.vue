@@ -61,37 +61,75 @@
           <td>{{ res.num }}</td>
           <td>{{ res.shengyu }}</td>
           <td>
-            <el-button type="primary" @click="goumai = true"
+            <el-button class="paiban" @click="gouke = true"
               >购买课程</el-button
             >
           </td>
         </tr>
       </table>
 
-      <el-pagination
-        style="margin-top: 30px; margin-left: 490px"
-        background
-        layout="prev, pager, next"
-        :total="1000"
-      >
-      </el-pagination>
-      <el-dialog title="购课" :visible.sync="goumai">
-        <div class="one">
-          <p style="color: #000">合约类型</p>
+      <div style="margin-left:550px;">
+      <div v-if="counts <= 8">
+        <div class="page">
+          共<font class="page-num">{{ counts }}</font>条记录
+        </div>
+      </div>
+      <div v-else>
+        <el-pagination class="pagenation" :page-size="pagesize" background layout="prev, pager, next" :total="counts" @current-change="handleCurrentChange">
+        </el-pagination>
+      </div>
+    </div>
+
+
+
+
+
+  <!-- 购买课程 -->
+ <el-dialog :title="title" :visible.sync="gouke">
+      <el-form :model="form">
+        <el-form-item class="wq" label="合约类型" :label-width="formLabelWidth"><br>
           <el-radio v-model="radio" label="1">课时卡</el-radio>
           <el-radio v-model="radio" label="2">时段卡</el-radio>
-        </div>
-        <div class="two">
-          <p style="color: #000;width:80px;">签约日期</p>
-          <el-date-picker v-model="value1" type="date" placeholder="选择日期">
-          </el-date-picker>
+        </el-form-item>
+        <el-form-item
+          class="ka"
+          label="收费模式:"
+          :label-width="formLabelWidth"
+        >
+       
+        </el-form-item>
 
-          <span style="width:80px">结束日期</span>
-          <el-date-picker v-model="value1" type="date" placeholder="选择日期">
-          </el-date-picker>
-        </div>
+        <el-form-item class="lp" label="单价:" :label-width="formLabelWidth">
+          <el-input
+            v-model="form.price"
+            class="input1"
+            autocomplete="off"
+          ></el-input>
+          <span>元/课时</span>
+        </el-form-item>
 
-      </el-dialog>
+        <el-form-item
+          class="uy"
+          label="上课模式:"
+          :label-width="formLabelWidth"
+        >
+          <el-radio-group class="kecheng_radio" v-model="form.mode">
+            <el-radio :label="1">一对一</el-radio>
+            <el-radio :label="2">集体班</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" >确定</el-button>
+      </div>
+    </el-dialog>
+
+
+     
+
+     <!-- 添加学员 -->
+
       <el-dialog title="添加学员" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -304,6 +342,11 @@ export default {
 
   data() {
     return {
+      title: "购课",
+      counts:0,
+      pagesize:7,
+      pagenum:1,
+      value:"",
       selectList: [],
       activeName: "first", //一对一排课 选择
       time: "",
@@ -316,7 +359,7 @@ export default {
       dialogTableVisible1: false,
       dialogFormVisible1: false,
       dialogFormVisible: false,
-      goumai: false,
+      gouke: false,
       form: {
         id: "", //学员编号
         name: "", //名称
@@ -342,21 +385,24 @@ export default {
     },
     xuyuan_list() {
       let that = this;
-      for (var i = 1; i <= 4; i++) {
         that.$http.get(
           "/api/students/list",
-          { page: i },
+          { page:this.pagenum,psize:this.pagesize },
           (success) => {
-            for (var i = 0; i < success.data.list.length; i++) {
-              that.list.push(success.data.list[i]);
-            }
+            that.counts = success.data.counts
+            that.list=success.data.list
           },
           (failure) => {
-            console.log("123");
+            console.log(failure);
           }
         );
-      }
+     
     },
+    handleCurrentChange(currPage){
+				this.pagenum = currPage;
+				this.xuyuan_list();
+			},
+
     checkAll() {
       if (this.selectList.length > 0) {
         this.selectList = [];
@@ -379,6 +425,18 @@ td {
   /* float: left; */
   font-size: 14px;
   display: inline-block;
+}
+
+.paiban {
+  color: blue;
+  border: none;
+  background-color: #fff;
+  display: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+td:hover .paiban {
+  display: inline;
 }
 
 .two {
