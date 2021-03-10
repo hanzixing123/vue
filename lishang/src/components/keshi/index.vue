@@ -11,7 +11,7 @@
   </template>
 </el-calendar>
   
-</template>
+</template>  
 
 <script>
 export default {
