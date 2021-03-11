@@ -78,7 +78,7 @@
        <el-checkbox></el-checkbox>
       <img class="kil" src="../../assets/images/keshi-02_03.gif" alt="">&#160;&#160;&#160;&#160;&#160;&#160;李三
      &#160;&#160;&#160;&#160;&#160;
-        <i class="el-icon-reading"> 架子鼓课</i>
+        <i class="el-icon-reading"> 架子鼓课</i>  
         <i class="el-icon-time"> 13:30-14:15</i>
         <i class="el-icon-s-custom"> 明明</i>
         <i class="el-icon-folder-checked"> 已到达</i>
