@@ -171,6 +171,25 @@ export default {
   },
 
   methods: {},
+  created() {
+    this.kaoqin_list();
+  },
+
+  methods: {
+    kaoqin_list() {
+      let tath = this;
+      tath.$http.get(
+        "/api/coursetables/checked",
+        "",
+        (success) => {
+          console.log("成功？",success);
+        },
+        (fall) => {
+          console.log(fall);
+        }
+      );
+    },
+  },
 };
 </script>
 
