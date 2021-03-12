@@ -6,7 +6,11 @@
           <img src="@/components/banji/img/images/006.png" />
           <span>删除</span>
         </div>
-        <el-button type="text" @click="dialogFormVisible = true" class="right-two">
+        <el-button
+          type="text"
+          @click="dialogFormVisible = true"
+          class="right-two"
+        >
           <!-- <img src="@/assets/007.png" /> -->
           <span>添加班级</span>
         </el-button>
@@ -15,11 +19,20 @@
           <el-form v-model="form">
             <el-form-item label="所选课程">
               <el-select v-model="form.coursename" placeholder="请选择">
-                <el-option v-for="(item,indexs) in liet" :key="indexs" :label="item.name" :value="item.id"></el-option>
+                <el-option
+                  v-for="(item, indexs) in liet"
+                  :key="indexs"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="班级名称">
-              <el-input v-model="form.name" autocomplete="off" class="inputs"></el-input>
+              <el-input
+                v-model="form.name"
+                autocomplete="off"
+                class="inputs"
+              ></el-input>
             </el-form-item>
             <el-form-item label="计划课时">
               <el-input
@@ -59,10 +72,19 @@
           </div>
         </el-dialog>
         <div class="right-three">
-          <div style="margin-top: 15px;">
-            <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-              <el-select v-model="select" slot="prepend" placeholder="课程" >
-                <el-option v-for="(item,indexs) in liet" :key="indexs" :label="item.name" :value="item.id"></el-option>
+          <div style="margin-top: 15px">
+            <el-input
+              placeholder="请输入内容"
+              v-model="input3"
+              class="input-with-select"
+            >
+              <el-select v-model="select" slot="prepend" placeholder="课程">
+                <el-option
+                  v-for="(item, indexs) in liet"
+                  :key="indexs"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
               </el-select>
               <el-button slot="append" icon="el-icon-search"></el-button>
             </el-input>
@@ -81,20 +103,26 @@
             <th>已上课时</th>
             <th>操作</th>
           </tr>
-          <tr class="edit-tr" v-for="(item,index) in list" :key="index">
+          <tr class="edit-tr" v-for="(item, index) in list" :key="index">
             <td class="textleft" style="position: relative">
               <img src="@/components/banji/img/09.png" />
-              {{item.name}}
-              <input type="hidden" value="item.id">
-            <td>{{item.coursename}}</td>
-            <td>{{item.teacherslist}}</td>
-            <td>{{item.students}}</td>
-            <td>{{item.coursecounts}}</td>
-            <td>{{item.schcourses}}</td>
-            <td>{{item.endcourses}}</td>
+              {{ item.name }}
+              <input type="hidden" value="item.id" />
+            </td>
+
+            <td>{{ item.coursename }}</td>
+            <td>{{ item.teacherslist }}</td>
+            <td>{{ item.students }}</td>
+            <td>{{ item.coursecounts }}</td>
+            <td>{{ item.schcourses }}</td>
+            <td>{{ item.endcourses }}</td>
             <td>
-              <el-button type="primary" @click="dialogFormVisible1 = true">排课</el-button>
-              <el-button type="info" @click="dialogVisible3 = true">课表</el-button>
+              <el-button type="primary" @click="dialogFormVisible1 = true"
+                >排课</el-button
+              >
+              <el-button type="info" @click="dialogVisible3 = true"
+                >课表</el-button
+              >
               <!-- <el-button type="success" @click="dialogVisible = true">单次排课</el-button> -->
               <el-button type="danger" @click="del(item.id)">删除</el-button>
               <el-button type="warning" @click="uplad(index)">修改</el-button>
@@ -103,75 +131,94 @@
         </tbody>
       </table>
 
-
-
-      <div style="margin-left:550px;">
-      <div v-if="counts <= 8">
-        <div class="page">
-          共<font class="page-num">{{ counts }}</font>条记录
+      <div style="margin-left: 550px">
+        <div v-if="counts <= 8">
+          <div class="page">
+            共<font class="page-num">{{ counts }}</font
+            >条记录
+          </div>
+        </div>
+        <div v-else>
+          <el-pagination
+            class="pagenation"
+            :page-size="pagesize"
+            background
+            layout="prev, pager, next"
+            :total="counts"
+            @current-change="handleCurrentChange"
+          >
+          </el-pagination>
         </div>
       </div>
-      <div v-else>
-        <el-pagination class="pagenation" :page-size="pagesize" background layout="prev, pager, next" :total="counts" @current-change="handleCurrentChange">
-        </el-pagination>
-      </div>
-    </div>
-
-
-
 
       <!-- 课表 -->
-       <el-dialog title="课表" :visible.sync="dialogVisible3" width="70%" :before-close="handleClose">
-                <div class="main">
-                  <div class="main-left">
-                  <div class="main-left-top">
-                        <p class="top-t">架子鼓基础班2101</p>
-                          <li><b>课程：</b>架子鼓课</li>
-                          <li><b>老师：</b>希希、老师傅</li>
-                          <li><b>教室：</b></li>
-                          <li><b>人数：</b>2/30</li>
-                          <li><el-progress :text-inside="true" :stroke-width="24" :percentage="50" status="success"></el-progress></li>
-                          <li> <b class="yi">已上2节课</b> <b>已排4节课</b> </li>
-                  </div>
-                   <div class="main-left-bottom">
-                      <p class="top-b">班级学员<b>(2)</b> <i class="el-icon-s-custom"></i> </p>
-                       <table style="height:100px;">
-                          <tr>
-                            <td rowspan="2">  <i class="el-icon-dish">  </i></td>
-                            <td class="dd">李四</td>
-                          </tr>
-                          <tr>
-                            <td>已排3节，已上1节</td>
-                          </tr>
-                          <tr>
-                            <td rowspan="2">  <i class="el-icon-dish">  </i></td>
-                            <td class="dd">李四</td>
-                          </tr>
-                          <tr>
-                            <td>已排本班课节3，其中上了1节</td>
-                          </tr>
-                       </table>
-                  </div> 
-                  </div>
-                  <div class="main-right">
-                      <li class="main-right-p">
-                        <el-button type="text" class="uu">单次排课</el-button> 
-                        <el-button type="text">批量排课</el-button>
-                      </li>
+      <el-dialog
+        title="课表"
+        :visible.sync="dialogVisible3"
+        width="70%"
+        :before-close="handleClose"
+      >
+        <div class="main">
+          <div class="main-left">
+            <div class="main-left-top">
+              <p class="top-t">架子鼓基础班2101</p>
+              <li><b>课程：</b>架子鼓课</li>
+              <li><b>老师：</b>希希、老师傅</li>
+              <li><b>教室：</b></li>
+              <li><b>人数：</b>2/30</li>
+              <li>
+                <el-progress
+                  :text-inside="true"
+                  :stroke-width="24"
+                  :percentage="50"
+                  status="success"
+                ></el-progress>
+              </li>
+              <li><b class="yi">已上2节课</b> <b>已排4节课</b></li>
+            </div>
+            <div class="main-left-bottom">
+              <p class="top-b">
+                班级学员<b>(2)</b> <i class="el-icon-s-custom"></i>
+              </p>
+              <table style="height: 100px">
+                <tr>
+                  <td rowspan="2"><i class="el-icon-dish"> </i></td>
+                  <td class="dd">李四</td>
+                </tr>
+                <tr>
+                  <td>已排3节，已上1节</td>
+                </tr>
+                <tr>
+                  <td rowspan="2"><i class="el-icon-dish"> </i></td>
+                  <td class="dd">李四</td>
+                </tr>
+                <tr>
+                  <td>已排本班课节3，其中上了1节</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="main-right">
+            <li class="main-right-p">
+              <el-button type="text" class="uu">单次排课</el-button>
+              <el-button type="text">批量排课</el-button>
+            </li>
 
-                      <div class="main-right-main">
-                        <el-calendar :range="['2019-03-01', '2019-03-31']">
-                       </el-calendar>
-                      </div>
-                      <div class="ke">
-                        <li>架子鼓课</li><li>09:01在</li>
-                      </div>
-                  </div>
-                </div>
-                <span slot="footer" class="dialog-footer">
-                  <el-button @click="dialogVisible3 = false">取 消</el-button>
-                  <el-button type="primary" @click="dialogVisible3= false">确 定</el-button>
-                </span>
+            <div class="main-right-main">
+              <el-calendar :range="['2019-03-01', '2019-03-31']"> </el-calendar>
+            </div>
+            <div class="ke">
+              <li>架子鼓课</li>
+              <li>09:01在</li>
+            </div>
+          </div>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible3 = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible3 = false"
+            >确 定</el-button
+          >
+        </span>
       </el-dialog>
 
       <!-- 排课 -->
@@ -181,7 +228,7 @@
             <td>
               <span>主讲老师</span>
               <span
-                style="float: right;  cursor: pointer;margin-left:10px;"
+                style="float: right;  cursor: pointer; margin-left: 10px"
                 @click="addTeachingAssistants"
                 :style="isAddAssistant == true ? 'color:#3e9eff' : ''"
                 >添加助教</span
@@ -491,138 +538,155 @@
           </div>
         </div>
         <div>
-            <h1>选择学员({{xueyuan_list1.length}})</h1>
-           
-          
-         <el-form>
-          <div class="um" @click="dialogFormVisibles = true">
-             <img src="./img/11.png" style="margin-left:5px;cursor: pointer;" alt="">
-            添加学员
-          </div>
-        </el-form>
+          <h1>选择学员({{ xueyuan_list1.length }})</h1>
+
+          <el-form>
+            <div class="um" @click="dialogFormVisibles = true">
+              <img
+                src="./img/11.png"
+                style="margin-left: 5px; cursor: pointer"
+                alt=""
+              />
+              添加学员
+            </div>
+          </el-form>
         </div>
-         <div style="width:100%;height:100px;">
-             <ul style="margin-top:20px;">
-            <li v-for="(item,index) in xueyuan_list1" :key="index" style="float:left;margin-right:10px;">
-              <img src="./img/10.png" width="30px" height="30px" alt="">
-              {{item}} 
+        <div style="width: 100%; height: 100px">
+          <ul style="margin-top: 20px">
+            <li
+              v-for="(item, index) in xueyuan_list1"
+              :key="index"
+              style="float: left; margin-right: 10px"
+            >
+              <img src="./img/10.png" width="30px" height="30px" alt="" />
+              {{ item }}
               <!-- </li>
               </ul> -->
-              
             </li>
           </ul>
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="dialogFormVisible1 = false">保存</el-button>
+          <el-button type="primary" @click="dialogFormVisible1 = false"
+            >保存</el-button
+          >
         </div>
       </el-dialog>
-           <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
-      <el-form :model="form">
-        <el-form-item label="" :label-width="formLabelWidth">
-          <div style="margin-top: 15px">
-            <el-input v-model="input3" class="input-with-select">
-              <el-select v-model="select" slot="prepend" placeholder="课程">
+      <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
+        <el-form :model="form">
+          <el-form-item label="" :label-width="formLabelWidth">
+            <div style="margin-top: 15px">
+              <el-input v-model="input3" class="input-with-select">
+                <el-select v-model="select" slot="prepend" placeholder="课程">
+                  <el-option label="餐厅名" value="1"></el-option>
+                  <el-option label="订单号" value="2"></el-option>
+                  <el-option label="用户电话" value="3"></el-option>
+                </el-select>
+                <el-button slot="append" icon="el-icon-search"></el-button>
+              </el-input>
+            </div>
+          </el-form-item>
+          <el-form-item label="活动区域" :label-width="formLabelWidth">
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisibles = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisibles = false"
+            >确 定</el-button
+          >
+        </div>
+      </el-dialog>
+
+      <!-- 添加学员 -->
+      <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
+        <h2></h2>
+        <div style="height: 440px">
+          <!-- 左 -->
+          <div style="width: 405px; float: left">
+            <el-input
+              placeholder="请输入内容"
+              v-model="input3"
+              style="width: 400px; margin-bottom: 5px"
+              class="input-with-select"
+            >
+              <el-select v-model="select" slot="prepend" placeholder="请选择">
                 <el-option label="餐厅名" value="1"></el-option>
                 <el-option label="订单号" value="2"></el-option>
                 <el-option label="用户电话" value="3"></el-option>
               </el-select>
               <el-button slot="append" icon="el-icon-search"></el-button>
             </el-input>
+            <ul
+              style="height: 400px; width: 100%; overflow: auto"
+              class="scroll"
+            >
+              <li
+                style="
+                  height: 50px;
+                  width: 350px;
+                  line-height: 50px;
+                  border-bottom: 1px solid red;
+                "
+                v-for="(res, index) in xueyuan_list"
+                :key="index"
+              >
+                <input
+                  type="checkbox"
+                  class="kuang"
+                  v-model="xueyuan_list1"
+                  :value="res.name"
+                />
+                <span class="rento"></span>
+                {{ res.name }}
+              </li>
+            </ul>
           </div>
-        </el-form-item>
-        <el-form-item label="活动区域" :label-width="formLabelWidth">
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisibles = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisibles = false"
-          >确 定</el-button
-        >
-      </div>
-    </el-dialog>
-
-    <!-- 添加学员 -->
-    <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
-      <h2></h2>
-      <div style="height: 440px">
-        <!-- 左 -->
-        <div style="width: 405px; float: left">
-          <el-input
-            placeholder="请输入内容"
-            v-model="input3"
-            style="width: 400px; margin-bottom: 5px"
-            class="input-with-select"
-          >
-            <el-select v-model="select" slot="prepend" placeholder="请选择">
-              <el-option label="餐厅名" value="1"></el-option>
-              <el-option label="订单号" value="2"></el-option>
-              <el-option label="用户电话" value="3"></el-option>
-            </el-select>
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
-          <ul
-            style="height: 400px; width: 100%; overflow: auto"
-            class="scroll"
-          >
-            <li
+          <!-- 右 -->
+          <div style="float: left; margin-left: 30px; width: 50%">
+            <span> 已选学员( {{ xueyuan_list1.length }} ) </span>
+            <span class="lj"></span>
+            <span
               style="
-                height: 50px;
-                width: 350px;
-                line-height: 50px;
-                border-bottom: 1px solid red;
-              "
-              v-for="(res, index) in xueyuan_list"
-              :key="index"
-            >
-              <input
-                type="checkbox"
-                class="kuang"
-                v-model="xueyuan_list1"
-                :value="res.name"
-              />
-              <span class="rento"></span>
-              {{ res.name }}
-            </li>
-          </ul>
-        </div>
-        <!-- 右 -->
-        <div style="float: left; margin-left: 30px;width:50%">
-          <span> 已选学员( {{ xueyuan_list1.length }} ) </span>
-          <span class="lj"></span>
-          <span
-            style="
-              position: relative;
-              left: 280px;
-              top: 8px;
-              display: inline-block;
+                position: relative;
+                left: 280px;
+                top: 8px;
+                display: inline-block;
                 cursor: pointer;
-            " @click="xueyuan_list1=[]"
-            >清空</span
-          >
-
-          <ul
-            style="height: 400px; width: 100%; overflow: auto"
-            class="scroll"
-          >
-            <li
-              style="height: 50px; width: 400px; line-height: 50px;border-bottom: 1px solid red;"
-              v-for="(res, index) in xueyuan_list1"
-              :key="index"
+              "
+              @click="xueyuan_list1 = []"
+              >清空</span
             >
-              <span class="rento"></span>
-              <span class="lj1" @click=" xueyuan_list1.splice(index,1)"></span>
-              {{ res }}
-            </li>
-          </ul>
+
+            <ul
+              style="height: 400px; width: 100%; overflow: auto"
+              class="scroll"
+            >
+              <li
+                style="
+                  height: 50px;
+                  width: 400px;
+                  line-height: 50px;
+                  border-bottom: 1px solid red;
+                "
+                v-for="(res, index) in xueyuan_list1"
+                :key="index"
+              >
+                <span class="rento"></span>
+                <span
+                  class="lj1"
+                  @click="xueyuan_list1.splice(index, 1)"
+                ></span>
+                {{ res }}
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisibles = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisibles = false"
-          >确 定</el-button
-        >
-      </div>
-    </el-dialog>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisibles = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisibles = false"
+            >确 定</el-button
+          >
+        </div>
+      </el-dialog>
 
       <!-- </el-dialog> -->
       <!-- <router-view></router-view> -->
@@ -633,10 +697,10 @@
 export default {
   data() {
     return {
-        counts:0,
-      pagesize:7,
-      pagenum:1,
-      formLabelWidth:'100%',
+      counts: 0,
+      pagesize: 7,
+      pagenum: 1,
+      formLabelWidth: "100%",
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -740,14 +804,14 @@ export default {
         radio: "1",
       },
       checked: "",
-      litt:"",
+      litt: "",
       relative: "",
       list: [],
       liet: [],
-      xueyuan_list1:[],
-      xueyuan_list:[],
-      value01:"",
-      value02:"",
+      xueyuan_list1: [],
+      xueyuan_list: [],
+      value01: "",
+      value02: "",
       startTime: "",
       endTime: "",
       startTimes: "",
@@ -812,7 +876,7 @@ export default {
   created() {
     this.loaddata();
     this.courses();
-    this.xueyuan__list()
+    this.xueyuan__list();
     //初始化主讲老师列表
     this.addTeacherList();
     //初始化助教老师列表
@@ -833,9 +897,9 @@ export default {
       let that = this;
       that.$http.get(
         "/api/classes/list",
-        {page:this.pagenum,psize:this.pagesize},
+        { page: this.pagenum, psize: this.pagesize },
         (success) => {
-          that.counts = success.data.counts
+          that.counts = success.data.counts;
           that.list = success.data.list;
           // console.log(success.data.list);
         },
@@ -877,7 +941,8 @@ export default {
     add: function () {
       let that = this;
       // console.log(that.form);
-      that.$http.post("/api/classes/add",
+      that.$http.post(
+        "/api/classes/add",
         JSON.stringify(this.form),
         (success) => {
           that.dialogFormVisible = false;
@@ -929,7 +994,6 @@ export default {
       console.log("学员列表", this.xueyuan_list);
     },
 
-    
     uplad(index) {
       let that = this;
       that.title = "修改班级";
@@ -937,7 +1001,7 @@ export default {
       that.form = that.list[index];
       // console.log(that.form)
     },
-       //是否添加助教
+    //是否添加助教
     addTeachingAssistants() {
       if (this.isAddAssistant) {
         this.isAddAssistant = false;
@@ -954,7 +1018,7 @@ export default {
         this.scheduleList.addtype = "one";
       } else {
         this.scheduleList.addtype = "more";
-        this.scheduleList.jsfs == "按课节"
+        this.scheduleList.jsfs == "按课节";
       }
       this.scheduleList.weektime = [
         {
@@ -975,8 +1039,8 @@ export default {
     },
 
     //单次排课，点击减号减除数据
-    delOnceTime(index){
-       this.scheduleList.weektime.splice(index,1)
+    delOnceTime(index) {
+      this.scheduleList.weektime.splice(index, 1);
     },
 
     //点击加号给星期index，添加一个新的list[]模板
@@ -1056,9 +1120,9 @@ export default {
     },
 
     //添加学生选中数据成功
-    checkStuInfo(val){
-      this.isAddStu = false
-      this.scheduleList.studentlist = val
+    checkStuInfo(val) {
+      this.isAddStu = false;
+      this.scheduleList.studentlist = val;
     },
     //保存
     commit() {
@@ -1090,10 +1154,10 @@ export default {
         }
       );
     },
-    handleCurrentChange(currPage){
-				this.pagenum = currPage;
-				this.loaddata();
-			},
+    handleCurrentChange(currPage) {
+      this.pagenum = currPage;
+      this.loaddata();
+    },
   },
 };
 </script>
@@ -1159,7 +1223,6 @@ export default {
   left: 340px;
   display: inline-block;
   cursor: pointer;
-
 }
 
 .kuang {
@@ -1169,10 +1232,6 @@ export default {
   position: relative;
   top: 4px;
 }
-
-
-
-
 
 .week-time {
   margin: 20px 20px 20px 0px;
@@ -1196,161 +1255,160 @@ export default {
   margin-bottom: 20px;
 }
 
+table {
+  font-size: 19px;
+  width: 100%;
+}
+.group {
+  padding: 20px;
+  margin: 20px;
+  background-color: #fff;
+}
 
-  table {
-    font-size: 19px;
-    width: 100%;
-  }
-  .group {
-    padding: 20px;
-    margin: 20px;
-    background-color: #fff;
-  }
+.top td > .el-select {
+  margin: 11px 0px;
+}
 
-  .top td > .el-select {
-    margin: 11px 0px;
-  }
+.top td {
+  padding-right: 40px;
+}
 
-  .top td {
-    padding-right: 40px;
-  }
+.addchange {
+  display: none;
+}
+.clickaddHelpteacher {
+  display: block;
+}
 
-  .addchange {
-    display: none;
-  }
-  .clickaddHelpteacher {
-    display: block;
-  }
+/* 中间 */
+.middle {
+  margin-top: 20px;
+}
 
-  /* 中间 */
-  .middle {
-    margin-top: 20px;
-  }
+.middle .tabTitle {
+  width: 220px;
+  cursor: pointer;
+}
+.changetab {
+  /* 选中tab */
+  height: 40px;
+  border-bottom: 2px solid #3e9eff;
+  display: inline-block;
+}
+.middle:first-of-type td span:nth-of-type(2) {
+  float: right;
+}
+.center td {
+  padding-right: 180px;
+}
 
-  .middle .tabTitle {
-    width: 220px;
-    cursor: pointer;
-  }
-  .changetab {
-    /* 选中tab */
-    height: 40px;
-    border-bottom: 2px solid #3e9eff;
-    display: inline-block;
-  }
-  .middle:first-of-type td span:nth-of-type(2) {
-    float: right;
-  }
-  .center td {
-    padding-right: 180px;
-  }
+.checkcontont td {
+  width: 230px;
+  padding-right: 25px;
+  padding-bottom: 30px;
+}
 
-  .checkcontont td {
-    width: 230px;
-    padding-right: 25px;
-    padding-bottom: 30px;
-  }
+.time {
+  padding-top: 14px;
+}
+.add {
+  position: relative;
+  top: 10px;
+}
 
-  .time {
-    padding-top: 14px;
-  }
-  .add {
-    position: relative;
-    top: 10px;
-  }
+/* 引入精灵图 */
+.elf {
+  width: 24px;
+  height: 24px;
+  background-image: url("./img/10.png");
+  background-repeat: no-repeat;
+}
+.userCap {
+  display: inline-block;
+  background-position: -2px -630px;
+}
+.box .user > div {
+  margin-top: 30px;
+  margin-right: 100px;
+  float: left;
+}
+/* 引入精灵图 */
 
-  /* 引入精灵图 */
-  .elf {
-    width: 24px;
-    height: 24px;
-    background-image: url("./img/10.png");
-    background-repeat: no-repeat ;
-  }
-  .userCap {
-    display: inline-block;
-    background-position: -2px -630px;
-  }
-  .box .user > div {
-    margin-top: 30px;
-    margin-right: 100px;
-    float: left;
-  }
-  /* 引入精灵图 */
+.box tr td {
+  width: 100%;
+  float: left;
+}
+.box tr td .students {
+  font-size: 20px;
+  margin-top: 26px;
+}
+.box tr td .students span {
+  margin-left: 30px;
+}
+.box tr td .students a {
+  margin-left: 7px;
+  text-decoration: none;
+  color: #4281fc;
+  font-weight: normal;
+}
+.box tr td:nth-of-type(2) div {
+  float: left;
+  background: url("./img/10.png");
+  /* background-repeat: no-repeat ; */
+  background-position: 0px -620px;
+  margin: 27px 100px 20px 10px;
+  padding-left: 32px;
+}
+.box tr td:nth-of-type(2) {
+  height: auto;
+  line-height: 50px;
+}
+@font-face {
+  font-family: "iconfont";
+  src: url("//at.alicdn.com/t/font_2397874_f8g10mwklol.eot?t=1614758616054"); /* IE9 */
+  src: url("//at.alicdn.com/t/font_2397874_f8g10mwklol.eot?t=1614758616054#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */
+      url("data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAMMAAsAAAAABrgAAAK9AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCCcAqBPIFQATYCJAMICwYABCAFhG0HOBv+BVGUrMkO2Y/D2D1SYi3a4ITDp+0RE/PHJoKn/dJ5+/cwBCoFAAksAUnWhWWJhCO0VXFRlYCadWtv+/00JRY258uyqh2wQv8g7wPnp3R+Tk+p+bFws5u8dpsW7XymAw2y5sc9vkZxikWS/cXhtHneBTK/wbnMNTDqAoy3BjrWoMgKJPSG6VXDpYQBPE6gbqKxyoaLu0doy/C4QFwMPAXtnFeWw0RVKNcszeKWkmq6nN7hpvp+/LU0qiSlAi7ZevrcwvrHfJJSjDRGHBQIPgJaXUKB+UAmdtZGN6uJEF9Tj9ZNBfsqDH7MbzSEXuxVI8K/Duc3gz7IvSce499qfgIZ9q4ADo66npzq62qO/joY7bOWqd9rY4ea3H86DiCarg5V0+XHZ/f7a+fIven9t7Pp/bSHio8W2dr84d5VucXKNyN5ojOmTmu7k7btU5e238kxTm+f1nHnLi0Z/5rMg9IUhCWuh/2bNg6PF8vHinghivX/f5v7U1nxIweT6Q8VGqgOBmQ7nA61IjlgDUBjJCuG/+pvLGr9Hx8ZrfhXbcrg+ynzrvj97KB6blvwD3k9a3IswIp0NVxkS1Zk3BKwoI4G7Oz0O1bZc8PmUM3xQkgqJkChajoyY+dDSZPlUFa1GurmuVzdpAuriVzDXC8AQrtXSFqNQaHdGzJjf6Ck1x+UtUcBdbuja8smM+Ncdz2TErKojxiYLHXUIF1deE/eNlacFSjCM3EZBHCxcHExcUkp8Rwzyp23FHHoOEvwApxGcZxhzllIRqa+SL6aLTpd96apyRLoWo8RRRALaUcoYGRSTjQW3dLn7xHPVkzhlqoR8zPCSkH/aGFq3gN5KU17Vd3LK6Udz5IQDnJYJoEuwCASi2VQXj8oRAwx5Y8I51ZmpJ7rK52uL0++bhPUYVUKUlJovRSoNGSVTOlxq1IAAAAA")
+      format("woff2"),
+    url("//at.alicdn.com/t/font_2397874_f8g10mwklol.woff?t=1614758616054")
+      format("woff"),
+    url("//at.alicdn.com/t/font_2397874_f8g10mwklol.ttf?t=1614758616054")
+      format("truetype"),
+    /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+      url("//at.alicdn.com/t/font_2397874_f8g10mwklol.svg?t=1614758616054#iconfont")
+      format("svg"); /* iOS 4.1- */
+}
 
-  .box tr td {
-    width: 100%;
-    float: left;
-  }
-  .box tr td .students {
-    font-size: 20px;
-    margin-top: 26px;
-  }
-  .box tr td .students span {
-    margin-left: 30px;
-  }
-  .box tr td .students a {
-    margin-left: 7px;
-    text-decoration: none;
-    color: #4281fc;
-    font-weight: normal;
-  }
-  .box tr td:nth-of-type(2) div {
-    float: left;
-    background: url("./img/10.png");
-    /* background-repeat: no-repeat ; */
-    background-position: 0px -620px;
-    margin: 27px 100px 20px 10px;
-    padding-left: 32px;
-  }
-  .box tr td:nth-of-type(2) {
-    height: auto;
-    line-height: 50px;
-  }
-  @font-face {
-    font-family: "iconfont";
-    src: url("//at.alicdn.com/t/font_2397874_f8g10mwklol.eot?t=1614758616054"); /* IE9 */
-    src: url("//at.alicdn.com/t/font_2397874_f8g10mwklol.eot?t=1614758616054#iefix")
-        format("embedded-opentype"),
-      /* IE6-IE8 */
-        url("data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAMMAAsAAAAABrgAAAK9AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCCcAqBPIFQATYCJAMICwYABCAFhG0HOBv+BVGUrMkO2Y/D2D1SYi3a4ITDp+0RE/PHJoKn/dJ5+/cwBCoFAAksAUnWhWWJhCO0VXFRlYCadWtv+/00JRY258uyqh2wQv8g7wPnp3R+Tk+p+bFws5u8dpsW7XymAw2y5sc9vkZxikWS/cXhtHneBTK/wbnMNTDqAoy3BjrWoMgKJPSG6VXDpYQBPE6gbqKxyoaLu0doy/C4QFwMPAXtnFeWw0RVKNcszeKWkmq6nN7hpvp+/LU0qiSlAi7ZevrcwvrHfJJSjDRGHBQIPgJaXUKB+UAmdtZGN6uJEF9Tj9ZNBfsqDH7MbzSEXuxVI8K/Duc3gz7IvSce499qfgIZ9q4ADo66npzq62qO/joY7bOWqd9rY4ea3H86DiCarg5V0+XHZ/f7a+fIven9t7Pp/bSHio8W2dr84d5VucXKNyN5ojOmTmu7k7btU5e238kxTm+f1nHnLi0Z/5rMg9IUhCWuh/2bNg6PF8vHinghivX/f5v7U1nxIweT6Q8VGqgOBmQ7nA61IjlgDUBjJCuG/+pvLGr9Hx8ZrfhXbcrg+ynzrvj97KB6blvwD3k9a3IswIp0NVxkS1Zk3BKwoI4G7Oz0O1bZc8PmUM3xQkgqJkChajoyY+dDSZPlUFa1GurmuVzdpAuriVzDXC8AQrtXSFqNQaHdGzJjf6Ck1x+UtUcBdbuja8smM+Ncdz2TErKojxiYLHXUIF1deE/eNlacFSjCM3EZBHCxcHExcUkp8Rwzyp23FHHoOEvwApxGcZxhzllIRqa+SL6aLTpd96apyRLoWo8RRRALaUcoYGRSTjQW3dLn7xHPVkzhlqoR8zPCSkH/aGFq3gN5KU17Vd3LK6Udz5IQDnJYJoEuwCASi2VQXj8oRAwx5Y8I51ZmpJ7rK52uL0++bhPUYVUKUlJovRSoNGSVTOlxq1IAAAAA")
-        format("woff2"),
-      url("//at.alicdn.com/t/font_2397874_f8g10mwklol.woff?t=1614758616054")
-        format("woff"),
-      url("//at.alicdn.com/t/font_2397874_f8g10mwklol.ttf?t=1614758616054")
-        format("truetype"),
-      /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
-        url("//at.alicdn.com/t/font_2397874_f8g10mwklol.svg?t=1614758616054#iconfont")
-        format("svg"); /* iOS 4.1- */
-  }
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 18px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  .iconfont {
-    font-family: "iconfont" !important;
-    font-size: 18px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+.icon-tianjiarenyuan:before {
+  content: "\e62c";
+  color: #4281fc;
+}
 
-  .icon-tianjiarenyuan:before {
-    content: "\e62c";
-    color: #4281fc;
-  }
-
-  .create {
-    cursor: pointer;
-    color: #e3e3e3;
-    border: 1px solid #e3e3e3;
-    width: 37px;
-    height: 37px;
-    border-radius: 3px;
-    text-align: center;
-    line-height: 37px;
-    position: relative;
-    top: 3px;
-  }
-  .week {
-    padding-top: 25px;
-    padding-left: 7px;
-  }
+.create {
+  cursor: pointer;
+  color: #e3e3e3;
+  border: 1px solid #e3e3e3;
+  width: 37px;
+  height: 37px;
+  border-radius: 3px;
+  text-align: center;
+  line-height: 37px;
+  position: relative;
+  top: 3px;
+}
+.week {
+  padding-top: 25px;
+  padding-left: 7px;
+}
 
 .btn {
   width: 100%;
@@ -1647,5 +1705,4 @@ li {
   color: #1890ff;
   font-size: 14px;
 }
-
 </style>

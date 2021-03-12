@@ -53,36 +53,43 @@
               v-model="selectList"
               :value="res"
             />
-            <!-- <span class="kuang" @click="xuanzhong(res.id)" /> -->
           </td>
           <td><span class="kuang-1" /> {{ res.name }}</td>
-          <td>{{ res.sex }}</td>
+          <td>{{ res.sex == 1 ? "男" : "女" }}</td>
           <td>{{ res.kecheng }}</td>
           <td>{{ res.num }}</td>
           <td>{{ res.shengyu }}</td>
           <td>
-            <el-button class="paiban" @click="gouke = true"
-              >购买课程</el-button
+            <el-button class="paiban" @click="gouke = true">购买课程</el-button>
+            <el-button class="paiban" @click="xueyuan_del(res.id)"
+              >删除</el-button
+            >
+            <el-button class="paiban" @click="xueyuan_xiu(index)"
+              >修改</el-button
             >
           </td>
         </tr>
       </table>
 
-      <div style="margin-left:550px;">
-      <div v-if="counts <= 8">
-        <div class="page">
-          共<font class="page-num">{{ counts }}</font>条记录
+      <div style="margin-left: 550px">
+        <div v-if="counts <= 8">
+          <div class="page">
+            共<font class="page-num">{{ counts }}</font
+            >条记录
+          </div>
+        </div>
+        <div v-else>
+          <el-pagination
+            class="pagenation"
+            :page-size="pagesize"
+            background
+            layout="prev, pager, next"
+            :total="counts"
+            @current-change="handleCurrentChange"
+          >
+          </el-pagination>
         </div>
       </div>
-      <div v-else>
-        <el-pagination class="pagenation" :page-size="pagesize" background layout="prev, pager, next" :total="counts" @current-change="handleCurrentChange">
-        </el-pagination>
-      </div>
-    </div>
-
-
-
-
 
   <!-- 购买课程 -->
   
@@ -147,15 +154,9 @@
         <el-button type="primary" >确定</el-button>
       </div>
     </el-dialog>
-  
- 
+      <!-- 添加学员 -->
 
-
-     
-
-     <!-- 添加学员 -->
-
-      <el-dialog title="添加学员" :visible.sync="dialogFormVisible">
+      <el-dialog :title="titles" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="姓名" :label-width="formLabelWidth">
             <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -166,31 +167,30 @@
           <el-form-item label="性别" :label-width="formLabelWidth">
             <!-- <el-input v-model="form.tel" autocomplete="off"></el-input> -->
             <input type="radio" v-model="form.sex" name="sex" value="1" />男
-            <input type="radio" v-model="form.sex" name="sex" value="2" />女
+            <input type="radio" v-model="form.sex" name="sex" value="0" />女
           </el-form-item>
           <el-form-item label="出生日期" :label-width="formLabelWidth">
             <div class="block">
               <el-date-picker
-                v-model="form.value1"
+                v-model="form.birthday"
                 type="date"
                 placeholder="选择日期"
+                value-format="yyyy-MM-dd"
               >
               </el-date-picker>
             </div>
           </el-form-item>
           <el-form-item label="学员编号" :label-width="formLabelWidth">
-            <el-input v-model="form.id" autocomplete="off"></el-input>
+            <el-input v-model="form.num" autocomplete="off"></el-input>
           </el-form-item>
 
           <el-form-item label="备注" :label-width="formLabelWidth">
-            <textarea na v-model="form.beizhu" id="" cols="55" rows="10" />
+            <textarea na v-model="form.remarks" id="" cols="55" rows="10" />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false"
-            >保 存</el-button
-          >
+          <el-button type="primary" @click="xueyuan_add">保 存</el-button>
         </div>
       </el-dialog>
 
@@ -269,6 +269,7 @@
                 </tr>
               </table>
             </el-tab-pane>
+
             <el-tab-pane label="一对一排课">
               <div>
                 *选择课程
@@ -367,14 +368,30 @@ export default {
   created() {
     this.xuyuan_list();
   },
+  watch: {
+    dialogFormVisible(c, v) {
+      console.log(c, v);
+      if (c === false) {
+        this.form = {
+          num: "", //学员编号
+          name: "", //名称
+          tel: "", //手机号
+          sex: 1, //性别
+          birthday: "", //日期
+          remarks: "", //备注
+        };
+      }
+    },
+  },
 
   data() {
     return {
       title: "购课",
-      counts:0,
-      pagesize:7,
-      pagenum:1,
-      value:"",
+      titles: "添加学员",
+      counts: 0,
+      pagesize: 7,
+      pagenum: 1,
+      value: "",
       selectList: [],
       activeName: "first", //一对一排课 选择
       time: "",
@@ -389,18 +406,12 @@ export default {
       dialogFormVisible: false,
       gouke: false,
       form: {
-        id: "", //学员编号
+        num: "", //学员编号
         name: "", //名称
         tel: "", //手机号
         sex: 1, //性别
-        value1: "", //日期
-        beizhu: "", //备注
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
+        birthday: "", //日期
+        remarks: "", //备注
       },
       form1: {},
       form2:{
@@ -428,29 +439,55 @@ export default {
     };
   },
   methods: {
-    xuan() {},
+    xueyuan_del(id) {
+      let tath = this;
+      tath.$http.get(
+        "/api/students/delete",
+        { id: id },
+        (success) => {
+          console.log(success);
+          this.xuyuan_list();
+        },
+        (fall) => {}
+      );
+    },
+    xueyuan_add() {
+      console.log(this.form);
+      let that = this;
+      that.$http.post(
+        "/api/students/add",
+        JSON.stringify(this.form),
+        (success) => {
+          this.xuyuan_list();
+          // console.log(success);
+          this.dialogFormVisible = false;
+        },
+        (fall) => {
+          console.log(fall);
+        }
+      );
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
     xuyuan_list() {
       let that = this;
-        that.$http.get(
-          "/api/students/list",
-          { page:this.pagenum,psize:this.pagesize },
-          (success) => {
-            that.counts = success.data.counts
-            that.list=success.data.list
-          },
-          (failure) => {
-            console.log(failure);
-          }
-        );
-     
+      that.$http.get(
+        "/api/students/list",
+        { page: this.pagenum, psize: this.pagesize },
+        (success) => {
+          that.counts = success.data.counts;
+          that.list = success.data.list;
+        },
+        (failure) => {
+          console.log(failure);
+        }
+      );
     },
-    handleCurrentChange(currPage){
-				this.pagenum = currPage;
-				this.xuyuan_list();
-			},
+    handleCurrentChange(currPage) {
+      this.pagenum = currPage;
+      this.xuyuan_list();
+    },
 
     checkAll() {
       if (this.selectList.length > 0) {
@@ -458,6 +495,23 @@ export default {
       } else {
         this.selectList = this.list.slice(0);
       }
+    },
+    xueyuan_xiu(index) {
+      console.log(this.list[index]);
+      var shuju = this.list[index];
+      this.form = {
+        id: shuju.id,
+        num: shuju.num, //学员编号
+        name: shuju.name, //名称
+        tel: shuju.tel, //手机号
+        sex: shuju.sex, //性别
+        birthday: shuju.birthday, //日期
+        remarks: shuju.remarks, //备注
+      };
+      console.log(this.form);
+      this.titles = "修改学员信息";
+      this.dialogFormVisible = true;
+      // form.
     },
   },
 };
@@ -640,7 +694,8 @@ td:hover .paiban {
   top: 10px;
   left: 20px;
 }
-.kuang-1 {
+ */
+/* .kuang-1 {
   background: url("../../assets/ico.png") -2px 421px;
   width: 34px;
   height: 34px;
@@ -663,7 +718,7 @@ tr {
   background: #e9eef3;
   /* line-height: 70px; */
   font-size: 19px;
-    
+
   border-top: 1px solid #e9eef3;
   border-bottom: 1px solid #e9eef3;
 }
@@ -751,7 +806,7 @@ tr {
   width: 27px;
   height: 28px;
 }
-
+ 
 .el-main1 {
   background-color: #fff;
   color: #333;
