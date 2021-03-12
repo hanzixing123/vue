@@ -11,8 +11,13 @@
           @click="dialogFormVisible = true"
           class="right-two"
         >
+<<<<<<< HEAD
+          <!-- <img src="@/assets/007.png" /> -->
+=======
+>>>>>>> ebd8c7404e675c12f91a1f29d568b40728573c8b
           <span>添加班级</span>
         </el-button>
+        <!-- Form -->
         <el-dialog :title="title" :visible.sync="dialogFormVisible">
           <el-form v-model="form">
             <el-form-item label="所选课程">
@@ -564,7 +569,13 @@
           </ul>
         </div>
         <div slot="footer" class="dialog-footer">
+<<<<<<< HEAD
+          <el-button type="primary" @click="dialogFormVisible1 = false"
+            >保存</el-button
+          >
+=======
           <el-button type="primary" @click="commit()">保存</el-button>
+>>>>>>> ebd8c7404e675c12f91a1f29d568b40728573c8b
         </div>
       </el-dialog>
       <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
@@ -972,7 +983,7 @@ export default {
     },
     xueyuan__list() {
       let that = this;
-      for (var i = 1; i <= 5; i++) {
+      for (var i = 1; i <= 4; i++) {
         that.$http.get(
           "/api/students/list",
           { page: i },
@@ -1048,7 +1059,7 @@ export default {
       });
       console.log(11);
     },
-    //点击减号给给ind这个组的list 减少一个list[] 模板
+    //点击减号给给ind这个组的list，减少一个list[]模板
     deltime(ind, index) {
       this.weekArray[ind].list.splice(index, -1);
     },
