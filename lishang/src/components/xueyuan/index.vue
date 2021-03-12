@@ -255,7 +255,8 @@
             </el-input>
           </el-form-item>
         </el-form>
-
+          <font color="red">总金额<span style="color:blue;">￥{{total}}</span></font>
+          <font color="red">已优惠<span style="color:blue;">￥{{form2.coursecounts * form2.price -  total}}</span></font>
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="goke()">确定</el-button>
         </div>
@@ -703,16 +704,9 @@ export default {
       console.log(form2.discountper);
       var sum = 0;
       if (form2.discounttype == "2") {
-        sum =
-          (Number(form2.price) *
-            Number(form2.coursecounts) *
-            Number(form2.discountper)) /
-          10;
-        // return sum; //-Number(form2.discountper);
+        sum =(Number(form2.price) *Number(form2.coursecounts) *Number(form2.discountper)) /10;
       } else {
-        sum =
-          Number(form2.price) * Number(form2.coursecounts) -
-          Number(form2.discountprice);
+        sum =Number(form2.price) * Number(form2.coursecounts) -Number(form2.discountprice);
       }
       // console.log(sum);
       return sum;
