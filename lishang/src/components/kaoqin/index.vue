@@ -145,7 +145,8 @@
     </div>
   </div>
 </template>
-<script>
+
+<script scoped>
 export default {
   data() {
     return {
@@ -200,6 +201,8 @@ export default {
       value2: "",
     };
   },
+
+  methods: {},
   created() {
     this.courses();
   },

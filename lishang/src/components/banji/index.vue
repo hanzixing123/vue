@@ -11,7 +11,10 @@
           @click="dialogFormVisible = true"
           class="right-two"
         >
+<<<<<<< HEAD
           <!-- <img src="@/assets/007.png" /> -->
+=======
+>>>>>>> ebd8c7404e675c12f91a1f29d568b40728573c8b
           <span>添加班级</span>
         </el-button>
         <!-- Form -->
@@ -566,9 +569,13 @@
           </ul>
         </div>
         <div slot="footer" class="dialog-footer">
+<<<<<<< HEAD
           <el-button type="primary" @click="dialogFormVisible1 = false"
             >保存</el-button
           >
+=======
+          <el-button type="primary" @click="commit()">保存</el-button>
+>>>>>>> ebd8c7404e675c12f91a1f29d568b40728573c8b
         </div>
       </el-dialog>
       <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
@@ -1054,7 +1061,7 @@ export default {
     },
     //点击减号给给ind这个组的list，减少一个list[]模板
     deltime(ind, index) {
-      this.weekArray[ind].list.splice(index, 1);
+      this.weekArray[ind].list.splice(index, -1);
     },
 
     //点击星期选中(取消选中)
@@ -1147,6 +1154,7 @@ export default {
           this.scheduleList = {};
           this.$emit("addSched");
           console.log(success);
+          dialogFormVisible1 = false;
         },
         (fail) => {
           this.$message.error("班级排课失败");
@@ -1231,6 +1239,15 @@ export default {
   margin-left: 10px;
   position: relative;
   top: 4px;
+}
+.rento {
+  background: url("../../assets/ico.png") 0px 420px;
+  width: 30px;
+  height: 30px;
+  padding-right: 5px;
+  position: relative;
+  top: 8px;
+  display: inline-block;
 }
 
 .week-time {
@@ -1475,6 +1492,7 @@ table {
   margin-top: -18px;
   cursor: pointer;
   color: blue;
+  width: 90px;
   font-size: 14px;
 }
 
