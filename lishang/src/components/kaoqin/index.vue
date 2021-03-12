@@ -169,6 +169,8 @@ export default {
       textarea: "",
     };
   },
+
+  methods: {},
   created() {
     this.kaoqin_list();
   },
