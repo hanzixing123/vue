@@ -71,13 +71,9 @@ export default {
 </script>
 
 
-
 <style>
 .kecheng {
   width: 163px;
-}
-.li {
-  width: 1385px;
   height: 51px;
   /* line-height: 51px; */
   margin-top: 49px;
