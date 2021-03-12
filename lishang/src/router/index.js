@@ -2,6 +2,16 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import banji from '@/components/banji/index'
+
+
+import dateTime from "../../api/time.js"
+//  Vue.filter("dateFormatHHmm",dateTime["dateFormatHHmm"]);
+//  Vue.filter("dateFormatYYmmdd",dateTime["dateFormatYYmmdd"]);
+for(let key in dateTime){
+  Vue.filter(key,dateTime[key]);
+}
+
+
 Vue.use(Router)
 const originalPush = Router.prototype.push;
 Router.prototype.push = function push(location) {

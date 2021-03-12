@@ -10,7 +10,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {'/api':{
+<<<<<<< HEAD
       port:8889,target:'http://www.eshareedu.cn/edusystems/api/',   // 要代理的接口地址
+=======
+      port:8889,target:'http://192.168.1.159:8888/edusystems/api/',   // 要代理的接口地址
+>>>>>>> ba9d1bf4cd206ea8ec5d9b91035502682c94b55d
       changeOrigin:true,                            // 允许跨域
       pathRewrite:{'^/api':''}            // 接口名重写
     }
@@ -18,7 +22,11 @@ module.exports = {
   
     proxyTable: {
       '/api': {
+<<<<<<< HEAD
         port: 2121, target: 'http://www.eshareedu.cn/edusystems/api/',   // 要代理的接口地址
+=======
+        port: 2121, target: 'http://192.168.1.159:8888/edusystems/api/',   // 要代理的接口地址
+>>>>>>> ba9d1bf4cd206ea8ec5d9b91035502682c94b55d
         changeOrigin: true,                            // 允许跨域
         pathRewrite: { '^/api': '' }            // 接口名重写
       }
