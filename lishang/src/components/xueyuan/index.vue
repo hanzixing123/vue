@@ -35,8 +35,14 @@
       <table class="table">
         <tr align="center">
           <td>
-            <input type="checkbox" class="kuang" @click="checkAll" />
-            <!-- <span class="kuang" @click="xuan" /> -->
+            <input
+              type="checkbox"
+              class="kuang"
+              @click="checkAll"
+              :checked="
+                selectList.length == list.length ? y_checked : n_checked
+              "
+            />
           </td>
           <td>学员名称</td>
           <td>性别</td>
@@ -53,6 +59,10 @@
               v-model="selectList"
               :value="res"
             />
+            <!-- :checked="ces(index,res.name)" -->
+            <!-- selectList[index].substr(0,selectList[index].indexOf('+',0)) == res.name?true:false -->
+            <!-- this.selectList[0].substr(0,this.selectList[0].indexOf("+",0)) -->
+            <!-- @click="checkAll(index)" -->
           </td>
           <td><span class="kuang-1" /> {{ res.name }}</td>
           <td>{{ res.sex == 1 ? "男" : "女" }}</td>
@@ -60,7 +70,9 @@
           <td>{{ res.num }}</td>
           <td>{{ res.shengyu }}</td>
           <td>
-            <el-button class="paiban" @click="gouke = true">购买课程</el-button>
+            <el-button class="paiban" @click="guoke(res.id)"
+              >购买课程</el-button
+            >
             <el-button class="paiban" @click="xueyuan_del(res.id)"
               >删除</el-button
             >
@@ -91,69 +103,163 @@
         </div>
       </div>
 
-  <!-- 购买课程 -->
-  
-<el-dialog :title="title" :visible.sync="gouke">
-      <el-form :model="form2">
-        <el-form-item class="wqs" label="合约类型" :label-width="formLabelWidth"><br>
-          <el-radio v-model="form2.radio" label="1" style="margin-left:-60px;">课时卡</el-radio>
-          <el-radio v-model="form2.radio" label="2">时段卡</el-radio>
-        </el-form-item>
-        <el-form-item class="kas" label="* 签约时间:" :label-width="formLabelWidth"><br>
-           <el-input v-model="form.shijian" autocomplete="off" style="margin-left:-80px;"></el-input>
-        </el-form-item>
+      <!-- 购买课程 -->
 
-        <el-form-item class="kiu" label="结束时间" :label-width="formLabelWidth"><br>
-            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+      <el-dialog :title="title" :visible.sync="gouke">
+        <el-form :model="form2">
+          <el-form-item
+            class="wqs"
+            label="合约类型"
+            :label-width="formLabelWidth"
+            ><br />
+            <el-radio
+              v-model="form2.ordertype"
+              label="0"
+              style="margin-left: -60px"
+              >课时卡</el-radio
+            >
+            <el-radio v-model="form2.ordertype" label="1">时段卡</el-radio>
+          </el-form-item>
+          <el-form-item
+            class="kas"
+            label="* 签约时间:"
+            :label-width="formLabelWidth"
+            ><br />
+            <el-input
+              v-model="form2.beigindate"
+              autocomplete="off"
+              style="margin-left: -80px"
+            ></el-input>
           </el-form-item>
 
-        <el-form-item class="kiuhs" label="* 签约课程" :label-width="formLabelWidth"><br>
-           
-        <el-select style="margin-left:-70px;" v-model="value" placeholder="请选择">
-        <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
-        </el-option>
-      </el-select>
-      <div class="yuts el-icon-plus"></div>
-          </el-form-item>
-           <el-form-item style="margin-left:280px;margin-top:-100px;width:250px;" label="课时数" :label-width="formLabelWidth"><br>
-            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
-          </el-form-item>
-          <el-form-item style="margin-left:420px;margin-top:-100px;width:250px;" label="课程单价" :label-width="formLabelWidth"><br>
-            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
-          </el-form-item>
-          <el-form-item style="margin-left:560px;margin-top:-100px;width:250px;" label="* 课程金额" :label-width="formLabelWidth"><br>
-            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          <el-form-item
+            class="kiu"
+            label="结束时间"
+            :label-width="formLabelWidth"
+            ><br />
+            <el-input
+              v-model="form2.enddate"
+              autocomplete="off"
+              style="margin-left: -80px"
+            ></el-input>
           </el-form-item>
 
-          <el-form-item style="margin-left:-20px;" label="折扣方式" :label-width="formLabelWidth"><br>
-            <el-radio v-model="form2.radios" label="1" style="margin-left:-60px;">直减</el-radio>
-          <el-radio v-model="form2.radios" label="2">折扣</el-radio>
+          <el-form-item
+            class="kiuhs"
+            label="* 签约课程"
+            :label-width="formLabelWidth"
+            ><br />
+
+            <el-select
+              style="margin-left: -70px"
+              v-model="form2.courseid"
+              placeholder="请选择"
+            >
+              <el-option
+                v-for="(item, index) in kc_list"
+                :key="index"
+                :label="item.name"
+                :value="item.id"
+              >
+                <!-- options -->
+              </el-option>
+            </el-select>
+            <div class="yuts el-icon-plus"></div>
+          </el-form-item>
+          <el-form-item
+            style="margin-left: 280px; margin-top: -100px; width: 250px"
+            label="课时数"
+            :label-width="formLabelWidth"
+            ><br />
+            <el-input
+              v-model="form2.coursecounts"
+              autocomplete="off"
+              style="margin-left: -80px"
+            ></el-input>
+          </el-form-item>
+          <el-form-item
+            style="margin-left: 420px; margin-top: -100px; width: 250px"
+            label="课程单价"
+            :label-width="formLabelWidth"
+            ><br />
+            <el-input
+              v-model="form2.price"
+              autocomplete="off"
+              style="margin-left: -80px"
+            ></el-input>
+          </el-form-item>
+          <el-form-item
+            style="margin-left: 560px; margin-top: -100px; width: 250px"
+            label="* 课程金额"
+            :label-width="formLabelWidth"
+            ><br />
+            <el-input
+              v-model="form2.sumprice"
+              autocomplete="off"
+              style="margin-left: -80px"
+            ></el-input>
+            <!-- {{ total }} -->
           </el-form-item>
 
-
-       <el-form-item label="优惠金额" style="width:300px;margin-left:200px;margin-top:-100px;" :label-width="formLabelWidth"><br>
-            <el-input v-model="form.jieshu" autocomplete="off" style="margin-left:-80px;"></el-input>
+          <el-form-item
+            style="margin-left: -20px"
+            label="折扣方式"
+            :label-width="formLabelWidth"
+            ><br />
+            <el-radio
+              v-model="form2.discounttype"
+              label="1"
+              style="margin-left: -60px"
+              >直减</el-radio
+            >
+            <el-radio v-model="form2.discounttype" label="2">折扣</el-radio>
           </el-form-item>
 
+          <el-form-item
+            label="优惠金额"
+            style="width: 300px; margin-left: 200px; margin-top: -100px"
+            :label-width="formLabelWidth"
+            ><br />
+            <!-- <el-input
+              v-model="
+                form2.discounttype == '2'
+                  ? form2.discountper
+                  : form2.discountprice
+              "
+              autocomplete="off"
+              style="margin-left: -80px"
+            ></el-input> -->
 
-        <el-form-item label="备注" style="margin-left:-50px;" :label-width="formLabelWidth"><br>
-                      <el-input style="margin-left:-50px; width:250px;"
+        <el-input v-show="form2.discounttype == '2'" v-model="form2.discountper" autocomplete="off" style="margin-left: -80px"></el-input>
+        <el-input v-show="form2.discounttype == '1'" v-model="form2.discountprice" autocomplete="off" style="margin-left: -80px"></el-input>
+
+
+
+
+
+            {{ form2.discounttype == "2" ? "折扣" : "直减" }}
+            <!-- {{ form2.total }} -->
+          </el-form-item>
+          <el-form-item
+            label="备注"
+            style="margin-left: -50px"
+            :label-width="formLabelWidth"
+            ><br />
+            <el-input
+              style="margin-left: -50px; width: 250px"
               type="textarea"
               :rows="2"
               placeholder="请输入内容"
-              v-model="form2.textarea">
-</el-input>
+              v-model="form2.remarks"
+            >
+            </el-input>
           </el-form-item>
-      </el-form>
+        </el-form>
 
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" >确定</el-button>
-      </div>
-    </el-dialog>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="goke()">确定</el-button>
+        </div>
+      </el-dialog>
       <!-- 添加学员 -->
 
       <el-dialog :title="titles" :visible.sync="dialogFormVisible">
@@ -193,9 +299,6 @@
           <el-button type="primary" @click="xueyuan_add">保 存</el-button>
         </div>
       </el-dialog>
-
-
-
 
       <el-dialog title="放学员名称..." :visible.sync="dialogFormVisible1">
         <el-form :model="form1">
@@ -357,6 +460,7 @@
           <el-button type="primary" @click="dialogFormVisible1 = false"
             >确 定</el-button
           >
+          <!--  -->
         </div>
       </el-dialog>
     </div>
@@ -367,6 +471,7 @@
 export default {
   created() {
     this.xuyuan_list();
+    this.kecheng_list();
   },
   watch: {
     dialogFormVisible(c, v) {
@@ -391,6 +496,9 @@ export default {
       counts: 0,
       pagesize: 7,
       pagenum: 1,
+      kc_list: [],
+      y_checked: true,
+      n_checked: false,
       value: "",
       selectList: [],
       activeName: "first", //一对一排课 选择
@@ -399,7 +507,6 @@ export default {
       list: [],
       input3: "",
       select: "",
-     
       dialogTableVisible: false,
       dialogTableVisible1: false,
       dialogFormVisible1: false,
@@ -414,31 +521,31 @@ export default {
         remarks: "", //备注
       },
       form1: {},
-      form2:{
-         radio: "1",
-         textarea: '',
+      form2: {
+        studentid: "",
+        ordertype: "0",
+        beigindate: "",
+        enddate: "",
+        courseid: "",
+        coursecounts: "",
+        price: "",
+        sumprice: "",
+        discounttype: "1",
+        remarks: "",
+        discountprice: "",
+        discountper: "",
       },
       formLabelWidth: "120px",
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: ''
     };
   },
   methods: {
+    // xiao(){
+    //     console.log(this.selectList.name);
+    //     if(this.selectList.length==6){
+    //       console.log("全选？");
+    //     }
+
+    // },
     xueyuan_del(id) {
       let tath = this;
       tath.$http.get(
@@ -478,6 +585,7 @@ export default {
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
+          console.log("580", that.list);
         },
         (failure) => {
           console.log(failure);
@@ -490,11 +598,13 @@ export default {
     },
 
     checkAll() {
-      if (this.selectList.length > 0) {
-        this.selectList = [];
+      if (this.selectList.length != this.list.length) {
+        this.selectList = this.list.map((item) => item.name + "+" + item.id);
       } else {
-        this.selectList = this.list.slice(0);
+        this.selectList = [];
       }
+      console.log(this.selectList);
+      // console.log();
     },
     xueyuan_xiu(index) {
       console.log(this.list[index]);
@@ -513,22 +623,114 @@ export default {
       this.dialogFormVisible = true;
       // form.
     },
+    kecheng_list() {
+      let tath = this;
+      tath.$http.get(
+        "/api/courses/list",
+        { page: 1 },
+        (success) => {
+          this.kc_list = success.data.list;
+          console.log(success);
+        },
+        (fall) => {}
+      );
+    },
+    goke() {
+      if (this.form2.discounttype == "2") {
+        this.form2.discounttype = "折扣";
+        this.form2.discountprice="";
+      } else {
+        this.form2.discounttype = "直减";
+        this.form2.discountper="";
+      }
+      if (this.form2.ordertype == "0") {
+        this.form2.ordertype = "课时卡";
+      } else {
+        this.form2.ordertype = "时段卡";
+      }
+      this.form2.courseid = this.form2.courseid.toString();
+      this.form2.sumprice = this.form2.sumprice.toString();
+      let tath = this;
+      console.log(JSON.stringify(tath.form2));
+      tath.$http.post(
+        "/api/students/addorder",
+        JSON.stringify(tath.form2),
+        (success) => {
+          this.gouke = false;
+          console.log(success);
+        },
+        (fall) => {
+          console.log(fall);
+        }
+      );
+    },
+    guoke(id) {
+      this.gouke = true;
+      this.form2.studentid = id.toString();
+    },
+    // ces(index,name){
+    //   if(this.selectList[index].substr(0,this.selectList[index].indexOf("+",0))==name){
+    //           // return true;
+    //     }
+    // }
+  },
+  watch: {
+    total(a, c) {
+      this.form2.sumprice = this.total;
+    },
+    gouke(z, c) {
+      if (z == false) {
+        this.form2 = {
+          studentid: "",
+          ordertype: "0",
+          beigindate: "",
+          enddate: "",
+          courseid: "",
+          coursecounts: "",
+          price: "",
+          sumprice: "",
+          discounttype: "1",
+          remarks: "",
+          discountprice: "",
+          discountper: "",
+        };
+      }
+    },
+  },
+  computed: {
+    total() {
+      var form2 = this.form2;
+      console.log(form2.discountper);
+      var sum = 0;
+      if (form2.discounttype == "2") {
+        sum =
+          (Number(form2.price) *
+            Number(form2.coursecounts) *
+            Number(form2.discountper)) /
+          10;
+        // return sum; //-Number(form2.discountper);
+      } else {
+        sum =
+          Number(form2.price) * Number(form2.coursecounts) -
+          Number(form2.discountprice);
+      }
+      // console.log(sum);
+      return sum;
+    },
   },
 };
 </script> 
 <style scoped>
-.el-icon-plus{
+.el-icon-plus {
   font-size: 30px;
   text-align: center;
   line-height: 40px;
- 
 }
-.kiuhs{
+.kiuhs {
   margin-left: -20px;
   margin-top: 40px;
- 
 }
-.yuts{
+.yuts {
   width: 40px;
   height: 40px;
   background-color: #dfe3ec;
@@ -536,12 +738,12 @@ export default {
   position: relative;
   top: 5px;
 }
-.kas{
+.kas {
   margin-left: 200px;
   margin-top: -100px;
   width: 300px;
 }
-.wqs{
+.wqs {
   margin-left: -20px;
 }
 td {
@@ -588,11 +790,10 @@ td:hover .paiban {
   width: 200px;
 }
 
-.kiu{
+.kiu {
   margin-left: 400px;
   margin-top: -100px;
   width: 300px;
-  
 }
 .san {
   float: left;
@@ -806,7 +1007,7 @@ tr {
   width: 27px;
   height: 28px;
 }
- 
+
 .el-main1 {
   background-color: #fff;
   color: #333;
