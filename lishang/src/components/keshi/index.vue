@@ -8,11 +8,9 @@
           {{ data.day.split("-").slice(2).join("-") }}
         </div>
         <div v-for="(item, index) in list" :key="index">
-          <!-- {{data}}
-                    {{item}} -->
           <div v-if="data.day == item.coursedate" class="kecheng">
             <div class="neirong">
-              <b style="width:100%"> {{ item.classname }}</b>
+              <b style="width:100%"> {{ item.coursename }}</b>
               <span style="color:#a698a7;width:100%;">{{item.starttime | formatTime}}——{{item.endtime | formatTime}}</span>
               <span style="color:#a698a7;">{{item.teachername}}</span>
             </div>
@@ -54,7 +52,7 @@ export default {
       let that = this;
       that.$http.get(
         "/api/coursetables/search",
-        { month: "2021-03", page: 1, psize: 10000 },
+        { month: new Date().format("yyyy-MM"), page: 1, psize: 10000 },
         (success) => {
           that.list = success.data.list;
           console.log(success.data.list);
