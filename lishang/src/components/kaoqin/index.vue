@@ -107,7 +107,7 @@
                         <p class="el-icon-edit-outline"></p>
                         <el-button
                           type="text"
-                          @click="dialogTableVisible = true"
+                          @click="dialogFormVisibles = true"
                           >签到</el-button
                         >
                       </div>
