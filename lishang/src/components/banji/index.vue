@@ -11,10 +11,6 @@
           @click="dialogFormVisible = true"
           class="right-two"
         >
-<<<<<<< HEAD
-          <!-- <img src="@/assets/007.png" /> -->
-=======
->>>>>>> ebd8c7404e675c12f91a1f29d568b40728573c8b
           <span>添加班级</span>
         </el-button>
         <!-- Form -->
@@ -113,16 +109,17 @@
               <input type="hidden" value="item.id" />
             </td>
 
-            <td>{{ item.coursename }}</td>
+            <td>{{ item.coursename }} </td>
             <td>{{ item.teacherslist }}</td>
             <td>{{ item.students }}</td>
             <td>{{ item.coursecounts }}</td>
             <td>{{ item.schcourses }}</td>
             <td>{{ item.endcourses }}</td>
             <td>
-              <el-button type="primary" @click="dialogFormVisible1 = true"
+              <el-button type="primary"  @click="paike(index)"
                 >排课</el-button
               >
+              <!-- dialogFormVisible1 = true -->
               <el-button type="info" @click="dialogVisible3 = true"
                 >课表</el-button
               >
@@ -562,20 +559,14 @@
               style="float: left; margin-right: 10px"
             >
               <img src="./img/10.png" width="30px" height="30px" alt="" />
-              {{ item }}
+              {{ item.name }}
               <!-- </li>
               </ul> -->
             </li>
           </ul>
         </div>
         <div slot="footer" class="dialog-footer">
-<<<<<<< HEAD
-          <el-button type="primary" @click="dialogFormVisible1 = false"
-            >保存</el-button
-          >
-=======
           <el-button type="primary" @click="commit()">保存</el-button>
->>>>>>> ebd8c7404e675c12f91a1f29d568b40728573c8b
         </div>
       </el-dialog>
       <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
@@ -640,7 +631,7 @@
                   type="checkbox"
                   class="kuang"
                   v-model="xueyuan_list1"
-                  :value="res.name"
+                  :value="(res)"
                 />
                 <span class="rento"></span>
                 {{ res.name }}
@@ -662,7 +653,7 @@
               @click="xueyuan_list1 = []"
               >清空</span
             >
-
+            <!-- {{xueyuan_list1}} -->
             <ul
               style="height: 400px; width: 100%; overflow: auto"
               class="scroll"
@@ -682,7 +673,7 @@
                   class="lj1"
                   @click="xueyuan_list1.splice(index, 1)"
                 ></span>
-                {{ res }}
+                {{ res.name }}
               </li>
             </ul>
           </div>
@@ -704,6 +695,7 @@
 export default {
   data() {
     return {
+      id:0, //
       counts: 0,
       pagesize: 7,
       pagenum: 1,
@@ -892,6 +884,13 @@ export default {
     this.addClassroomList();
   },
   methods: {
+
+    paike(index){
+        this.scheduleList.classid=this.list[index].id;
+        this.scheduleList.courseid= this.list[index].courseid;
+        // this.scheduleList.coursename= this.list[index].coursename;
+        this.dialogFormVisible1 = true;
+    },
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then((_) => {
@@ -908,7 +907,7 @@ export default {
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          // console.log(success.data.list);
+          console.log("班级信息",success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -1127,10 +1126,10 @@ export default {
     },
 
     //添加学生选中数据成功
-    checkStuInfo(val) {
-      this.isAddStu = false;
-      this.scheduleList.studentlist = val;
-    },
+    // checkStuInfo(val) {
+    //   this.isAddStu = false;
+    //   this.scheduleList.studentlist = val;
+    // },
     //保存
     commit() {
       for (var i = 0; i < this.weekArray.length; i++) {
@@ -1140,9 +1139,11 @@ export default {
           }
         }
       }
-
-      console.log(JSON.stringify(this.scheduleList));
-
+            this.isAddStu = false;
+      this.scheduleList.studentlist = this.xueyuan_list1;
+      // console.log(this.classid);
+      // console.log(JSON.stringify(this.scheduleList));
+      // return ;
       this.$http.post(
         "/api/coursetables/add",
         this.scheduleList,
@@ -1154,7 +1155,7 @@ export default {
           this.scheduleList = {};
           this.$emit("addSched");
           console.log(success);
-          dialogFormVisible1 = false;
+          this.dialogFormVisible1 = false;
         },
         (fail) => {
           this.$message.error("班级排课失败");
@@ -1167,6 +1168,14 @@ export default {
       this.loaddata();
     },
   },
+  watch:{
+    dialogFormVisible1(a,c){
+        if(a==false){
+          this.xueyuan_list1=[];
+        }
+
+    }
+  }
 };
 </script>
 <style scoped>

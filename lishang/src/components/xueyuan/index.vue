@@ -110,8 +110,7 @@
           <el-form-item
             class="wqs"
             label="合约类型"
-            :label-width="formLabelWidth"
-            ><br />
+            :label-width="formLabelWidth"><br />
             <el-radio
               v-model="form2.ordertype"
               label="0"
