@@ -11,10 +11,6 @@
           @click="dialogFormVisible = true"
           class="right-two"
         >
-<<<<<<< HEAD
-          <!-- <img src="@/assets/007.png" /> -->
-=======
->>>>>>> ebd8c7404e675c12f91a1f29d568b40728573c8b
           <span>添加班级</span>
         </el-button>
         <!-- Form -->
@@ -569,13 +565,7 @@
           </ul>
         </div>
         <div slot="footer" class="dialog-footer">
-<<<<<<< HEAD
-          <el-button type="primary" @click="dialogFormVisible1 = false"
-            >保存</el-button
-          >
-=======
           <el-button type="primary" @click="commit()">保存</el-button>
->>>>>>> ebd8c7404e675c12f91a1f29d568b40728573c8b
         </div>
       </el-dialog>
       <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
