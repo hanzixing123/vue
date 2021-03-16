@@ -141,7 +141,7 @@
         <br />
       </div>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script scoped>
@@ -217,8 +217,7 @@ export default {
     dateFormat(fmt, date) {
       return date;
     },
-  
-    courses() {
+  courses() {
       //使用axios 调用api接口数据
       let that = this;
       that.$http.get(
@@ -226,6 +225,7 @@ export default {
         null,
         (success) => {
           console.log(111);
+          console.log(success);
           this.list = success.data.list;
           console.log(this.list);
         },

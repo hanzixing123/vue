@@ -163,7 +163,7 @@ export default {
         { month: new Date().format("yyyy-MM"), page: 1, psize: 10000 },
         success => {
           that.list = success.data.list;
-          console.log(success.data.list);
+          console.log(success);
           // console.log(123);
         },
         failure => {
@@ -177,92 +177,7 @@ export default {
 </script>
 
 
-<style>
-.right-threes {
-  width: 40%;
-}
-.stu {
-  overflow-y: scroll;
-  width: 430px;
-  height: 480px;
-}
-.stu::-webkit-scrollbar {
-  width: 4px;
-}
-.stu::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-}
-.stu::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  border-radius: 0;
-  background: rgba(0, 0, 0, 0.1);
-}
-.stu td {
-  border-bottom: 1px solid #f0f0f0;
-  line-height: 55px;
-  width: 430px;
-}
-.rt {
-  float: right;
-  margin-top: -18px;
-}
-.right {
-  width: 480px;
-  height: 520px;
-  float: right;
-  position: relative;
-  bottom: 520px;
-}
-.um{
-  margin-left: 70px;
-  margin-top: -15px;
-}
-.bq {
-  float: left;
-  line-height: 60px;
-  color: #333335;
-  font-size: 24px;
-  background-color: #dfe3ec;
-  padding-left: 20px;
-  padding-right: 10px;
-  margin-top: 0px;
-}
-#triangle-right {
-  float: left;
-  width: 0px;
-  height: 0px;
-  border-top: 30px solid transparent;
-  border-left: 20px solid #dfe3ec;
-  border-bottom: 30px solid transparent;
-}
-.right-a {
-    height: 62px;
-    background-color: #f5f6fa;
-    border: 1px solid #dee3e9;
-    margin-bottom: 20px;
-}
-.search-a {
-  background-color: #ffffff;
-  margin-left: 190px;
-  margin-top: 12px;
-  width: 679px;
-  height: 38px;
-}
-.d {
-  width: 8%;
-  background-color: #f3f3f3;
-  color: #00014e;
-  line-height: 80px;
-  text-align: center;
-  border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-}
-.ssk{
-  width:475px;
-  border: 0;
-  float: right;
-}
+<style scoped>
 .kecheng {
   width: 163px;
   height: 51px;
