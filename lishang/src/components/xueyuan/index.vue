@@ -24,7 +24,7 @@
               <el-option label="订单号" value="2"></el-option>
               <el-option label="用户电话" value="3"></el-option>
             </el-select>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+           <el-button slot="append" icon="el-icon-search" style="margin-top:-3px;"></el-button>
           </el-input>
         </div>
       </div>
@@ -878,6 +878,7 @@ td:hover .paiban {
   height: 40px;
   padding: 0;
   margin-left: 20px;
+  
 }
 /* .sosuo .el-button{
   top:10px;

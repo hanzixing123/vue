@@ -117,7 +117,7 @@ created(){
     lujing(){
        if(this.$route.path=="/banji"){this.isChange=0;}
         if(this.$route.path=="/kecheng"){this.isChange=1;}
-        if(this.$route.path=="kaoqin"){this.isChange=2;}
+        if(this.$route.path=="/kaoqin"){this.isChange=2;}
         if(this.$route.path=="/keshi"){this.isChange=3;}
         if(this.$route.path=="/xueyuan"){this.isChange=4;}
     }
