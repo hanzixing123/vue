@@ -4,8 +4,8 @@
       <div class="da">
         <b>学员管理</b>
         <button @click="dialogFormVisible = true"><span /> 添加学员</button>
-        <button @click="dialogFormVisible1 = true"><span /> 添加排版</button>
-        <button><span /> 删除</button>
+        <button @click="paike_add"><span /> 添加排版</button>
+        <button @click="ALLdel"><span /> 删除</button>
 
         <div class="sosuo">
           <el-input
@@ -30,6 +30,13 @@
       </div>
       <!-- </el-footer> -->
     </div>
+    <div v-show="selectList != ''" style="height: 50px; margin-top: 20px">
+      <div v-for="(vo, index) in selectList" :key="index" class="mc">
+        <span style="margin: 40px">{{ vo.substring(0, vo.indexOf("+")) }}</span
+        ><span class="el-icon-close" @click="delxue(index)"></span>
+      </div>
+    </div>
+
     <div class="el-main1">
       <!-- <el-main> -->
       <table class="table">
@@ -57,12 +64,8 @@
               type="checkbox"
               class="kuang"
               v-model="selectList"
-              :value="res"
+              :value="res.name + '+' + res.id"
             />
-            <!-- :checked="ces(index,res.name)" -->
-            <!-- selectList[index].substr(0,selectList[index].indexOf('+',0)) == res.name?true:false -->
-            <!-- this.selectList[0].substr(0,this.selectList[0].indexOf("+",0)) -->
-            <!-- @click="checkAll(index)" -->
           </td>
           <td><span class="kuang-1" /> {{ res.name }}</td>
           <td>{{ res.sex == 1 ? "男" : "女" }}</td>
@@ -102,15 +105,14 @@
           </el-pagination>
         </div>
       </div>
-
       <!-- 购买课程 -->
-
       <el-dialog :title="title" :visible.sync="gouke">
         <el-form :model="form2">
           <el-form-item
             class="wqs"
             label="合约类型"
-            :label-width="formLabelWidth"><br />
+            :label-width="formLabelWidth"
+            ><br />
             <el-radio
               v-model="form2.ordertype"
               label="0"
@@ -219,22 +221,19 @@
             style="width: 300px; margin-left: 200px; margin-top: -100px"
             :label-width="formLabelWidth"
             ><br />
-            <!-- <el-input
-              v-model="
-                form2.discounttype == '2'
-                  ? form2.discountper
-                  : form2.discountprice
-              "
+
+            <el-input
+              v-show="form2.discounttype == '2'"
+              v-model="form2.discountper"
               autocomplete="off"
               style="margin-left: -80px"
-            ></el-input> -->
-
-        <el-input v-show="form2.discounttype == '2'" v-model="form2.discountper" autocomplete="off" style="margin-left: -80px"></el-input>
-        <el-input v-show="form2.discounttype == '1'" v-model="form2.discountprice" autocomplete="off" style="margin-left: -80px"></el-input>
-
-
-
-
+            ></el-input>
+            <el-input
+              v-show="form2.discounttype == '1'"
+              v-model="form2.discountprice"
+              autocomplete="off"
+              style="margin-left: -80px"
+            ></el-input>
 
             {{ form2.discounttype == "2" ? "折扣" : "直减" }}
             <!-- {{ form2.total }} -->
@@ -254,8 +253,14 @@
             </el-input>
           </el-form-item>
         </el-form>
-          <font color="red">总金额<span style="color:blue;">￥{{total}}</span></font>
-          <font color="red">已优惠<span style="color:blue;">￥{{form2.coursecounts * form2.price -  total}}</span></font>
+        <font color="red"
+          >总金额<span style="color: blue">￥{{ total }}</span></font
+        >
+        <font color="red"
+          >已优惠<span style="color: blue"
+            >￥{{ form2.coursecounts * form2.price - total }}</span
+          ></font
+        >
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="goke()">确定</el-button>
         </div>
@@ -300,77 +305,57 @@
         </div>
       </el-dialog>
 
-      <el-dialog title="放学员名称..." :visible.sync="dialogFormVisible1">
+      <el-dialog :visible.sync="dialogFormVisible1">
+        <ul style="height: 40px">
+          <li
+            v-for="(res, index) in selectList"
+            :key="index"
+            style="
+              font-size: 20px;
+              margin-right: 10px;
+              width: 100px;
+              background: yellow;
+              float: left;
+              text-align: center;
+            "
+          >
+            <span>{{ res.substr(0, res.indexOf("+")) }}</span>
+          </li>
+        </ul>
+        <span>共 {{ selectList.length }}条</span>
         <el-form :model="form1">
           <el-tabs type="border-card">
-            <!-- <el-tab-pane label="用户管理">用户管理</el-tab-pane> -->
             <el-tab-pane label="插班排课">
               <div class="chaban">
                 <input type="text" name="" id="" placeholder="输入关键字" />
                 <span />
               </div>
-              <table class="table1">
-                <tr>
-                  <td>班级名称</td>
-                  <td>课程</td>
-                  <td>老师</td>
-                  <td>人数</td>
-                  <td>计划课时</td>
-                  <td>已排课时</td>
-                  <td>已上课时</td>
-                  <td>操作</td>
-                </tr>
-                <tr>
-                  <td>架子鼓基础班2101</td>
-                  <td>架子鼓课</td>
-                  <td></td>
-                  <td>0人</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td><span>课表</span></td>
-                </tr>
-                <tr>
-                  <td>架子鼓基础班2101</td>
-                  <td>架子鼓课</td>
-                  <td></td>
-                  <td>0人</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td><span>课表</span></td>
-                </tr>
-                <tr>
-                  <td>架子鼓基础班2101</td>
-                  <td>架子鼓课</td>
-                  <td></td>
-                  <td>0人</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td><span>课表</span></td>
-                </tr>
-                <tr>
-                  <td>架子鼓基础班2101</td>
-                  <td>架子鼓课</td>
-                  <td></td>
-                  <td>0人</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td><span>课表</span></td>
-                </tr>
-                <tr>
-                  <td>架子鼓基础班2101</td>
-                  <td>架子鼓课</td>
-                  <td></td>
-                  <td>0人</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td><span>课表</span></td>
-                </tr>
-              </table>
+              <el-table :data="banji_list" stripe style="width: 100%">
+                <el-table-column prop="id" width="30">
+                  <template slot-scope="scope">
+                    <el-radio v-model="kecehng_xuan" :label="scope.row.id"
+                      >备选项</el-radio
+                    >
+                    <!-- {{scope.row.id}} -->
+                  </template>
+                </el-table-column>
+                <el-table-column prop="name" label="班级名称" width="180">
+                </el-table-column>
+                <el-table-column prop="coursename" label="课程" width="180">
+                </el-table-column>
+                <el-table-column prop="address" label="老师"> </el-table-column>
+                <el-table-column prop="students" label="人数">
+                </el-table-column>
+                <el-table-column prop="coursecounts" label="计划课时">
+                </el-table-column>
+                <el-table-column prop="schcourses" label="已排课时">
+                </el-table-column>
+                <el-table-column prop="endcourses" label="已上课时">
+                </el-table-column>
+                <el-table-column label="操作">
+                  <button>课表</button>
+                </el-table-column>
+              </el-table>
             </el-tab-pane>
 
             <el-tab-pane label="一对一排课">
@@ -457,21 +442,20 @@
           </el-tabs>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="dialogFormVisible1 = false"
-            >确 定</el-button
-          >
-          <!--  -->
+          <el-button type="primary" @click="paike()">确 定</el-button>
+          <!--dialogFormVisible1 = false  -->
         </div>
       </el-dialog>
     </div>
   </div>
 </template>
 
-<script>
+<script scoped>
 export default {
   created() {
     this.xuyuan_list();
     this.kecheng_list();
+    this.hu_bj_list();
   },
   watch: {
     dialogFormVisible(c, v) {
@@ -487,10 +471,35 @@ export default {
         };
       }
     },
+
+    total(a, c) {
+      this.form2.sumprice = this.total;
+    },
+    gouke(z, c) {
+      if (z == false) {
+        this.form2 = {
+          studentid: "",
+          ordertype: "0",
+          beigindate: "",
+          enddate: "",
+          courseid: "",
+          coursecounts: "",
+          price: "",
+          sumprice: "",
+          discounttype: "1",
+          remarks: "",
+          discountprice: "",
+          discountper: "",
+        };
+      }
+    },
   },
 
   data() {
     return {
+      kecehng_xuan: "",
+      banji_list: [],
+
       title: "购课",
       titles: "添加学员",
       counts: 0,
@@ -539,13 +548,63 @@ export default {
     };
   },
   methods: {
-    // xiao(){
-    //     console.log(this.selectList.name);
-    //     if(this.selectList.length==6){
-    //       console.log("全选？");
-    //     }
-
-    // },
+    paike() {
+      // this.kecehng_xuan
+      // dialogFormVisible1 = false
+      if (this.kecehng_xuan == "") {
+        alert("请选择要添加的班级");
+        return;
+      }
+      let tath = this;
+      var list = tath.selectList;
+      var arr = [];
+      for (let i = 0; i < list.length; i++) {
+        arr.push({
+          id: list[i].substring(list[i].lastIndexOf("+") + 1, list[i].length),
+        });
+      }
+      let list1 = { classid: this.kecehng_xuan, studentlist: arr };
+      console.log(list1);
+      tath.$http.post(
+        "/api/coursetables/addForClassid",
+        JSON.stringify(list1),
+        (success) => {
+  
+              this.xuyuan_list();
+              this.selectList = [];
+              alert("操作成功");
+        },
+        (fall) => {}
+      );
+    },
+    paike_add() {
+      if (this.selectList != 0) {
+        this.dialogFormVisible1 = true;
+      } else {
+        alert("请先添加学员");
+      }
+      // selectList!=0?dialogFormVisible1 = true: alert('请先添加学员')
+    },
+    ALLdel() {
+      let tath = this;
+      var list = tath.selectList;
+      for (let i = 0; i < list.length; i++) {
+        tath.$http.get(
+          "/api/students/delete",
+          {
+            id: list[i].substring(list[i].lastIndexOf("+") + 1, list[i].length),
+          },
+          (success) => {
+            if (i == list.length - 1) {
+              alert("批量删除成功");
+              this.xuyuan_list();
+              this.selectList = [];
+            }
+          },
+          (fall) => {}
+        );
+      }
+    },
     xueyuan_del(id) {
       let tath = this;
       tath.$http.get(
@@ -554,6 +613,18 @@ export default {
         (success) => {
           console.log(success);
           this.xuyuan_list();
+        },
+        (fall) => {}
+      );
+    },
+    hu_bj_list() {
+      let tath = this;
+      tath.$http.get(
+        "/api/classes/list",
+        { page: 1 },
+        (success) => {
+          this.banji_list = success.data.list;
+          // console.log("班级信息", success);
         },
         (fall) => {}
       );
@@ -595,6 +666,10 @@ export default {
     handleCurrentChange(currPage) {
       this.pagenum = currPage;
       this.xuyuan_list();
+    },
+    delxue(index) {
+      //
+      this.selectList.splice(index, 1);
     },
 
     checkAll() {
@@ -638,10 +713,10 @@ export default {
     goke() {
       if (this.form2.discounttype == "2") {
         this.form2.discounttype = "折扣";
-        this.form2.discountprice="";
+        this.form2.discountprice = "";
       } else {
         this.form2.discounttype = "直减";
-        this.form2.discountper="";
+        this.form2.discountper = "";
       }
       if (this.form2.ordertype == "0") {
         this.form2.ordertype = "课时卡";
@@ -674,38 +749,22 @@ export default {
     //     }
     // }
   },
-  watch: {
-    total(a, c) {
-      this.form2.sumprice = this.total;
-    },
-    gouke(z, c) {
-      if (z == false) {
-        this.form2 = {
-          studentid: "",
-          ordertype: "0",
-          beigindate: "",
-          enddate: "",
-          courseid: "",
-          coursecounts: "",
-          price: "",
-          sumprice: "",
-          discounttype: "1",
-          remarks: "",
-          discountprice: "",
-          discountper: "",
-        };
-      }
-    },
-  },
+
   computed: {
     total() {
       var form2 = this.form2;
       console.log(form2.discountper);
       var sum = 0;
       if (form2.discounttype == "2") {
-        sum =(Number(form2.price) *Number(form2.coursecounts) *Number(form2.discountper)) /10;
+        sum =
+          (Number(form2.price) *
+            Number(form2.coursecounts) *
+            Number(form2.discountper)) /
+          10;
       } else {
-        sum =Number(form2.price) * Number(form2.coursecounts) -Number(form2.discountprice);
+        sum =
+          Number(form2.price) * Number(form2.coursecounts) -
+          Number(form2.discountprice);
       }
       // console.log(sum);
       return sum;
@@ -714,6 +773,28 @@ export default {
 };
 </script> 
 <style scoped>
+.mc {
+  float: left;
+  margin-left: 40px;
+  min-width: 126px;
+  height: 40px;
+  border: 1px solid #2e12ac;
+  text-align: center;
+  line-height: 40px;
+  background-color: yellow;
+  color: #100e99;
+  font-size: 18px;
+  position: relative;
+}
+
+.el-icon-close {
+  font-size: 22px;
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  cursor: pointer;
+}
+
 .el-icon-plus {
   font-size: 30px;
   text-align: center;
@@ -806,21 +887,20 @@ td:hover .paiban {
   width: 140px;
   height: 40px;
 }
-.table1 {
+
+/* .table1 {
   width: 100%;
   border-collapse: collapse;
 }
-.table1 tr {
+.table1 tr:nth-child(1){
   height: 20px;
   line-height: 50px;
   text-align: center;
 }
-/* .table1 tr td{
 
-} */
-.table1 tr:nth-child(1) {
+.table1 >tr:nth-child(1) {
   background: #f5f6fa;
-}
+} */
 
 .is-top:nth-last-child(1) {
   margin-left: 10px;

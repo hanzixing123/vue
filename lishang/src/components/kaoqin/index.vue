@@ -143,7 +143,7 @@
         <br />
       </div>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script scoped>
@@ -220,22 +220,7 @@ export default {
     dateFormat(fmt, date) {
       return date;
     },
-    courses() {
-      //使用axios 调用api接口数据
-      let that = this;
-      that.$http.get(
-        "/api/courses/list",
-        // { page: 1 },
-        (success) => {
-          that.liet = success.data.list;
-          console.log(success.data.list);
-        },
-        (failure) => {
-          console.log(failure);
-        }
-      );
-    },
-    courses() {
+  courses() {
       //使用axios 调用api接口数据
       let that = this;
       that.$http.get(
@@ -243,6 +228,7 @@ export default {
         null,
         (success) => {
           console.log(111);
+          console.log(success);
           this.list = success.data.list;
         },
         (failure) => {

@@ -55,7 +55,7 @@ export default {
         { month: new Date().format("yyyy-MM"), page: 1, psize: 10000 },
         (success) => {
           that.list = success.data.list;
-          console.log(success.data.list);
+          console.log(success);
           // console.log(123);
         },
         (failure) => {
@@ -69,7 +69,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .kecheng {
   width: 163px;
   height: 51px;
