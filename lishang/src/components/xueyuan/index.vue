@@ -696,7 +696,6 @@ export default {
       console.log(this.form);
       this.titles = "修改学员信息";
       this.dialogFormVisible = true;
-      // form.
     },
     kecheng_list() {
       let tath = this;
