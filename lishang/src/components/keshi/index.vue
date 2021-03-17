@@ -10,13 +10,19 @@
         <div v-for="(item, index) in list" :key="index">
           <div v-if="data.day == item.coursedate" class="kecheng">
             <div class="neirong">
-              <b style="width:100%"> {{ item.coursename }}</b>
-              <span style="color:#a698a7;width:100%;">{{item.starttime | formatTime}}——{{item.endtime | formatTime}}</span>
-              <span style="color:#a698a7;">{{item.teachername}}</span>
+              <b style="width: 100%"> {{ item.coursename }}</b>
+              <span style="color: #a698a7; width: 100%"
+                >{{ item.starttime | formatTime }}——{{
+                  item.endtime | formatTime
+                }}</span
+              >
+              <span style="color: #a698a7">{{ item.teachername }}</span>
             </div>
           </div>
         </div>
+        
         <!-- <div>111</div> -->
+       
       </div>
     </template>
   </el-calendar>
@@ -34,10 +40,11 @@ export default {
         { months: ["11"], days: ["02"], things: "看月亮" },
       ],
       // value: new Date(),
-      time:new Date()
+      time: new Date(),
+      huizong: false,
     };
   },
-   filters: {
+  filters: {
     formatTime(time) {
       return new Date(time).format("hh:mm");
     },
@@ -99,14 +106,14 @@ export default {
   height: auto;
 }
 
-.neirong{
-  margin-left: 11px ;
+.neirong {
+  margin-left: 11px;
 }
 
-.neirong b{
+.neirong b {
   display: inline-block;
 }
-.neirong span{
+.neirong span {
   display: inline-block;
 }
 </style>
