@@ -74,7 +74,7 @@
           <div style="margin-top: 15px">
             <el-input
               placeholder="请输入内容"
-              v-model="input3"
+              v-model="keyword"
               class="input-with-select"
             >
               <el-select v-model="select" slot="prepend" placeholder="课程">
@@ -85,7 +85,7 @@
                   :value="item.id"
                 ></el-option>
               </el-select>
-              <el-button slot="append" icon="el-icon-search"></el-button>
+              <el-button @click="search()" slot="append" icon="el-icon-search"></el-button>
             </el-input>
           </div>
         </div>
@@ -599,7 +599,7 @@
           <div style="width: 405px; float: left">
             <el-input
               placeholder="请输入内容"
-              v-model="input3"
+              v-model="keyword"
               style="width: 400px; margin-bottom: 5px"
               class="input-with-select"
             >
@@ -812,7 +812,8 @@ export default {
       endTime: "",
       startTimes: "",
       endTimes: "",
-      input3: "",
+      input3:"",
+      keyword: "",
       select: "",
       dd: "",
       ee: "",
@@ -881,7 +882,9 @@ export default {
     this.addClassroomList();
   },
   methods: {
-
+search(){
+this.loaddata();
+},
     paike(index){
         this.scheduleList.classid=this.list[index].id;
         this.scheduleList.courseid= this.list[index].courseid;
@@ -900,7 +903,7 @@ export default {
       let that = this;
       that.$http.get(
         "/api/classes/list",
-        { page: this.pagenum, psize: this.pagesize },
+        { page: that.pagenum, psize: that.pagesize,name:that.keyword },
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
