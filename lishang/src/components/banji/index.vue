@@ -1731,7 +1731,7 @@ li {
   margin-bottom: 20px;
 }
 .el-icon-user-solid {
-  color: #1890ff;
+  color: #1890ff; 
   font-size: 14px;
 }
 </style>

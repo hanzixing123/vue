@@ -582,7 +582,7 @@ export default {
     paike_add() {
       if (this.selectList != 0) {
         this.dialogFormVisible1 = true;
-      } else {
+      } else {      
         alert("请先添加学员");
       }
       // selectList!=0?dialogFormVisible1 = true: alert('请先添加学员')
