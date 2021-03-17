@@ -18,7 +18,7 @@
             v-model="input3"
             class="input-with-select"
           >
-            <el-select v-model="select" style="margin-left:20px; slot="prepend" placeholder="课程">
+            <el-select v-model="select" style="margin-left:20px;" slot="prepend" placeholder="课程">
               <el-option
                 v-for="(item, indexs) in list"
                 :key="indexs"
@@ -187,7 +187,7 @@ export default {
           },
         ],
       },
-      value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+      value1:"",
       value2: "",
     };
   },
