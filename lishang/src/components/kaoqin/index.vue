@@ -6,24 +6,19 @@
         <div id="triangle-right"></div>
       </div>
       <div class="block">
-        <el-date-picker
-          v-model="value2"
-          type="datetimerange"
-          :picker-options="pickerOptions"
-          range-separator="~"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          align="right"
-        >
-        </el-date-picker>
+         <el-date-picker
+      v-model="value1" style="margin-left:20px;"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
 
-        <div style="" class="el-inputs">
+        <div class="el-inputs">
           <el-input
             placeholder="搜索学员快速签到"
             v-model="input3"
             class="input-with-select"
           >
-            <el-select v-model="select" slot="prepend" placeholder="课程">
+            <el-select v-model="select" style="margin-left:20px; slot="prepend" placeholder="课程">
               <el-option
                 v-for="(item, indexs) in list"
                 :key="indexs"
@@ -36,6 +31,9 @@
         </div>
       </div>
     </div>
+
+
+
     <div class="right-ba">
       <span style="margin-left: -80px">今日课表</span>
     </div>
@@ -43,12 +41,7 @@
       <!-- 考勤 -->
       <div class="kq-text1">
         <el-checkbox v-model="stuAll" @click="changeAll">全选</el-checkbox>
-        <el-button
-          type="primary"
-          @click="dialogFormVisibles = true"
-          style="padding-right: 30px; width: 100px"
-          >考勤</el-button
-        >
+        <el-button type="primary" @click="dialogFormVisibles = true" style="padding-right: 30px; width: 100px">考勤</el-button>
       </div>
       <div class="kq-text2" v-for="pitem in list" :key="pitem.id">
         <div>
@@ -157,7 +150,6 @@ export default {
       startTime: "",
       endTime: "",
       checked: true,
-      dialogTableVisible: false,
       dialogFormVisibles: false,
       form: {
         id: "",
@@ -237,6 +229,9 @@ export default {
     qiandao: function () {
       let that = this;
       console.log(this.form);
+      return;
+
+
       that.$http.post(
         "/api/coursetables/updateState",
         JSON.stringify(this.form),
@@ -291,6 +286,7 @@ export default {
   background-color: #f5f6fa;
   border: 1px solid #dee3e9;
   margin-bottom: 20px;
+  width: 100%;
 }
 .right-ta2 {
   float: left;
@@ -367,14 +363,15 @@ export default {
   float: left;
 }
 .block {
-  margin-left: 40px;
+  width: 100%;
+   margin-left: 80px;
   margin-top: 10px;
-  float: left;
+  /* float: left; */
 }
 .el-inputs {
-  width: 300px;
-  float: right;
-  margin-left: 20px;
+  width: 100%;
+  margin-left: 350px;
+  margin-top: -40px;
 }
 .kq-text2 {
   float: left;
