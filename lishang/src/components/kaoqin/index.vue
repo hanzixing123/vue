@@ -115,9 +115,7 @@
                   </tr>
                   <el-dialog title="签到" :visible.sync="dialogFormVisibles">
                     <div class="groups">
-                      <el-radio label="1" v-model="form.checked"
-                        >未签到</el-radio
-                      >
+                      <el-radio label="1" v-model="form.checked">未签到</el-radio>
                       <el-radio label="2" v-model="form.checked">出勤</el-radio>
                       <el-radio label="3" v-model="form.checked">迟到</el-radio>
                       <el-radio label="4" v-model="form.checked">请假</el-radio>
@@ -143,7 +141,7 @@
         <br />
       </div>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script scoped>
@@ -164,7 +162,7 @@ export default {
       form: {
         id: "",
         remarks: "",
-        checked: 1,
+        checked: "1",
         courseid: "",
       },
       formLabelWidth: "120px",
@@ -202,7 +200,6 @@ export default {
     };
   },
 
-  methods: {},
   created() {
     this.courses();
   },
@@ -220,22 +217,7 @@ export default {
     dateFormat(fmt, date) {
       return date;
     },
-    courses() {
-      //使用axios 调用api接口数据
-      let that = this;
-      that.$http.get(
-        "/api/courses/list",
-        // { page: 1 },
-        (success) => {
-          that.liet = success.data.list;
-          console.log(success.data.list);
-        },
-        (failure) => {
-          console.log(failure);
-        }
-      );
-    },
-    courses() {
+  courses() {
       //使用axios 调用api接口数据
       let that = this;
       that.$http.get(
@@ -243,7 +225,9 @@ export default {
         null,
         (success) => {
           console.log(111);
+          console.log(success);
           this.list = success.data.list;
+          console.log(this.list);
         },
         (failure) => {
           console.log(failure);
@@ -252,6 +236,7 @@ export default {
     },
     qiandao: function () {
       let that = this;
+      console.log(this.form);
       that.$http.post(
         "/api/coursetables/updateState",
         JSON.stringify(this.form),
