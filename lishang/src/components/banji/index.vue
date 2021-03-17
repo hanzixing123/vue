@@ -199,10 +199,7 @@
             </div>
           </div>
           <div class="main-right">
-            <li class="main-right-p">
-              <el-button type="text" class="uu">单次排课</el-button>
-              <el-button type="text">批量排课</el-button>
-            </li>
+           
 
             <div class="main-right-main">
               <el-calendar :range="['2019-03-01', '2019-03-31']"> </el-calendar>
