@@ -190,15 +190,13 @@ export default {
           },
         ],
       },
-      today: new Date(),
+      today: "",
       studentid: 0,
-      stulist:'[{"id":26,"companyid":1,"courseid":115,"name":"14","coursecounts":14,"coursename":"fsdf","startdate":"2021-03-29 00:00:00.0","enddate":"2021-03-29 00:00:00.0","students":0,"schcourses":6,"endcourses":0,"teacherslist":null},{"id":25,"companyid":1,"courseid":91,"name":"14","coursecounts":5,"coursename":"别删（OK）","startdate":"2021-03-18 00:00:00.0","enddate":"2021-03-31 00:00:00.0","students":0,"schcourses":5,"endcourses":0,"teacherslist":null},{"id":24,"companyid":1,"courseid":102,"name":"哈哈哈","coursecounts":5,"coursename":"懵逼树下你和我","startdate":"2021-03-29 00:00:00.0","enddate":"2021-03-31 00:00:00.0","students":0,"schcourses":0,"endcourses":0,"teacherslist":null},{"id":23,"companyid":1,"courseid":102,"name":"dsad","coursecounts":5,"coursename":"懵逼树下你和我","startdate":"2021-03-29 00:00:00.0","enddate":"2021-03-31 00:00:00.0","students":0,"schcourses":0,"endcourses":0,"teacherslist":null},{"id":22,"companyid":1,"courseid":0,"name":"1","coursecounts":1,"coursename":null,"startdate":"2021-03-10 00:00:00.0","enddate":"2021-03-17 00:00:00.0","students":0,"schcourses":0,"endcourses":0,"teacherslist":null},{"id":9,"companyid":1,"courseid":97,"name":"666","coursecounts":100,"coursename":"历史","startdate":"2021-03-03 00:00:00.0","enddate":"2021-03-31 00:00:00.0","students":0,"schcourses":0,"endcourses":0,"teacherslist":null},{"id":7,"companyid":1,"courseid":94,"name":"2004","coursecounts":12,"coursename":"美术12","startdate":"2021-03-01 00:00:00.0","enddate":"2021-03-16 00:00:00.0","students":0,"schcourses":0,"endcourses":0,"teacherslist":null},{"id":6,"companyid":1,"courseid":97,"name":"123","coursecounts":123,"coursename":"历史","startdate":"2021-03-14 00:00:00.0","enddate":"2021-03-25 00:00:00.0","students":0,"schcourses":0,"endcourses":0,"teacherslist":null}]'
     };
   },
 
   created() {
     this.courses();
-    
   },
 
   methods: {
@@ -250,7 +248,7 @@ export default {
       console.log(that.today);
       that.$http.get(
         "/api/coursetables/checked",
-        {today:that.today,studentid:that.studentid},
+        {today:that.today,studentid:that.studentid,},
         (success) => {
           console.log(111);
           console.log(success);
