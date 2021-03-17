@@ -13,14 +13,6 @@
     </el-date-picker>
 
         <div class="el-inputs">
-          <el-autocomplete
-            placeholder="搜索学员快速签到"
-            v-model="input3" value-key="name"
-            :fetch-suggestions="querySearchAsync"
-  @select="handleSelect"
-            class="input-with-select"
-          >
-          </el-autocomplete>
             <el-select v-model="select" style="margin-left:20px;" slot="prepend" placeholder="课程">
               <el-option
                 v-for="(item, indexs) in list"
@@ -29,6 +21,14 @@
                 :value="item.id"
               ></el-option>
             </el-select>
+          <el-autocomplete
+            placeholder="搜索学员快速签到"
+            v-model="input3" value-key="name"
+            :fetch-suggestions="querySearchAsync"
+  @select="handleSelect"
+            class="input-with-select">
+          </el-autocomplete>
+          
             <el-button slot="append" @click="search()" icon="el-icon-search"></el-button>
         
         </div>

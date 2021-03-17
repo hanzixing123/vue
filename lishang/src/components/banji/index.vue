@@ -570,7 +570,7 @@
         <el-form :model="form">
           <el-form-item label="" :label-width="formLabelWidth">
             <div style="margin-top: 15px">
-              <el-input v-model="input3" class="input-with-select">
+              <el-input v-model="xueyuankey" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="课程">
                   <el-option label="餐厅名" value="1"></el-option>
                   <el-option label="订单号" value="2"></el-option>
@@ -812,7 +812,7 @@ export default {
       endTime: "",
       startTimes: "",
       endTimes: "",
-      input3:"",
+      xueyuankey:"",
       keyword: "",
       select: "",
       dd: "",
@@ -903,7 +903,7 @@ this.loaddata();
       let that = this;
       that.$http.get(
         "/api/classes/list",
-        { page: that.pagenum, psize: that.pagesize,name:that.keyword },
+        { page: that.pagenum, psize: that.pagesize,name:that.keyword},
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
