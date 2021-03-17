@@ -109,16 +109,14 @@
               <input type="hidden" value="item.id" />
             </td>
 
-            <td>{{ item.coursename }} </td>
+            <td>{{ item.coursename }}</td>
             <td>{{ item.teacherslist }}</td>
             <td>{{ item.students }}</td>
             <td>{{ item.coursecounts }}</td>
             <td>{{ item.schcourses }}</td>
             <td>{{ item.endcourses }}</td>
             <td>
-              <el-button type="primary"  @click="paike(index)"
-                >排课</el-button
-              >
+              <el-button type="primary" @click="paike(index)">排课</el-button>
               <!-- dialogFormVisible1 = true -->
               <el-button type="info" @click="dialogVisible3 = true"
                 >课表</el-button
@@ -566,7 +564,7 @@
           </ul>
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="commit()">保存</el-button>
+          <el-button type="primary" @click="commit()"   v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
         </div>
       </el-dialog>
       <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
@@ -631,7 +629,7 @@
                   type="checkbox"
                   class="kuang"
                   v-model="xueyuan_list1"
-                  :value="(res)"
+                  :value="res"
                 />
                 <span class="rento"></span>
                 {{ res.name }}
@@ -695,7 +693,8 @@
 export default {
   data() {
     return {
-      id:0, //
+      fullscreenLoading: false,
+      id: 0, //
       counts: 0,
       pagesize: 7,
       pagenum: 1,
@@ -740,7 +739,7 @@ export default {
         //教室id
         classrooms: "",
         // 单节课扣学员课时
-        pricecounts: "",
+        pricecounts: 0,
         //开课日期
         begindate: "",
         //结课日期
@@ -748,7 +747,7 @@ export default {
         //结束方法按课节(0:按课节: 按日期)
         jsfs: "按课节",
         //排课总数
-        coursescount: 0,
+        coursescount: "",
         //上课时间
         weektime: [
           {
@@ -884,12 +883,11 @@ export default {
     this.addClassroomList();
   },
   methods: {
-
-    paike(index){
-        this.scheduleList.classid=this.list[index].id;
-        this.scheduleList.courseid= this.list[index].courseid;
-        // this.scheduleList.coursename= this.list[index].coursename;
-        this.dialogFormVisible1 = true;
+    paike(index) {
+      this.scheduleList.classid = this.list[index].id;
+      this.scheduleList.courseid = this.list[index].courseid;
+      // this.scheduleList.coursename= this.list[index].coursename;
+      this.dialogFormVisible1 = true;
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -907,7 +905,7 @@ export default {
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          console.log("班级信息",success.data.list);
+          console.log("班级信息", success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -1132,34 +1130,39 @@ export default {
     // },
     //保存
     commit() {
-      for (var i = 0; i < this.weekArray.length; i++) {
-        if (this.weekArray[i].list.length > 0) {
-          for (var j in this.weekArray[i].list) {
-            this.scheduleList.weektime.push(this.weekArray[i].list[j]);
+      let tath = this;
+              this.fullscreenLoading=true;
+
+      for (var i = 0; i < tath.weekArray.length; i++) {
+        if (tath.weekArray[i].list.length > 0) {
+          for (var j in tath.weekArray[i].list) {
+            tath.scheduleList.weektime.push(tath.weekArray[i].list[j]);
           }
         }
       }
-            this.isAddStu = false;
-      this.scheduleList.studentlist = this.xueyuan_list1;
-      // console.log(this.classid);
-      // console.log(JSON.stringify(this.scheduleList));
-      // return ;
-      this.$http.post(
+      tath.isAddStu = false;
+      tath.scheduleList.studentlist = tath.xueyuan_list1;
+      console.log("????", JSON.stringify(tath.scheduleList));
+      // console.log("????1",tath.scheduleList);
+
+      tath.$http.post(
         "/api/coursetables/add",
-        this.scheduleList,
+        tath.scheduleList,
         (success) => {
-          this.$message({
+                    this.fullscreenLoading = false;
+          // console.log(111);
+          tath.$message({
             message: "恭喜你，排课成功",
             type: "success",
           });
-          this.scheduleList = {};
-          this.$emit("addSched");
-          console.log(success);
-          this.dialogFormVisible1 = false;
+           tath.scheduleList = {};
+           tath.$emit("addSched");
+          // console.log(success);
+           tath.dialogFormVisible1 = false;
         },
-        (fail) => {
-          this.$message.error("班级排课失败");
-          console.log(fail);
+        (fail) =>{
+            console.log(222);
+           this.$message.error("班级排课失败");
         }
       );
     },
@@ -1168,14 +1171,13 @@ export default {
       this.loaddata();
     },
   },
-  watch:{
-    dialogFormVisible1(a,c){
-        if(a==false){
-          this.xueyuan_list1=[];
-        }
-
-    }
-  }
+  watch: {
+    dialogFormVisible1(a, c) {
+      if (a == false) {
+        this.xueyuan_list1 = [];
+      }
+    },
+  },
 };
 </script>
 <style scoped>

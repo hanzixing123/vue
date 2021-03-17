@@ -572,6 +572,8 @@ export default {
   
               this.xuyuan_list();
               this.selectList = [];
+                      this.dialogFormVisible1 = false;
+
               alert("操作成功");
         },
         (fall) => {}
@@ -624,7 +626,7 @@ export default {
         { page: 1 },
         (success) => {
           this.banji_list = success.data.list;
-          // console.log("班级信息", success);
+          console.log("班级信息", success);
         },
         (fall) => {}
       );
@@ -656,7 +658,7 @@ export default {
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          console.log("580", that.list);
+          // console.log("580", that.list);
         },
         (failure) => {
           console.log(failure);
