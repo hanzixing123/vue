@@ -68,7 +68,7 @@
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="add">确 定</el-button>
-          </div>
+          </div> 
         </el-dialog>
         <div class="right-three">
           <div style="margin-top: 15px">
