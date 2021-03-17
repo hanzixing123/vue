@@ -6,24 +6,14 @@
         <div id="triangle-right"></div>
       </div>
       <div class="block">
-        <el-date-picker
-          v-model="value2"
-          type="datetimerange"
-          :picker-options="pickerOptions"
-          range-separator="~"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          align="right"
-        >
-        </el-date-picker>
+         <el-date-picker
+      v-model="today" value-format="yyyy-MM-dd" style="margin-left:20px;"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
 
-        <div style="" class="el-inputs">
-          <el-input
-            placeholder="搜索学员快速签到"
-            v-model="input3"
-            class="input-with-select"
-          >
-            <el-select v-model="select" slot="prepend" placeholder="课程">
+        <div class="el-inputs">
+            <el-select v-model="select" style="margin-left:20px;" slot="prepend" placeholder="课程">
               <el-option
                 v-for="(item, indexs) in list"
                 :key="indexs"
@@ -31,24 +21,30 @@
                 :value="item.id"
               ></el-option>
             </el-select>
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
+          <el-autocomplete
+            placeholder="搜索学员快速签到"
+            v-model="input3" value-key="name"
+            :fetch-suggestions="querySearchAsync"
+  @select="handleSelect"
+            class="input-with-select">
+          </el-autocomplete>
+          
+            <el-button slot="append" @click="search()" icon="el-icon-search"></el-button>
+        
         </div>
       </div>
     </div>
+
+
+
     <div class="right-ba">
-      <span style="margin-left: -80px">今日课表</span>
+      <span style="margin-left: -80px">今日课表{{studentid}}</span>
     </div>
     <div class="right-ya">
       <!-- 考勤 -->
       <div class="kq-text1">
         <el-checkbox v-model="stuAll" @click="changeAll">全选</el-checkbox>
-        <el-button
-          type="primary"
-          @click="dialogFormVisibles = true"
-          style="padding-right: 30px; width: 100px"
-          >考勤</el-button
-        >
+        <el-button type="primary" @click="dialogFormVisibles = true" style="padding-right: 30px; width: 100px">考勤</el-button>
       </div>
       <div class="kq-text2" v-for="pitem in list" :key="pitem.id">
         <div>
@@ -107,7 +103,7 @@
                         <p class="el-icon-edit-outline"></p>
                         <el-button
                           type="text"
-                          @click="dialogFormVisibles = true"
+                          @click="qd(item.id,pitem.id)"
                           >签到</el-button
                         >
                       </div>
@@ -115,9 +111,7 @@
                   </tr>
                   <el-dialog title="签到" :visible.sync="dialogFormVisibles">
                     <div class="groups">
-                      <el-radio label="1" v-model="form.checked"
-                        >未签到</el-radio
-                      >
+                      <el-radio label="1" v-model="form.checked">未签到</el-radio>
                       <el-radio label="2" v-model="form.checked">出勤</el-radio>
                       <el-radio label="3" v-model="form.checked">迟到</el-radio>
                       <el-radio label="4" v-model="form.checked">请假</el-radio>
@@ -159,12 +153,11 @@ export default {
       startTime: "",
       endTime: "",
       checked: true,
-      dialogTableVisible: false,
       dialogFormVisibles: false,
       form: {
         id: "",
         remarks: "",
-        checked: 1,
+        checked: "1",
         courseid: "",
       },
       formLabelWidth: "120px",
@@ -197,17 +190,46 @@ export default {
           },
         ],
       },
-      value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-      value2: "",
+      today: "",
+      studentid: 0,
     };
   },
 
-  methods: {},
   created() {
     this.courses();
   },
 
   methods: {
+    
+  querySearchAsync(queryString, cb) {
+       console.log(queryString);
+
+  let tath = this;
+      tath.$http.get(
+        "/api/students/list",
+        { page: 1,name:queryString},
+        (success) => {
+          
+           cb(success.data.list);
+        },
+        (fall) => {}
+      );
+
+        
+      },
+    handleSelect(item) {
+      this.studentid=item.id;
+       // console.log("选中"+item.id);
+      },
+    search(){
+      this.courses();
+    },
+    qd(id,kb_id){
+        let tath=this;
+        tath.dialogFormVisibles = true;
+        tath.form.id=id;
+        tath.form.courseid=kb_id;
+    },
     changeAll() {
       if (!this.checked) {
         this.stuAll = this.list;
@@ -223,13 +245,15 @@ export default {
   courses() {
       //使用axios 调用api接口数据
       let that = this;
+      console.log(that.today);
       that.$http.get(
         "/api/coursetables/checked",
-        null,
+        {today:that.today,studentid:that.studentid,},
         (success) => {
           console.log(111);
           console.log(success);
           this.list = success.data.list;
+          console.log(this.list);
         },
         (failure) => {
           console.log(failure);
@@ -238,11 +262,16 @@ export default {
     },
     qiandao: function () {
       let that = this;
+      that.form.checked= parseInt(that.form.checked)
+      console.log(JSON.stringify(that.form));
+    //return;
+
+
       that.$http.post(
         "/api/coursetables/updateState",
-        JSON.stringify(this.form),
+        [JSON.stringify(that.form)],
         (success) => {
-          console.log(111222);
+          console.log("?");
           that.form = {
             id: "",
             remarks: "",
@@ -292,6 +321,7 @@ export default {
   background-color: #f5f6fa;
   border: 1px solid #dee3e9;
   margin-bottom: 20px;
+  width: 100%;
 }
 .right-ta2 {
   float: left;
@@ -368,14 +398,15 @@ export default {
   float: left;
 }
 .block {
-  margin-left: 40px;
+  width: 100%;
+   margin-left: 80px;
   margin-top: 10px;
-  float: left;
+  /* float: left; */
 }
 .el-inputs {
-  width: 300px;
-  float: right;
-  margin-left: 20px;
+  width: 100%;
+  margin-left: 350px;
+  margin-top: -40px;
 }
 .kq-text2 {
   float: left;

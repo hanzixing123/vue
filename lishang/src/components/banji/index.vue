@@ -74,7 +74,7 @@
           <div style="margin-top: 15px">
             <el-input
               placeholder="请输入内容"
-              v-model="input3"
+              v-model="keyword"
               class="input-with-select"
             >
               <el-select v-model="select" slot="prepend" placeholder="课程">
@@ -85,7 +85,7 @@
                   :value="item.id"
                 ></el-option>
               </el-select>
-              <el-button slot="append" icon="el-icon-search"></el-button>
+              <el-button @click="search()" slot="append" icon="el-icon-search"></el-button>
             </el-input>
           </div>
         </div>
@@ -197,10 +197,7 @@
             </div>
           </div>
           <div class="main-right">
-            <li class="main-right-p">
-              <el-button type="text" class="uu">单次排课</el-button>
-              <el-button type="text">批量排课</el-button>
-            </li>
+           
 
             <div class="main-right-main">
               <el-calendar :range="['2019-03-01', '2019-03-31']"> </el-calendar>
@@ -571,7 +568,7 @@
         <el-form :model="form">
           <el-form-item label="" :label-width="formLabelWidth">
             <div style="margin-top: 15px">
-              <el-input v-model="input3" class="input-with-select">
+              <el-input v-model="xueyuankey" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="课程">
                   <el-option label="餐厅名" value="1"></el-option>
                   <el-option label="订单号" value="2"></el-option>
@@ -600,7 +597,7 @@
           <div style="width: 405px; float: left">
             <el-input
               placeholder="请输入内容"
-              v-model="input3"
+              v-model="keyword"
               style="width: 400px; margin-bottom: 5px"
               class="input-with-select"
             >
@@ -683,9 +680,6 @@
           >
         </div>
       </el-dialog>
-
-      <!-- </el-dialog> -->
-      <!-- <router-view></router-view> -->
     </el-main>
   </el-container>
 </template>
@@ -701,7 +695,9 @@ export default {
       formLabelWidth: "100%",
       pickerOptions: {
         disabledDate(time) {
+          
           return time.getTime() > Date.now();
+
         },
       },
       //是否添加学员
@@ -814,7 +810,8 @@ export default {
       endTime: "",
       startTimes: "",
       endTimes: "",
-      input3: "",
+      xueyuankey:"",
+      keyword: "",
       select: "",
       dd: "",
       ee: "",
@@ -883,11 +880,14 @@ export default {
     this.addClassroomList();
   },
   methods: {
-    paike(index) {
-      this.scheduleList.classid = this.list[index].id;
-      this.scheduleList.courseid = this.list[index].courseid;
-      // this.scheduleList.coursename= this.list[index].coursename;
-      this.dialogFormVisible1 = true;
+search(){
+this.loaddata();
+},
+    paike(index){
+        this.scheduleList.classid=this.list[index].id;
+        this.scheduleList.courseid= this.list[index].courseid;
+        // this.scheduleList.coursename= this.list[index].coursename;
+        this.dialogFormVisible1 = true;
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -901,7 +901,7 @@ export default {
       let that = this;
       that.$http.get(
         "/api/classes/list",
-        { page: this.pagenum, psize: this.pagesize },
+        { page: that.pagenum, psize: that.pagesize,name:that.keyword},
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;

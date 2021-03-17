@@ -1,5 +1,6 @@
 Date.prototype.format = function(fmt) { 
   var o = { 
+    "Y+": this.getFullYear().toString(), 
      "M+" : this.getMonth()+1,                 //月份 
      "d+" : this.getDate(),                    //日 
      "h+" : this.getHours(),                   //小时 
