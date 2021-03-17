@@ -9,7 +9,7 @@
       <div class="dh">
         <el-input
           placeholder="请输入内容"
-          v-model="input3"
+          v-model="keyname"
           class="input-with-select"
         >
           <el-select>
@@ -17,7 +17,7 @@
             <el-option label="订单号" value="2"></el-option>
             <el-option label="用户电话" value="3"></el-option>
           </el-select>
-          <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
         </el-input>
       </div>
     </div>
@@ -114,7 +114,7 @@ export default {
       pagenum:1,
       title: "",
       list: [],
-      input3: "",
+      keyname:"",
       dialogFormVisible: false,
       form: {
         name: "",
@@ -137,6 +137,10 @@ export default {
     this.klo();
   },
   methods: {
+    search(){
+      // console.log(this.keyname)
+        this.klo()
+    },
     formatter(row, column) {
       return row.address;
     },
@@ -149,7 +153,7 @@ export default {
       let that = this;
       that.$http.get(
         "/api/courses/list",
-        { page: this.pagenum,psize:this.pagesize },
+        { page: this.pagenum,psize:this.pagesize,name:this.keyname },
         (success) => {
            that.counts = success.data.counts
           that.list = success.data.list;

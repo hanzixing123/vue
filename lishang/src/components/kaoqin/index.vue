@@ -7,17 +7,20 @@
       </div>
       <div class="block">
          <el-date-picker
-      v-model="value1" style="margin-left:20px;"
+      v-model="today" value-format="yyyy-MM-dd" style="margin-left:20px;"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
 
         <div class="el-inputs">
-          <el-input
+          <el-autocomplete
             placeholder="搜索学员快速签到"
-            v-model="input3"
+            v-model="input3" value-key="name"
+            :fetch-suggestions="querySearchAsync"
+  @select="handleSelect"
             class="input-with-select"
           >
+          </el-autocomplete>
             <el-select v-model="select" style="margin-left:20px;" slot="prepend" placeholder="课程">
               <el-option
                 v-for="(item, indexs) in list"
@@ -26,8 +29,8 @@
                 :value="item.id"
               ></el-option>
             </el-select>
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
+            <el-button slot="append" @click="search()" icon="el-icon-search"></el-button>
+        
         </div>
       </div>
     </div>
@@ -35,7 +38,7 @@
 
 
     <div class="right-ba">
-      <span style="margin-left: -80px">今日课表</span>
+      <span style="margin-left: -80px">今日课表{{studentid}}</span>
     </div>
     <div class="right-ya">
       <!-- 考勤 -->
@@ -100,7 +103,7 @@
                         <p class="el-icon-edit-outline"></p>
                         <el-button
                           type="text"
-                          @click="dialogFormVisibles = true"
+                          @click="qd(item.id,pitem.id)"
                           >签到</el-button
                         >
                       </div>
@@ -187,8 +190,8 @@ export default {
           },
         ],
       },
-      value1:"",
-      value2: "",
+      today: "",
+      studentid: 0,
     };
   },
 
@@ -197,6 +200,36 @@ export default {
   },
 
   methods: {
+    
+  querySearchAsync(queryString, cb) {
+       console.log(queryString);
+
+  let tath = this;
+      tath.$http.get(
+        "/api/students/list",
+        { page: 1,name:queryString},
+        (success) => {
+          
+           cb(success.data.list);
+        },
+        (fall) => {}
+      );
+
+        
+      },
+    handleSelect(item) {
+      this.studentid=item.id;
+       // console.log("选中"+item.id);
+      },
+    search(){
+      this.courses();
+    },
+    qd(id,kb_id){
+        let tath=this;
+        tath.dialogFormVisibles = true;
+        tath.form.id=id;
+        tath.form.courseid=kb_id;
+    },
     changeAll() {
       if (!this.checked) {
         this.stuAll = this.list;
@@ -212,9 +245,10 @@ export default {
   courses() {
       //使用axios 调用api接口数据
       let that = this;
+      console.log(that.today);
       that.$http.get(
         "/api/coursetables/checked",
-        null,
+        {today:that.today,studentid:that.studentid,},
         (success) => {
           console.log(111);
           console.log(success);
@@ -228,15 +262,16 @@ export default {
     },
     qiandao: function () {
       let that = this;
-      console.log(this.form);
-      return;
+      that.form.checked= parseInt(that.form.checked)
+      console.log(JSON.stringify(that.form));
+    //return;
 
 
       that.$http.post(
         "/api/coursetables/updateState",
-        JSON.stringify(this.form),
+        [JSON.stringify(that.form)],
         (success) => {
-          console.log(111222);
+          console.log("?");
           that.form = {
             id: "",
             remarks: "",
