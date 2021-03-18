@@ -29,7 +29,6 @@ export default new Router({
       children:[
         {
           path:"/banji",
-          // name:"banji",
           component: () => import ("@/components/banji/index.vue")
         },
         {
@@ -51,6 +50,14 @@ export default new Router({
           path:"/xueyuan",
           // name:"xueyuan",
           component:()=>import("@/components/xueyuan/index.vue")
+        },
+        {
+          path:"/lecturer",
+          component:()=>import("@/components/lecturer/index.vue")
+        },
+        {
+          path:"/classroom",
+          component:()=>import("@/components/classroom/index.vue")
         }
       ]
     },

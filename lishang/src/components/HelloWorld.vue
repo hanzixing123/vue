@@ -13,7 +13,7 @@
           <el-aside width="125px">
             <ul>
               <template v-for="(item, index) in navList">
-                <li
+                <li v-if="index<=4"
                   :key="index.id"
                   ref="changeInit" 
                   @click="addClass(index, item.path)" 
@@ -21,6 +21,14 @@
                   :style="index == isChange ? item.checked : item.unchecked"
                 > 
                   {{ item.meta.name }}
+                </li>
+                <li v-if="index>=5"
+                  :key="index.id"
+                  ref="changeInit" 
+                  @click="addClass(index, item.path)" 
+                  :class="[index==5? 'el-icon-s-custom':'el-icon-s-home',index==isChange&&index==5?'el-icon-s-custom1':'',index==isChange&&index==6?'el-icon-s-home1':'' ]"
+                  :style="index==isChange?'color: #66aff4;background-color: #e8ebf0 !important;border-radius: 10px;':''"
+                ><span >{{ item.meta.name }}</span>
                 </li>
               </template>
             </ul>
@@ -95,11 +103,22 @@ export default {
           },
           checked: {
             backgroundPosition: "31px -1190px",
-
-},
+          },
           unchecked: {
             backgroundPosition: "-112px -1190px",
           },
+        },
+        {
+          path: "/lecturer",
+          meta: {
+            name: "讲师管理",
+          },
+        },
+      {
+          path: "/classroom",
+          meta: {
+            name: "教室管理",
+          }
         },
       ],
     
@@ -126,7 +145,7 @@ created(){
 };
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -139,7 +158,6 @@ created(){
   background-color: #e8ebf0 !important;
   border-radius: 10px;
 }
-
 .el-header {
   background-color: #fefefe;
   color: #000;
@@ -152,13 +170,13 @@ created(){
   background-color: #fafafc;
   color: #333;
   text-align: center;
-  /* line-height: 200px; */
 }
 ul,
 li {
   list-style: none;
   margin: 0;
   padding: 0;
+  width:111px;
 }
 .el-aside ul li {
   background: url("../assets/ico.png") no-repeat;
@@ -167,14 +185,49 @@ li {
   margin: 17px 7px;
   padding-top: 48px;
 }
+.el-icon-s-custom::before{
+  font-size: 50px;
+  position: absolute;
+  margin:0;
+  top:-4px;
+  left: 30px;  
+  color:#b7c3dc;
+}
+.el-icon-s-custom1::before{
+  font-size: 50px;
+  position: absolute;
+  margin:0;
+  top:-4px;
+  left: 30px;  
+  color:#4281fc;
+}
 
+
+.el-icon-s-home::before{
+    font-size: 50px;
+  position: absolute;
+  color:#b7c3dc;
+  top:-4px;
+  left: 30px;  
+}
+.el-icon-s-home1::before{
+    font-size: 50px;
+  position: absolute;
+  color:#4281fc;
+  top:-4px;
+  left: 30px;  
+}
+.el-aside ul li:nth-child(6){
+background: none;
+position: relative;
+}
 .el-aside ul li:nth-child(1) {
-  margin-top: 39px;
+  margin-top: 39px;  
 }
-.el-aside ul li:nth-child(5) {
-  margin-bottom: 220px;
+.el-aside ul li:nth-child(7) {
+  background: none;
+  position: relative;
 }
-
 body > .el-container {
   margin-bottom: 40px;
 }
