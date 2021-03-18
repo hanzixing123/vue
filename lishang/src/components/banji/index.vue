@@ -118,7 +118,7 @@
             <td>
               <el-button type="primary" @click="paike(index)">排课</el-button>
               <!-- dialogFormVisible1 = true -->
-              <el-button type="info" @click="dialogVisible3 = true"
+              <el-button type="info" @click="kebiao()"
                 >课表</el-button
               >
               <!-- <el-button type="success" @click="dialogVisible = true">单次排课</el-button> -->
@@ -202,8 +202,8 @@
             <div class="main-right-main">
               <el-calendar :range="['2019-03-01', '2019-03-31']"> </el-calendar>
             </div>
-            <div class="ke">
-              <li>架子鼓课</li>
+            <div class="ke" v-for="(res,index) in liet" :key="index">
+              <li>{{res.name}}</li>
               <li>09:01在</li>
             </div>
           </div>
@@ -883,6 +883,9 @@ export default {
 search(){
 this.loaddata();
 },
+    kebiao(){
+        this.dialogVisible3 = true;
+    },
     paike(index){
         this.scheduleList.classid=this.list[index].id;
         this.scheduleList.courseid= this.list[index].courseid;
@@ -1689,7 +1692,7 @@ li {
 
 .ke {
   width: 80px;
-  height: 40px;
+  /* height: 40px; */
   border-radius: 8px;
   border-left: 10px #1890ff solid;
   position: absolute;
