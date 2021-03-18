@@ -239,7 +239,7 @@ export default {
 
 
   //班级签到
-    changeClass(item, studentList,index) {
+    changeClass(item, studentList,index) {   
        if(item.classCheckStatu==false){
            this.checkClass = [];
        }else{
