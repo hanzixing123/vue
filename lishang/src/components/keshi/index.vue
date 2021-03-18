@@ -49,23 +49,19 @@
         </div>
       </template>
     </el-calendar>
-    <el-dialog :title2="title2" :visible.sync="dial" v-for="(item,index) in list" :key="index">
+    <el-dialog :title2="title2" :visible.sync="dial">
          <h1>基本信息:</h1>
-          课程名称: {{item.coursename}}  主讲老师:{{item.teachername}} 教室:{{item.classrooms}}
-
-          <h1 style="margin:20px 0;">上课时间</h1>
-          {{item.starttime}}<br>
-          <h1 style="margin-top:20px;">学员({{xueyuan_list1.length}})</h1>
          <el-form>
-          <div class="um" @click="dialog = true">
-             <img src="../banji/img/11.png" style="margin-left:5px;cursor: pointer;" alt="">
-            添加学员
-          </div>
+          
         </el-form>
       
-           <el-button  type="primary" @click="dial = false" style="margin-left:600px;">取消课程</el-button>
+           <el-button  type="primary" @click="dial = false" style="margin-left:500px;">取消课程</el-button>
           <el-button @click="dial = false">保存修改</el-button>
     </el-dialog>
+
+
+
+    
            <el-dialog title1="选择学员22222(钢琴课)"   :visible.sync="dialog"  >
        <div class="right-threes">
           <div style="margin-top: 15px;">

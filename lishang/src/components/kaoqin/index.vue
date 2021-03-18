@@ -38,21 +38,23 @@
 
 
     <div class="right-ba">
-      <span style="margin-left: -80px">今日课表{{studentid}}</span>
+      <span style="margin-left: -80px">今日课表</span>
     </div>
     <div class="right-ya">
       <!-- 考勤 -->
       <div class="kq-text1">
         <el-checkbox v-model="stuAll" @click="changeAll">全选</el-checkbox>
-        <el-button type="primary" @click="dialogFormVisibles = true" style="padding-right: 30px; width: 100px">考勤</el-button>
+        <el-button type="primary" @click="classOrAll()" style="padding-right: 30px; width: 100px">考勤</el-button>
       </div>
-      <div class="kq-text2" v-for="pitem in list" :key="pitem.id">
+      <div class="kq-text2" v-for="(pitem,index) in list" :key="pitem.id">
         <div>
           <table>
             <tr>
               <td>
                 <div class="tab2" style="float: left">
-                  <el-checkbox></el-checkbox>
+                  <input type="checkbox" class="checkbox-selectStudent" v-model="pitem.classCheckStatu"
+                  @change="changeClass(pitem, pitem.studentList,index)"/>
+
 
                   {{ pitem.classname }} <span class="asd">班课</span>
                 </div>
@@ -81,7 +83,13 @@
                   <tr>
                     <td>
                       <div class="tab2">
-                        <el-checkbox v-model="stuAll"></el-checkbox>
+                       
+                           <input
+                      type="checkbox"
+                      :value="item"
+                      class="checkbox-selectStudent"
+                      v-model="checkClass"
+                    />
                         <img
                           src="../../assets/images/10.png"
                           width="30px"
@@ -103,7 +111,7 @@
                         <p class="el-icon-edit-outline"></p>
                         <el-button
                           type="text"
-                          @click="qd(item.id,pitem.id)"
+                         @click="classEvery(item.id, pitem.id)"
                           >签到</el-button
                         >
                       </div>
@@ -111,11 +119,11 @@
                   </tr>
                   <el-dialog title="签到" :visible.sync="dialogFormVisibles">
                     <div class="groups">
-                      <el-radio label="1" v-model="form.checked">未签到</el-radio>
-                      <el-radio label="2" v-model="form.checked">出勤</el-radio>
-                      <el-radio label="3" v-model="form.checked">迟到</el-radio>
-                      <el-radio label="4" v-model="form.checked">请假</el-radio>
-                      <el-radio label="5" v-model="form.checked">旷课</el-radio>
+                      <el-radio label="1" v-model="signList.checked">未签到</el-radio>
+                      <el-radio label="2" v-model="signList.checked">出勤</el-radio>
+                      <el-radio label="3" v-model="signList.checked">迟到</el-radio>
+                      <el-radio label="4" v-model="signList.checked">请假</el-radio>
+                      <el-radio label="5" v-model="signList.checked">旷课</el-radio>
                       <br />
                       <el-input
                         type="textarea"
@@ -125,7 +133,7 @@
                       ></el-input>
                     </div>
                     <br />
-                    <el-button type="primary" @click="qiandao" class="buttons"
+                    <el-button type="primary" @click="addSign()" class="buttons"
                       >保 存</el-button
                     >
                   </el-dialog>
@@ -144,21 +152,30 @@
 export default {
   data() {
     return {
+       //考勤管理数据
+      list: [
+        {
+          //班级是否选中状态
+          classCheckStatu: false,
+          studentList:{
+            //学生是否选中状态
+            studentCheckStatu:false
+          }
+        },
+      ],
+
+    signList:[],
+
       liet: [],
-      list: [],
       stuAll: [],
       radio: "1",
       input3: "",
       select: "",
       startTime: "",
       endTime: "",
-      checked: true,
       dialogFormVisibles: false,
       form: {
-        id: "",
-        remarks: "",
-        checked: "1",
-        courseid: "",
+      
       },
       formLabelWidth: "120px",
       pickerOptions: {
@@ -192,15 +209,84 @@ export default {
       },
       today: "",
       studentid: 0,
+       //签到状态(默认0：未签到)
+      checkStatu: 0,
+
+      //学员id
+      stuId: "",
+
+      //课程id
+      courseId: "",
+        //班级全选
+      checkClass: [],
+
     };
   },
+
+
 
   created() {
     this.courses();
   },
 
   methods: {
-    
+       //班级里个人签到
+    classEvery(stuId, courseId) {
+      this.stuId = stuId;
+      this.courseId = courseId;
+      this.dialogFormVisibles = true;
+    },
+
+
+  //班级签到
+    changeClass(item, studentList,index) {
+       if(item.classCheckStatu==false){
+           this.checkClass = [];
+       }else{
+         for(var i in studentList){
+           this.$set(studentList[i], "isStudentStatu", false)
+         }
+         this.checkClass = studentList
+         console.log(this.checkClass)
+       }
+    },
+    //确定签到
+    addSign() {
+      console.log(this.signList.checked);
+      this.signList = [
+        {
+          id: this.stuId,
+          checked: this.signList.checked,
+          courseid: this.courseId,
+          remarks: this.signList.remarks,
+        },
+      ];
+
+      console.log(JSON.stringify(this.signList));
+      this.$http.post(
+        "/api/coursetables/updateState",
+        this.signList,
+        (success) => {
+          console.log(success);
+          this.$message({
+            message: "恭喜你，签到成功",
+            type: "success",
+          });
+          this.dialogFormVisibles = false;
+          this.courses();
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
+    },
+
+  //考勤
+    classOrAll() {
+      console.log(this.checkClass);
+    },
+
+
   querySearchAsync(queryString, cb) {
        console.log(queryString);
 
@@ -224,12 +310,7 @@ export default {
     search(){
       this.courses();
     },
-    qd(id,kb_id){
-        let tath=this;
-        tath.dialogFormVisibles = true;
-        tath.form.id=id;
-        tath.form.courseid=kb_id;
-    },
+   
     changeAll() {
       if (!this.checked) {
         this.stuAll = this.list;
@@ -254,31 +335,6 @@ export default {
           console.log(success);
           this.list = success.data.list;
           console.log(this.list);
-        },
-        (failure) => {
-          console.log(failure);
-        }
-      );
-    },
-    qiandao: function () {
-      let that = this;
-      that.form.checked= parseInt(that.form.checked)
-      console.log(JSON.stringify(that.form));
-    //return;
-
-
-      that.$http.post(
-        "/api/coursetables/updateState",
-        [JSON.stringify(that.form)],
-        (success) => {
-          console.log("?");
-          that.form = {
-            id: "",
-            remarks: "",
-            checked: 1,
-            courseid: "",
-          };
-          that.courses();
         },
         (failure) => {
           console.log(failure);
