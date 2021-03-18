@@ -18,7 +18,7 @@
                 v-for="(item, indexs) in list"
                 :key="indexs"
                 :label="item.name"
-                :value="item.id"
+                :value="item.coursename"
               ></el-option>
             </el-select>
           <el-autocomplete
