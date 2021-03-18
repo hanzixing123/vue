@@ -600,7 +600,11 @@ export default {
       // this.kecehng_xuan
       // dialogFormVisible1 = false
       if (this.kecehng_xuan == "") {
-        alert("请选择要添加的班级");
+        this.$message({
+          showClose: true,
+          message: "请先选择要添加的班级",
+          type: "error",
+        });
         return;
       }
       let tath = this;
@@ -620,8 +624,11 @@ export default {
           this.xuyuan_list();
           this.selectList = [];
           this.dialogFormVisible1 = false;
-
-          alert("操作成功");
+          this.$message({
+            showClose: true,
+            message: "排课成功",
+            type: "success",
+          });
         },
         (fall) => {}
       );
@@ -630,13 +637,26 @@ export default {
       if (this.selectList != 0) {
         this.dialogFormVisible1 = true;
       } else {
-        alert("请先添加学员");
+        this.$message({
+          showClose: true,
+          message: "请先添加学员",
+          type: "error",
+        });
       }
-      // selectList!=0?dialogFormVisible1 = true: alert('请先添加学员')
     },
     ALLdel() {
       let tath = this;
       var list = tath.selectList;
+      if (list == 0) {
+        this.$message({
+          showClose: true,
+          message: "请先选择要删除的学员",
+          type: "error",
+        });
+        return;
+      }
+      
+      
       for (let i = 0; i < list.length; i++) {
         tath.$http.get(
           "/api/students/delete",
@@ -645,7 +665,12 @@ export default {
           },
           (success) => {
             if (i == list.length - 1) {
-              alert("批量删除成功");
+              this.$message({
+                showClose: true,
+                message: "删除成功",
+                type: "success",
+              });
+
               this.xuyuan_list();
               this.selectList = [];
             }
@@ -660,7 +685,13 @@ export default {
         "/api/students/delete",
         { id: id },
         (success) => {
-          console.log(success);
+          // console.log(success);
+          this.$message({
+            showClose: true,
+            message: "删除成功",
+            type: "success",
+          });
+
           this.xuyuan_list();
         },
         (fall) => {}
@@ -679,12 +710,22 @@ export default {
       );
     },
     xueyuan_add() {
-      console.log(this.form);
       let that = this;
+      // console.log(this.form);
+       if(that.form.id){
+            var huifu="修改成功"
+       }else{
+            var huifu="添加成功"
+       }
       that.$http.post(
         "/api/students/add",
         JSON.stringify(this.form),
         (success) => {
+          this.$message({
+            showClose: true,
+            message: huifu,
+            type: "success",
+          });
           this.xuyuan_list();
           // console.log(success);
           this.dialogFormVisible = false;
@@ -780,6 +821,11 @@ export default {
         JSON.stringify(tath.form2),
         (success) => {
           this.gouke = false;
+                  this.$message({
+            showClose: true,
+            message: "购课成功",
+            type: "success",
+          });
           console.log(success);
         },
         (fall) => {
