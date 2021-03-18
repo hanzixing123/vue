@@ -11,7 +11,7 @@
           <el-input
             style="width: 600px"
             placeholder="请输入内容"
-            v-model="input3"
+            v-model="keywordd"
             class="input-with-select"
           >
             <el-select
@@ -24,7 +24,12 @@
               <el-option label="订单号" value="2"></el-option>
               <el-option label="用户电话" value="3"></el-option>
             </el-select>
-           <el-button slot="append" icon="el-icon-search" style="margin-top:-3px;"></el-button>
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="search()"
+              style="margin-top: -3px"
+            ></el-button>
           </el-input>
         </div>
       </div>
@@ -265,9 +270,8 @@
           <el-button type="primary" @click="goke()">确定</el-button>
         </div>
       </el-dialog>
-      <!-- 添加学员 -->
-
-      <el-dialog :title="titles" :visible.sync="dialogFormVisible">
+      <!-- 课表 -->
+      <el-dialog :title="titless" :visible.sync="kljh">
         <el-form :model="form">
           <el-form-item label="姓名" :label-width="formLabelWidth">
             <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -277,6 +281,43 @@
           </el-form-item>
           <el-form-item label="性别" :label-width="formLabelWidth">
             <!-- <el-input v-model="form.tel" autocomplete="off"></el-input> -->
+            <input type="radio" v-model="form.sex" name="sex" value="1" />男
+            <input type="radio" v-model="form.sex" name="sex" value="0" />女
+          </el-form-item>
+          <el-form-item label="出生日期" :label-width="formLabelWidth">
+            <div class="block">
+              <el-date-picker
+                v-model="form.birthday"
+                type="date"
+                placeholder="选择日期"
+                value-format="yyyy-MM-dd"
+              >
+              </el-date-picker>
+            </div>
+          </el-form-item>
+          <el-form-item label="学员编号" :label-width="formLabelWidth">
+            <el-input v-model="form.num" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item label="备注" :label-width="formLabelWidth">
+            <textarea na v-model="form.remarks" id="" cols="55" rows="10" />
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="xueyuan_add">保 存</el-button>
+        </div>
+      </el-dialog>
+      <!-- 添加学员 -->
+      <el-dialog :title="titles" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+          <el-form-item label="姓名" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="联系方式" :label-width="formLabelWidth">
+            <el-input v-model="form.tel" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="性别" :label-width="formLabelWidth">
             <input type="radio" v-model="form.sex" name="sex" value="1" />男
             <input type="radio" v-model="form.sex" name="sex" value="0" />女
           </el-form-item>
@@ -353,7 +394,7 @@
                 <el-table-column prop="endcourses" label="已上课时">
                 </el-table-column>
                 <el-table-column label="操作">
-                  <button>课表</button>
+                  <button @click="kljh = true">课表</button>
                 </el-table-column>
               </el-table>
             </el-tab-pane>
@@ -497,11 +538,14 @@ export default {
 
   data() {
     return {
+      kljh: false,
+      keywordd: "",
       kecehng_xuan: "",
       banji_list: [],
 
       title: "购课",
       titles: "添加学员",
+      titless: "学员课表",
       counts: 0,
       pagesize: 7,
       pagenum: 1,
@@ -514,7 +558,7 @@ export default {
       time: "",
       time1: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
       list: [],
-      input3: "",
+      keywordd: "",
       select: "",
       dialogTableVisible: false,
       dialogTableVisible1: false,
@@ -548,6 +592,10 @@ export default {
     };
   },
   methods: {
+    search() {
+      this.xuyuan_list();
+    },
+
     paike() {
       // this.kecehng_xuan
       // dialogFormVisible1 = false
@@ -569,10 +617,11 @@ export default {
         "/api/coursetables/addForClassid",
         JSON.stringify(list1),
         (success) => {
-  
-              this.xuyuan_list();
-              this.selectList = [];
-              alert("操作成功");
+          this.xuyuan_list();
+          this.selectList = [];
+          this.dialogFormVisible1 = false;
+
+          alert("操作成功");
         },
         (fall) => {}
       );
@@ -624,7 +673,7 @@ export default {
         { page: 1 },
         (success) => {
           this.banji_list = success.data.list;
-          // console.log("班级信息", success);
+          console.log("班级信息", success);
         },
         (fall) => {}
       );
@@ -652,11 +701,11 @@ export default {
       let that = this;
       that.$http.get(
         "/api/students/list",
-        { page: this.pagenum, psize: this.pagesize },
+        { page: this.pagenum, psize: this.pagesize, name: that.keywordd },
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          console.log("580", that.list);
+          // console.log("580", that.list);
         },
         (failure) => {
           console.log(failure);
@@ -950,7 +999,6 @@ td:hover .paiban {
   height: 40px;
   padding: 0;
   margin-left: 20px;
-  
 }
 /* .sosuo .el-button{
   top:10px;

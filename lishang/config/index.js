@@ -9,20 +9,14 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {'/api':{
-      port:8889,target:'http://192.168.1.159:8888/edusystems/api/',   // 要代理的接口地址
-      changeOrigin:true,                            // 允许跨域
-      pathRewrite:{'^/api':''}            // 接口名重写
-    }
- },
-  
     proxyTable: {
       '/api': {
-        port: 2121, target: 'http://192.168.1.159:8888/edusystems/api/',   // 要代理的接口地址
-        changeOrigin: true,                            // 允许跨域
-        pathRewrite: { '^/api': '' }            // 接口名重写
+        port: 8889, target: 'http://192.168.1.159:8888/edusystems/api/',   // 要代理的接口地址
+        changeOrigin: true,// 允许跨域
+        pathRewrite: { '^/api': '' }// 接口名重写
       }
-    }, 
+    },
+
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -30,7 +24,7 @@ module.exports = {
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
-    poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+    poll: false, //https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
 
     /**
