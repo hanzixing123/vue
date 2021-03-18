@@ -24,7 +24,12 @@
               <el-option label="订单号" value="2"></el-option>
               <el-option label="用户电话" value="3"></el-option>
             </el-select>
-           <el-button slot="append" icon="el-icon-search" @click="search()" style="margin-top:-3px;"></el-button>
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="search()"
+              style="margin-top: -3px"
+            ></el-button>
           </el-input>
         </div>
       </div>
@@ -265,12 +270,8 @@
           <el-button type="primary" @click="goke()">确定</el-button>
         </div>
       </el-dialog>
-
-
-
       <!-- 课表 -->
-
-       <el-dialog :title="titless" :visible.sync="kljh">
+      <el-dialog :title="titless" :visible.sync="kljh">
         <el-form :model="form">
           <el-form-item label="姓名" :label-width="formLabelWidth">
             <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -307,15 +308,7 @@
           <el-button type="primary" @click="xueyuan_add">保 存</el-button>
         </div>
       </el-dialog>
-
-
-
-
-
-
-
       <!-- 添加学员 -->
-
       <el-dialog :title="titles" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -325,7 +318,6 @@
             <el-input v-model="form.tel" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="性别" :label-width="formLabelWidth">
-            <!-- <el-input v-model="form.tel" autocomplete="off"></el-input> -->
             <input type="radio" v-model="form.sex" name="sex" value="1" />男
             <input type="radio" v-model="form.sex" name="sex" value="0" />女
           </el-form-item>
@@ -402,7 +394,7 @@
                 <el-table-column prop="endcourses" label="已上课时">
                 </el-table-column>
                 <el-table-column label="操作">
-                  <button @click="kljh=true">课表</button>
+                  <button @click="kljh = true">课表</button>
                 </el-table-column>
               </el-table>
             </el-tab-pane>
@@ -546,14 +538,14 @@ export default {
 
   data() {
     return {
-      kljh:false,
-      keywordd:"",
+      kljh: false,
+      keywordd: "",
       kecehng_xuan: "",
       banji_list: [],
 
       title: "购课",
       titles: "添加学员",
-      titless:"学员课表",
+      titless: "学员课表",
       counts: 0,
       pagesize: 7,
       pagenum: 1,
@@ -600,10 +592,9 @@ export default {
     };
   },
   methods: {
-      search(){
+    search() {
       this.xuyuan_list();
     },
-
 
     paike() {
       // this.kecehng_xuan
@@ -626,10 +617,11 @@ export default {
         "/api/coursetables/addForClassid",
         JSON.stringify(list1),
         (success) => {
-  
-              this.xuyuan_list();
-              this.selectList = [];
-              alert("操作成功");
+          this.xuyuan_list();
+          this.selectList = [];
+          this.dialogFormVisible1 = false;
+
+          alert("操作成功");
         },
         (fall) => {}
       );
@@ -681,7 +673,7 @@ export default {
         { page: 1 },
         (success) => {
           this.banji_list = success.data.list;
-          // console.log("班级信息", success);
+          console.log("班级信息", success);
         },
         (fall) => {}
       );
@@ -709,11 +701,11 @@ export default {
       let that = this;
       that.$http.get(
         "/api/students/list",
-        { page: this.pagenum, psize: this.pagesize,name:that.keywordd },
+        { page: this.pagenum, psize: this.pagesize, name: that.keywordd },
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          console.log("580", that.list);
+          // console.log("580", that.list);
         },
         (failure) => {
           console.log(failure);
@@ -1007,7 +999,6 @@ td:hover .paiban {
   height: 40px;
   padding: 0;
   margin-left: 20px;
-  
 }
 /* .sosuo .el-button{
   top:10px;
