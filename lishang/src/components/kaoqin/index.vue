@@ -38,7 +38,7 @@
 
 
     <div class="right-ba">
-      <span style="margin-left: -80px">今日课表{{studentid}}</span>
+      <span style="margin-left: -80px">今日课表</span>
     </div>
     <div class="right-ya">
       <!-- 考勤 -->
@@ -121,7 +121,7 @@
                         type="textarea"
                         v-model="form.remarks"
                         placeholder="备注"
-                        class="inputs-aa"
+                       class="inputs-aa"
                       ></el-input>
                     </div>
                     <br />
@@ -196,6 +196,7 @@ export default {
   },
 
   created() {
+    this.today = new Date().format("yyyy-MM-dd"); 
     this.courses();
   },
 

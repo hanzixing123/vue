@@ -155,7 +155,7 @@
       <el-dialog
         title="课表"
         :visible.sync="dialogVisible3"
-        width="70%"
+        width="75%"
         :before-close="handleClose"
       >
         <div class="main">
@@ -1692,7 +1692,7 @@ li {
   border-left: 10px #1890ff solid;
   position: absolute;
   left: 400px;
-  top: 180px;
+  top: 148px;
 }
 
 .ke li {
