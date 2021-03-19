@@ -479,7 +479,7 @@ tr {
 .el-footer1 div button:nth-child(4) span {
   background: url("../../assets/ico.png") 31px 595px;
   display: inline-block;
-  width: 27px;
+  width: 27px; 
   height: 28px;
 }
 .el-main1 {
