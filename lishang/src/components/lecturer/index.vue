@@ -34,7 +34,7 @@
           <td>讲师名称</td>
           <td>讲师电话</td>
           <td>微信号</td>
-          <td>类型</td>
+          <td>职位</td>
           <td>操作</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
@@ -133,7 +133,7 @@ export default {
         name: "",
         tel: "",
         wechat: "",
-        type: 1,
+        type:1,
       },
       formLabelWidth: "120px",
     };
@@ -200,6 +200,34 @@ export default {
       } else {
         this.form.type = "助教老师";
       }
+
+
+      if(this.form.name==""){
+           this.$message({
+            showClose: false,
+            message: "讲师名称不能为空",
+            type: "error",
+          });
+            return;
+      }
+      if(this.form.tel==""){
+         this.$message({
+            showClose: false,
+            message: "讲师电话不能为空",
+            type: "error",
+          });
+          return;
+      }
+       if(this.form.wechat==""){
+         this.$message({
+            showClose: false,
+            message: "讲师微信号不能为空",
+            type: "error",
+          });
+          return;
+      }
+      
+    
 
       console.log(JSON.stringify(this.form));
       // return;
