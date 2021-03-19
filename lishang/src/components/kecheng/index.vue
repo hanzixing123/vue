@@ -80,6 +80,7 @@
         <el-form-item class="lp" label="单价:" :label-width="formLabelWidth">
           <el-input
             v-model="form.price"
+            type="number"
             class="input1"
             autocomplete="off"
           ></el-input>
@@ -177,6 +178,31 @@ export default {
         this.form.mode = "集体班";
       }
 
+      console.log(this.form);
+     
+
+
+      if(this.form.name==""){
+          this.$message({
+            showClose: false,
+            message: "课程名称不能为空",
+            type: "error",
+          });
+            return;
+      }
+
+         if(this.form.price==""){
+          this.$message({
+            showClose: false,
+            message: "课程单价不能为空",
+            type: "error",
+          });
+            return;
+      }
+
+     
+
+
       console.log(JSON.stringify(this.form));
 
       let data = JSON.stringify(this.form);
@@ -191,6 +217,12 @@ export default {
             pricetype: "",
             mode: "",
           };
+           this.$message({
+            showClose: true,
+            message: "课程添加成功",
+            type: "success",
+          });
+          
           this.klo();
           // console.log(success);
         },
@@ -208,6 +240,12 @@ export default {
         { id: that.list[index].id },
         (success) => {
           this.klo();
+            this.$message({
+            showClose: true,
+            message: "删除成功",
+            type: "success",
+          });
+            return;
         },
         (failure) => {}
       );

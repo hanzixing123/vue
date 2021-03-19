@@ -226,7 +226,7 @@ export default {
           });
           return;
       }
-      
+
     
 
       console.log(JSON.stringify(this.form));
@@ -243,8 +243,15 @@ export default {
             wechat: "",
             type: 1,
           };
+          this.$message({
+            showClose: true,
+            message: "添加成功",
+            type: "success",
+          });
           this.klo();
           // console.log(success);
+        
+
         },
         (failure) => {
           console.log(failure);
@@ -260,6 +267,11 @@ export default {
         "/api/teachers/delete",
         { id: that.list[index].id },
         (success) => {
+             this.$message({
+            showClose: true,
+            message: "删除成功",
+            type: "success",
+          });
           this.klo();
         },
         (failure) => {}
