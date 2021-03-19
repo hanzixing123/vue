@@ -746,7 +746,7 @@ export default {
           });
           return;
         }
-        if(this.form.remarks==""){
+        if(this.form.remarks==""){  
             this.$message({
             showClose: false,
             message: "备注不能为空",
