@@ -659,7 +659,7 @@ export default {
       
       for (let i = 0; i < list.length; i++) {
         tath.$http.get(
-          "/api/students/delete",
+          "/api/students/delete", 
           {
             id: list[i].substring(list[i].lastIndexOf("+") + 1, list[i].length),
           },
