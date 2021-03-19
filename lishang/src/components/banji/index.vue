@@ -68,7 +68,7 @@
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="add">确 定</el-button>
-          </div>      
+          </div>
         </el-dialog>
         <div class="right-three">
           <div style="margin-top: 15px">
@@ -85,7 +85,11 @@
                   :value="item.id"
                 ></el-option>
               </el-select>
-              <el-button @click="search()" slot="append" icon="el-icon-search"></el-button>
+              <el-button
+                @click="search()"
+                slot="append"
+                icon="el-icon-search"
+              ></el-button>
             </el-input>
           </div>
         </div>
@@ -118,9 +122,7 @@
             <td>
               <el-button type="primary" @click="paike(index)">排课</el-button>
               <!-- dialogFormVisible1 = true -->
-              <el-button type="info" @click="kebiao()"
-                >课表</el-button
-              >
+              <el-button type="info" @click="kebiao()">课表</el-button>
               <!-- <el-button type="success" @click="dialogVisible = true">单次排课</el-button> -->
               <el-button type="danger" @click="del(item.id)">删除</el-button>
               <el-button type="warning" @click="uplad(index)">修改</el-button>
@@ -159,7 +161,7 @@
         <div class="main">
           <div class="main-left">
             <div class="main-left-top">
-              <p class="top-t">架子鼓基础班2101</p>
+              <p class="top-t" >架子鼓基础班2101</p>
               <li><b>课程：</b>架子鼓课</li>
               <li><b>老师：</b>希希、老师傅</li>
               <li><b>教室：</b></li>
@@ -197,13 +199,11 @@
             </div>
           </div>
           <div class="main-right">
-           
-
             <div class="main-right-main">
               <el-calendar :range="['2019-03-01', '2019-03-31']"> </el-calendar>
             </div>
-            <div class="ke" v-for="(res,index) in liet" :key="index">
-              <li>{{res.name}}</li>
+            <div class="ke" v-for="(res, index) in liet" :key="index">
+              <li>{{ res.name }}</li>
               <li>09:01在</li>
             </div>
           </div>
@@ -561,7 +561,12 @@
           </ul>
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="commit()"   v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
+          <el-button
+            type="primary"
+            @click="commit()"
+            v-loading.fullscreen.lock="fullscreenLoading"
+            >保存</el-button
+          >
         </div>
       </el-dialog>
       <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
@@ -695,9 +700,7 @@ export default {
       formLabelWidth: "100%",
       pickerOptions: {
         disabledDate(time) {
-          
           return time.getTime() > Date.now();
-
         },
       },
       //是否添加学员
@@ -810,7 +813,7 @@ export default {
       endTime: "",
       startTimes: "",
       endTimes: "",
-      xueyuankey:"",
+      xueyuankey: "",
       keyword: "",
       select: "",
       dd: "",
@@ -880,17 +883,18 @@ export default {
     this.addClassroomList();
   },
   methods: {
-search(){
-this.loaddata();
-},
-    kebiao(){
-        this.dialogVisible3 = true;
+    
+    search() {
+      this.loaddata();
     },
-    paike(index){
-        this.scheduleList.classid=this.list[index].id;
-        this.scheduleList.courseid= this.list[index].courseid;
-        // this.scheduleList.coursename= this.list[index].coursename;
-        this.dialogFormVisible1 = true;
+    kebiao() {
+      this.dialogVisible3 = true;
+    },
+    paike(index) {
+      this.scheduleList.classid = this.list[index].id;
+      this.scheduleList.courseid = this.list[index].courseid;
+      // this.scheduleList.coursename= this.list[index].coursename;
+      this.dialogFormVisible1 = true;
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -904,7 +908,7 @@ this.loaddata();
       let that = this;
       that.$http.get(
         "/api/classes/list",
-        { page: that.pagenum, psize: that.pagesize,name:that.keyword},
+        { page: that.pagenum, psize: that.pagesize, name: that.keyword },
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
@@ -1110,7 +1114,7 @@ this.loaddata();
         { page: 1 },
         (success) => {
           this.classroomList = success.data.list;
-          console.log(success.data.list);
+          // console.log(success.data.list);
         },
         (fail) => {
           console.log(fail);
@@ -1134,7 +1138,7 @@ this.loaddata();
     //保存
     commit() {
       let tath = this;
-              this.fullscreenLoading=true;
+      this.fullscreenLoading = true;
 
       for (var i = 0; i < tath.weekArray.length; i++) {
         if (tath.weekArray[i].list.length > 0) {
@@ -1152,20 +1156,20 @@ this.loaddata();
         "/api/coursetables/add",
         tath.scheduleList,
         (success) => {
-                    this.fullscreenLoading = false;
+          this.fullscreenLoading = false;
           // console.log(111);
           tath.$message({
             message: "恭喜你，排课成功",
             type: "success",
           });
-           tath.scheduleList = {};
-           tath.$emit("addSched");
+          tath.scheduleList = {};
+          tath.$emit("addSched");
           // console.log(success);
-           tath.dialogFormVisible1 = false;
+          tath.dialogFormVisible1 = false;
         },
-        (fail) =>{
-            console.log(222);
-           this.$message.error("班级排课失败");
+        (fail) => {
+          console.log(222);
+          this.$message.error("班级排课失败");
         }
       );
     },
@@ -1734,7 +1738,7 @@ li {
   margin-bottom: 20px;
 }
 .el-icon-user-solid {
-  color: #1890ff; 
+  color: #1890ff;
   font-size: 14px;
 }
 </style>
