@@ -126,6 +126,18 @@ export default {
             name: "教室管理",
           },
         },
+         {
+          path: "/account",
+          meta: {
+            name: "账号管理",
+          },
+        },
+         {
+          path: "/campus",
+          meta: {
+            name: "校区管理",
+          },
+        },
       ],
     };
   },
@@ -158,6 +170,12 @@ export default {
       }
       if (this.$route.path == "/classroom") {
         this.isChange = 6;
+      }
+        if (this.$route.path == "/account") {
+        this.isChange = 7;
+      }
+        if (this.$route.path == "/campus") {
+        this.isChange = 8;
       }
     },
   },

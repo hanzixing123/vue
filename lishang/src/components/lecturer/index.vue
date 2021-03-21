@@ -3,8 +3,7 @@
     <div class="lo">
       <p class="bq">讲师管理</p>
       <a class="el-icon-folder-add" @click="dialogFormVisible = true"
-        >添加讲师</a
-      >
+        >添加讲师</a>
       <div class="dh">
         <el-input
           placeholder="请输入内容"
