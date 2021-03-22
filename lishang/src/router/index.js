@@ -58,14 +58,6 @@ export default new Router({
         {
           path:"/classroom",
           component:()=>import("@/components/classroom/index.vue")
-        },
-        {
-          path:"/account",
-          component:()=>import("@/components/account/index.vue")
-        },
-        {
-          path:"/campus",
-          component:()=>import("@/components/campus/index.vue")
         }
       ]
     },
