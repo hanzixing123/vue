@@ -167,7 +167,7 @@ export default {
         );
       }
 
-      console.log("学员列表", this.xueyuan_list);
+      // console.log("学员列表", this.xueyuan_list);
     },
     huo_list() {
       let that = this;
@@ -176,7 +176,7 @@ export default {
         { month: new Date().format("yyyy-MM"), page: 1, psize: 10000 },
         success => {
           that.list = success.data.list;
-          console.log(success.data.list);
+          // console.log(success.data.list);
           // console.log(123);
         },
         failure => {

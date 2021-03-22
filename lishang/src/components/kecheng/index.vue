@@ -157,7 +157,7 @@ export default {
         (success) => {
            that.counts = success.data.counts
           that.list = success.data.list;
-          console.log(success.data.list);
+          // console.log(success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -177,7 +177,7 @@ export default {
         this.form.mode = "集体班";
       }
 
-      console.log(JSON.stringify(this.form));
+      // console.log(JSON.stringify(this.form));
 
       let data = JSON.stringify(this.form);
       that.$http.post(
@@ -201,7 +201,7 @@ export default {
     },
 
     del(index) {
-      console.log(this.list[index]);
+      // console.log(this.list[index]);
       let that = this;
       that.$http.get(
         "/api/courses/delete",
@@ -228,7 +228,7 @@ export default {
       }
 
       that.form = that.list[index];
-      console.log(that.form);
+      // console.log(that.form);
     },
 
   },

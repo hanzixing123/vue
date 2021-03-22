@@ -159,13 +159,13 @@
       <el-dialog
         title="课表"
         :visible.sync="dialogVisible3"
-        width="70%"
+        width="75%"
         :before-close="handleClose"
       >
         <div class="main">
           <div class="main-left">
             <div class="main-left-top">
-              <p class="top-t">架子鼓基础班2101</p>
+              <p class="top-t" >架子鼓基础班2101</p>
               <li><b>课程：</b>架子鼓课</li>
               <li><b>老师：</b>希希、老师傅</li>
               <li><b>教室：</b></li>
@@ -888,6 +888,7 @@ export default {
     this.addClassroomList();
   },
   methods: {
+    
     search() {
       this.loaddata();
     },
@@ -916,7 +917,7 @@ export default {
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          console.log("班级信息", success.data.list);
+          // console.log("班级信息", success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -1020,7 +1021,7 @@ export default {
         );
       }
 
-      console.log("学员列表", this.xueyuan_list);
+      // console.log("学员列表", this.xueyuan_list);
     },
 
     uplad(index) {
@@ -1042,7 +1043,7 @@ export default {
     changetab(index) {
       this.checktab = index;
       this.isschedule = index;
-      console.log(index);
+      // console.log(index);
       if (index == 0) {
         this.scheduleList.addtype = "one";
       } else {
@@ -1079,7 +1080,7 @@ export default {
         begintime: "",
         endtime: "",
       });
-      console.log(11);
+      // console.log(11);
     },
     //点击减号给给ind这个组的list，减少一个list[]模板
     deltime(ind, index) {
@@ -1132,7 +1133,7 @@ export default {
         { page: 1 },
         (success) => {
           this.classroomList = success.data.list;
-          console.log(success.data.list);
+          // console.log(success.data.list);
         },
         (fail) => {
           console.log(fail);
@@ -1167,7 +1168,7 @@ export default {
       }
       tath.isAddStu = false;
       tath.scheduleList.studentlist = tath.xueyuan_list1;
-      console.log("????", JSON.stringify(tath.scheduleList));
+      // console.log("????", JSON.stringify(tath.scheduleList));
       // console.log("????1",tath.scheduleList);
 
       tath.$http.post(
@@ -1186,7 +1187,7 @@ export default {
           tath.dialogFormVisible1 = false;
         },
         (fail) => {
-          console.log(222);
+          // console.log(222);
           this.$message.error("班级排课失败");
         }
       );
@@ -1719,7 +1720,7 @@ li {
   border-left: 10px #1890ff solid;
   position: absolute;
   left: 400px;
-  top: 180px;
+  top: 148px;
 }
 
 .ke li {
