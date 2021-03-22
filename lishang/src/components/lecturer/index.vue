@@ -145,7 +145,7 @@ export default {
       }
     },
     teacher_type(y,n){
-      console.log("查看状态",y,n);
+      // console.log("查看状态",y,n);
       if(y=='1'){          
         this.cat=1;
           this.klo();
@@ -184,7 +184,7 @@ export default {
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          console.log("获取", success.data.list);
+          // console.log("获取", success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -201,7 +201,7 @@ export default {
         this.form.type = "助教老师";
       }
 
-      console.log(JSON.stringify(this.form));
+      // console.log(JSON.stringify(this.form));
       // return;
       let data = JSON.stringify(this.form);
       that.$http.post(
@@ -226,7 +226,7 @@ export default {
 
     // 讲师删除
     del(index) {
-      console.log(this.list[index]);
+      // console.log(this.list[index]);
       let that = this;
       that.$http.get(
         "/api/teachers/delete",
@@ -259,7 +259,7 @@ export default {
       }
 
         that.dialogFormVisible = true;
-        console.log(this.form);
+        // console.log(this.form);
     },
   },
 };

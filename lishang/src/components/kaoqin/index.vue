@@ -248,12 +248,12 @@ export default {
            this.$set(studentList[i], "isStudentStatu", false)
          }
          this.checkClass = studentList
-         console.log(this.checkClass)
+        //  console.log(this.checkClass)
        }
     },
     //确定签到
     addSign() {
-      console.log(this.signList.checked);
+      // console.log(this.signList.checked);
       this.signList = [
         {
           id: this.stuId,
@@ -263,12 +263,12 @@ export default {
         },
       ];
 
-      console.log(JSON.stringify(this.signList));
+      // console.log(JSON.stringify(this.signList));
       this.$http.post(
         "/api/coursetables/updateState",
         this.signList,
         (success) => {
-          console.log(success);
+          // console.log(success);
           this.$message({
             message: "恭喜你，签到成功",
             type: "success",
@@ -284,12 +284,12 @@ export default {
 
   //考勤
     classOrAll() {
-      console.log(this.checkClass);
+      // console.log(this.checkClass);
     },
 
 
   querySearchAsync(queryString, cb) {
-       console.log(queryString);
+      //  console.log(queryString);
 
   let tath = this;
       tath.$http.get(
@@ -327,15 +327,15 @@ export default {
   courses() {
       //使用axios 调用api接口数据
       let that = this;
-      console.log(that.today);
+      // console.log(that.today);
       that.$http.get(
         "/api/coursetables/checked",
         {today:that.today,studentid:that.studentid,},
         (success) => {
-          console.log(111);
-          console.log(success);
+          // console.log(111);
+          // console.log(success);
           this.list = success.data.list;
-          console.log(this.list);
+          // console.log(this.list);
         },
         (failure) => {
           console.log(failure);

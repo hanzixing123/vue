@@ -912,7 +912,7 @@ export default {
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          console.log("班级信息", success.data.list);
+          // console.log("班级信息", success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -1002,7 +1002,7 @@ export default {
         );
       }
 
-      console.log("学员列表", this.xueyuan_list);
+      // console.log("学员列表", this.xueyuan_list);
     },
 
     uplad(index) {
@@ -1024,7 +1024,7 @@ export default {
     changetab(index) {
       this.checktab = index;
       this.isschedule = index;
-      console.log(index);
+      // console.log(index);
       if (index == 0) {
         this.scheduleList.addtype = "one";
       } else {
@@ -1061,7 +1061,7 @@ export default {
         begintime: "",
         endtime: "",
       });
-      console.log(11);
+      // console.log(11);
     },
     //点击减号给给ind这个组的list，减少一个list[]模板
     deltime(ind, index) {
@@ -1149,7 +1149,7 @@ export default {
       }
       tath.isAddStu = false;
       tath.scheduleList.studentlist = tath.xueyuan_list1;
-      console.log("????", JSON.stringify(tath.scheduleList));
+      // console.log("????", JSON.stringify(tath.scheduleList));
       // console.log("????1",tath.scheduleList);
 
       tath.$http.post(
@@ -1168,7 +1168,7 @@ export default {
           tath.dialogFormVisible1 = false;
         },
         (fail) => {
-          console.log(222);
+          // console.log(222);
           this.$message.error("班级排课失败");
         }
       );
