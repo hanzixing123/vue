@@ -10,8 +10,8 @@ import axios from 'axios'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 import HttpRequest from "./http/http.js";
-Vue.http = Vue.prototype.$http = HttpRequest
-
+Vue.http = Vue.prototype.$http = HttpRequest;
+// import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
 //转换时间
 Vue.format = Vue.prototype.$format = format
 

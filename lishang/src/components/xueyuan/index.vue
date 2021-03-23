@@ -793,7 +793,7 @@ export default {
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          // console.log("580", that.list);
+          console.log("580",success);
         },
         (failure) => {
           console.log(failure);
@@ -884,11 +884,6 @@ export default {
       this.gouke = true;
       this.form2.studentid = id.toString();
     },
-    // ces(index,name){
-    //   if(this.selectList[index].substr(0,this.selectList[index].indexOf("+",0))==name){
-    //           // return true;
-    //     }
-    // }
   },
 
   computed: {
