@@ -171,6 +171,7 @@ export default {
     qt(path){
         this.$router.push(path);
     },
+
     lujing() {
       if (this.$route.path == "/banji") {
         this.isChange = 0;
