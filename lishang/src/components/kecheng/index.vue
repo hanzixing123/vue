@@ -158,7 +158,7 @@ export default {
         (success) => {
            that.counts = success.data.counts
           that.list = success.data.list;
-          console.log(success.data.list);
+          // console.log(success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -178,32 +178,7 @@ export default {
         this.form.mode = "集体班";
       }
 
-      console.log(this.form);
-     
-
-
-      if(this.form.name==""){
-          this.$message({
-            showClose: false,
-            message: "课程名称不能为空",
-            type: "error",
-          });
-            return;
-      }
-
-         if(this.form.price==""){
-          this.$message({
-            showClose: false,
-            message: "课程单价不能为空",
-            type: "error",
-          });
-            return;
-      }
-
-     
-
-
-      console.log(JSON.stringify(this.form));
+      // console.log(JSON.stringify(this.form));
 
       let data = JSON.stringify(this.form);
       that.$http.post(
@@ -233,7 +208,7 @@ export default {
     },
 
     del(index) {
-      console.log(this.list[index]);
+      // console.log(this.list[index]);
       let that = this;
       that.$http.get(
         "/api/courses/delete",
@@ -266,7 +241,7 @@ export default {
       }
 
       that.form = that.list[index];
-      console.log(that.form);
+      // console.log(that.form);
     },
 
   },

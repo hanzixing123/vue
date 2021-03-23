@@ -501,7 +501,7 @@ export default {
   },
   watch: {
     dialogFormVisible(c, v) {
-      console.log(c, v);
+      // console.log(c, v);
       if (c === false) {
         this.form = {
           num: "", //学员编号
@@ -617,7 +617,7 @@ export default {
         });
       }
       let list1 = { classid: this.kecehng_xuan, studentlist: arr };
-      console.log(list1);
+      // console.log(list1);
       tath.$http.post(
         "/api/coursetables/addForClassid",
         JSON.stringify(list1),
@@ -705,7 +705,7 @@ export default {
         { page: 1 },
         (success) => {
           this.banji_list = success.data.list;
-          console.log("班级信息", success);
+          // console.log("班级信息", success);
         },
         (fall) => {}
       );
@@ -783,7 +783,7 @@ export default {
       );
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
     },
     xuyuan_list() {
       let that = this;
@@ -819,7 +819,7 @@ export default {
       // console.log();
     },
     xueyuan_xiu(index) {
-      console.log(this.list[index]);
+      // console.log(this.list[index]);
       var shuju = this.list[index];
       this.form = {
         id: shuju.id,
@@ -830,7 +830,7 @@ export default {
         birthday: shuju.birthday, //日期
         remarks: shuju.remarks, //备注
       };
-      console.log(this.form);
+      // console.log(this.form);
       this.titles = "修改学员信息";
       this.dialogFormVisible = true;
     },
@@ -841,7 +841,7 @@ export default {
         { page: 1 },
         (success) => {
           this.kc_list = success.data.list;
-          console.log(success);
+          // console.log(success);
         },
         (fall) => {}
       );
@@ -862,7 +862,7 @@ export default {
       this.form2.courseid = this.form2.courseid.toString();
       this.form2.sumprice = this.form2.sumprice.toString();
       let tath = this;
-      console.log(JSON.stringify(tath.form2));
+      // console.log(JSON.stringify(tath.form2));
       tath.$http.post(
         "/api/students/addorder",
         JSON.stringify(tath.form2),
@@ -873,7 +873,7 @@ export default {
             message: "购课成功",
             type: "success",
           });
-          console.log(success);
+          // console.log(success);
         },
         (fall) => {
           console.log(fall);
@@ -894,7 +894,7 @@ export default {
   computed: {
     total() {
       var form2 = this.form2;
-      console.log(form2.discountper);
+      // console.log(form2.discountper);
       var sum = 0;
       if (form2.discounttype == "2") {
         sum =

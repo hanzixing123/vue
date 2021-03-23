@@ -17,13 +17,14 @@
         <el-dialog :title="title" :visible.sync="dialogFormVisible">
           <el-form v-model="form">
             <el-form-item label="所选课程">
-              <el-select v-model="form.coursename" placeholder="请选择">
+              <el-select v-model="form.courseid" placeholder="请选择">
                 <el-option
                   v-for="(item, indexs) in liet"
                   :key="indexs"
                   :label="item.name"
                   :value="item.id"
-                ></el-option>
+                >
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="班级名称">
@@ -37,6 +38,9 @@
               <el-input
                 v-model="form.coursecounts"
                 autocomplete="off"
+                type="number"
+                oninput="value=value.replace(/[^\d]/g,'')"
+                maxLength="9"
                 class="inputs"
                 placeholder="0"
               ></el-input>
@@ -68,7 +72,7 @@
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="add">确 定</el-button>
-          </div>      
+          </div>
         </el-dialog>
         <div class="right-three">
           <div style="margin-top: 15px">
@@ -85,7 +89,11 @@
                   :value="item.id"
                 ></el-option>
               </el-select>
-              <el-button @click="search()" slot="append" icon="el-icon-search"></el-button>
+              <el-button
+                @click="search()"
+                slot="append"
+                icon="el-icon-search"
+              ></el-button>
             </el-input>
           </div>
         </div>
@@ -118,9 +126,7 @@
             <td>
               <el-button type="primary" @click="paike(index)">排课</el-button>
               <!-- dialogFormVisible1 = true -->
-              <el-button type="info" @click="kebiao()"
-                >课表</el-button
-              >
+              <el-button type="info" @click="kebiao()">课表</el-button>
               <!-- <el-button type="success" @click="dialogVisible = true">单次排课</el-button> -->
               <el-button type="danger" @click="del(item.id)">删除</el-button>
               <el-button type="warning" @click="uplad(index)">修改</el-button>
@@ -153,13 +159,13 @@
       <el-dialog
         title="课表"
         :visible.sync="dialogVisible3"
-        width="70%"
+        width="75%"
         :before-close="handleClose"
       >
         <div class="main">
           <div class="main-left">
             <div class="main-left-top">
-              <p class="top-t">架子鼓基础班2101</p>
+              <p class="top-t" >架子鼓基础班2101</p>
               <li><b>课程：</b>架子鼓课</li>
               <li><b>老师：</b>希希、老师傅</li>
               <li><b>教室：</b></li>
@@ -197,13 +203,11 @@
             </div>
           </div>
           <div class="main-right">
-           
-
             <div class="main-right-main">
               <el-calendar :range="['2019-03-01', '2019-03-31']"> </el-calendar>
             </div>
-            <div class="ke" v-for="(res,index) in liet" :key="index">
-              <li>{{res.name}}</li>
+            <div class="ke" v-for="(res, index) in liet" :key="index">
+              <li>{{ res.name }}</li>
               <li>09:01在</li>
             </div>
           </div>
@@ -561,7 +565,12 @@
           </ul>
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="commit()"   v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
+          <el-button
+            type="primary"
+            @click="commit()"
+            v-loading.fullscreen.lock="fullscreenLoading"
+            >保存</el-button
+          >
         </div>
       </el-dialog>
       <el-dialog title="选择学员" :visible.sync="dialogFormVisibles">
@@ -695,9 +704,7 @@ export default {
       formLabelWidth: "100%",
       pickerOptions: {
         disabledDate(time) {
-          
           return time.getTime() > Date.now();
-
         },
       },
       //是否添加学员
@@ -810,7 +817,7 @@ export default {
       endTime: "",
       startTimes: "",
       endTimes: "",
-      xueyuankey:"",
+      xueyuankey: "",
       keyword: "",
       select: "",
       dd: "",
@@ -852,6 +859,7 @@ export default {
             text: "昨天",
             onClick(picker) {
               const date = new Date();
+
               date.setTime(date.getTime() - 3600 * 1000 * 24);
               picker.$emit("pick", date);
             },
@@ -880,17 +888,18 @@ export default {
     this.addClassroomList();
   },
   methods: {
-search(){
-this.loaddata();
-},
-    kebiao(){
-        this.dialogVisible3 = true;
+    
+    search() {
+      this.loaddata();
     },
-    paike(index){
-        this.scheduleList.classid=this.list[index].id;
-        this.scheduleList.courseid= this.list[index].courseid;
-        // this.scheduleList.coursename= this.list[index].coursename;
-        this.dialogFormVisible1 = true;
+    kebiao() {
+      this.dialogVisible3 = true;
+    },
+    paike(index) {
+      this.scheduleList.classid = this.list[index].id;
+      this.scheduleList.courseid = this.list[index].courseid;
+      // this.scheduleList.coursename= this.list[index].coursename;
+      this.dialogFormVisible1 = true;
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -904,11 +913,11 @@ this.loaddata();
       let that = this;
       that.$http.get(
         "/api/classes/list",
-        { page: that.pagenum, psize: that.pagesize,name:that.keyword},
+        { page: that.pagenum, psize: that.pagesize, name: that.keyword },
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          console.log("班级信息", success.data.list);
+          // console.log("班级信息", success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -947,7 +956,21 @@ this.loaddata();
     },
     add: function () {
       let that = this;
-      // console.log(that.form);
+      console.log(that.form);
+      // 验证 所选课程不可为空
+      // if(that.form.coursename==""){that.$message({showClose: true,message: "请您该班级所选择的课程",type: "error",});return;}
+      // 验证班级名称
+      //   var arr = Object.keys(that.form); 
+      //   console.log(arr);
+      //   for(let i=1;i<arr.length;i++){
+      //       // if(arr[i])
+      //       // let ar=eval(.form.arr[i]);
+      //       let ar=arr[i];
+      //       console.log(ar);
+      //     console.log("成功？",this.form.ar);
+      //     //  console.log("for里？",arr[i]);
+      //   }
+      // return;
       that.$http.post(
         "/api/classes/add",
         JSON.stringify(this.form),
@@ -974,7 +997,13 @@ this.loaddata();
         "/api/classes/delete",
         { id: id },
         (success) => {
+           this.$message({
+            showClose: true,
+            message: "删除成功",
+            type: "success",
+          });
           that.loaddata();
+
         },
         (failure) => {
           alert(failure);
@@ -998,7 +1027,7 @@ this.loaddata();
         );
       }
 
-      console.log("学员列表", this.xueyuan_list);
+      // console.log("学员列表", this.xueyuan_list);
     },
 
     uplad(index) {
@@ -1020,7 +1049,7 @@ this.loaddata();
     changetab(index) {
       this.checktab = index;
       this.isschedule = index;
-      console.log(index);
+      // console.log(index);
       if (index == 0) {
         this.scheduleList.addtype = "one";
       } else {
@@ -1057,7 +1086,7 @@ this.loaddata();
         begintime: "",
         endtime: "",
       });
-      console.log(11);
+      // console.log(11);
     },
     //点击减号给给ind这个组的list，减少一个list[]模板
     deltime(ind, index) {
@@ -1110,7 +1139,7 @@ this.loaddata();
         { page: 1 },
         (success) => {
           this.classroomList = success.data.list;
-          console.log(success.data.list);
+          // console.log(success.data.list);
         },
         (fail) => {
           console.log(fail);
@@ -1134,7 +1163,7 @@ this.loaddata();
     //保存
     commit() {
       let tath = this;
-              this.fullscreenLoading=true;
+      this.fullscreenLoading = true;
 
       for (var i = 0; i < tath.weekArray.length; i++) {
         if (tath.weekArray[i].list.length > 0) {
@@ -1145,27 +1174,27 @@ this.loaddata();
       }
       tath.isAddStu = false;
       tath.scheduleList.studentlist = tath.xueyuan_list1;
-      console.log("????", JSON.stringify(tath.scheduleList));
+      // console.log("????", JSON.stringify(tath.scheduleList));
       // console.log("????1",tath.scheduleList);
 
       tath.$http.post(
         "/api/coursetables/add",
         tath.scheduleList,
         (success) => {
-                    this.fullscreenLoading = false;
+          this.fullscreenLoading = false;
           // console.log(111);
           tath.$message({
             message: "恭喜你，排课成功",
             type: "success",
           });
-           tath.scheduleList = {};
-           tath.$emit("addSched");
+          tath.scheduleList = {};
+          tath.$emit("addSched");
           // console.log(success);
-           tath.dialogFormVisible1 = false;
+          tath.dialogFormVisible1 = false;
         },
-        (fail) =>{
-            console.log(222);
-           this.$message.error("班级排课失败");
+        (fail) => {
+          // console.log(222);
+          this.$message.error("班级排课失败");
         }
       );
     },
@@ -1697,7 +1726,7 @@ li {
   border-left: 10px #1890ff solid;
   position: absolute;
   left: 400px;
-  top: 180px;
+  top: 148px;
 }
 
 .ke li {
@@ -1734,7 +1763,7 @@ li {
   margin-bottom: 20px;
 }
 .el-icon-user-solid {
-  color: #1890ff; 
+  color: #1890ff;
   font-size: 14px;
 }
 </style>

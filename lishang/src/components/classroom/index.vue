@@ -121,7 +121,7 @@ export default {
   },
   watch: {
     dialogFormVisible(c, v) {
-      console.log(c, v);
+      // console.log(c, v);
       if (c === false) {
         this.form = {
           name: "", //班级名称
@@ -170,7 +170,7 @@ export default {
         });
       }
       let list1 = { classid: this.kecehng_xuan, studentlist: arr };
-      console.log(list1);
+      // console.log(list1);
       tath.$http.post(
         "/api/coursetables/addForClassid",
         JSON.stringify(list1),
@@ -255,7 +255,7 @@ export default {
         });
         return;
       }
-      console.log(this.form);
+      // console.log(this.form);
       that.$http.post(
         "/api/classrooms/add",
         JSON.stringify(this.form),
@@ -311,7 +311,7 @@ export default {
       // console.log();
     },
     jiaoshi_xiu(index) {
-      console.log(this.list[index]);
+      // console.log(this.list[index]);
       var shuju = this.list[index];
       this.form = {
         id: shuju.id,
