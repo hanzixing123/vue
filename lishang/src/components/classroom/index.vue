@@ -285,7 +285,7 @@ export default {
         (success) => {
           that.counts = success.data.counts; // counts  分页用到的
           that.list = success.data.list;
-          // console.log("580", that.list);
+          console.log("580", success);
         },
         (failure) => {
           console.log(failure);

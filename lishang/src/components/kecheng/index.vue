@@ -80,6 +80,7 @@
         <el-form-item class="lp" label="单价:" :label-width="formLabelWidth">
           <el-input
             v-model="form.price"
+            type="number"
             class="input1"
             autocomplete="off"
           ></el-input>
@@ -191,6 +192,12 @@ export default {
             pricetype: "",
             mode: "",
           };
+           this.$message({
+            showClose: true,
+            message: "课程添加成功",
+            type: "success",
+          });
+          
           this.klo();
           // console.log(success);
         },
@@ -208,6 +215,12 @@ export default {
         { id: that.list[index].id },
         (success) => {
           this.klo();
+            this.$message({
+            showClose: true,
+            message: "删除成功",
+            type: "success",
+          });
+            return;
         },
         (failure) => {}
       );

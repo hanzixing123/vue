@@ -10,7 +10,7 @@
       </el-header>
 
       <el-container>
-        <el-aside width="125px">
+        <el-aside width="125px" style="overflow:visible;">
           <ul>
             <template v-for="(item, index) in navList">
               <li
@@ -20,11 +20,9 @@
                 @click="addClass(index, item.path)"
                 :class="index == isChange ? 'changeClass' : ''"
                 :style="index == isChange ? item.checked : item.unchecked"
-              >
-                {{ item.meta.name }}
-              </li>
+              >{{item.meta.name}}</li>
               <li
-                v-if="index >= 5"
+                v-if="(index >= 5) && (index <= 6)"
                 :key="index.id"
                 ref="changeInit"
                 @click="addClass(index, item.path)"
@@ -36,6 +34,26 @@
                 ]"
               >
                 <span>{{ item.meta.name }}</span>
+              </li>
+
+              <!-- @mouseleave="leave()" -->
+              <li
+                v-if="index == 7" :key="index"
+                 @mouseenter="enters(index)" @mouseleave="leave()"
+                :class="[             
+                  index == 7 ? 'el-icon-setting' : '',
+                  index == isChange ? 'changeClass' : '',
+                  index == isChange ? 'el-icon-setting1' : '',
+                ]"
+              >
+                <span>其他</span>
+                <div v-if="qitas==1"  class="tanchukuang">
+                        <span v-for="(item, index) in navList"  :key="index">
+                          <span v-if="index>=7" class='qita' @click="qt(item.path)">
+                              {{item.meta.name}}
+                          </span>
+                          </span>
+                </div>
               </li>
             </template>
           </ul>
@@ -53,6 +71,7 @@ export default {
     return {
       path: "",
       isChange: 0,
+      qitas:0,//
       navList: [
         {
           path: "/banji",
@@ -126,6 +145,18 @@ export default {
             name: "教室管理",
           },
         },
+        {
+          path: "/campus",
+          meta: {
+            name: "校园管理",
+          },
+        },
+        {
+          path: "/account_number",
+          meta: {
+            name: "账号管理",
+          },
+        },
       ],
     };
   },
@@ -137,6 +168,10 @@ export default {
       this.isChange = val;
       this.$router.push(path);
     },
+    qt(path){
+        this.$router.push(path);
+    },
+
     lujing() {
       if (this.$route.path == "/banji") {
         this.isChange = 0;
@@ -160,6 +195,17 @@ export default {
         this.isChange = 6;
       }
     },
+    enters(index){// 移入事件
+      // alert("移入");
+      this.isChange=index;
+      this.qitas=1;
+    },
+    leave(){
+        // this.isChange=1;
+        this.qitas=0
+    }
+    
+
   },
 };
 </script>
@@ -170,7 +216,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 25px;
+  margin-top: 0px;
 }
 .changeClass {
   color: #66aff4;
@@ -189,6 +235,8 @@ export default {
   background-color: #fafafc;
   color: #333;
   text-align: center;
+    
+
 }
 ul,
 li {
@@ -201,7 +249,7 @@ li {
   background: url("../assets/ico.png") no-repeat;
   background-size: 300px;
   height: 50px;
-  margin: 17px 7px;
+  margin: 8px 7px;
   padding-top: 48px;
 }
 .el-icon-s-custom::before {
@@ -221,6 +269,22 @@ li {
   color: #4281fc;
 }
 
+.el-icon-setting::before {
+  font-size: 50px;
+  position: absolute;
+  margin: 0;
+  top: -4px;
+  left: 30px;
+  color: #b7c3dc;
+}
+.el-icon-setting1::before {
+  font-size: 50px;
+  position: absolute;
+  margin: 0;
+  top: -4px;
+  left: 30px;
+  color: #4281fc;
+}
 .el-icon-s-home::before {
   font-size: 50px;
   position: absolute;
@@ -240,12 +304,19 @@ li {
   position: relative;
 }
 .el-aside ul li:nth-child(1) {
-  margin-top: 39px;
+  margin-top: 30px;
 }
 .el-aside ul li:nth-child(7) {
   background: none;
   position: relative;
 }
+.el-aside ul li:nth-child(8) {
+  background: none;
+  position: relative;
+}
+
+
+
 body > .el-container {
   margin-bottom: 40px;
 }
@@ -255,5 +326,26 @@ body > .el-container {
 }
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
+}
+
+.tanchukuang{
+  width:150px;
+  height:100px;
+  background-color:#cdcdcd;
+  position:absolute;
+  top:0px;
+  right:-150px;
+
+}
+.qita{
+      width:150px;
+      height:30px;
+      display: inline-block;
+      margin-bottom:4px;
+      background-color: yellow;
+      border-radius: 6px;
+      line-height: 30px;
+      cursor: pointer;
+
 }
 </style>

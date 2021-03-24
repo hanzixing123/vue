@@ -59,7 +59,7 @@
           <td>学员名称</td>
           <td>性别</td>
           <td>所选课程</td>
-          <td>购买数量</td>
+          <td>学员编号</td>
           <td>剩余课程</td>
           <td>操作</td>
         </tr>
@@ -110,6 +110,7 @@
           </el-pagination>
         </div>
       </div>
+
       <!-- 购买课程 -->
       <el-dialog :title="title" :visible.sync="gouke">
         <el-form :model="form2">
@@ -712,6 +713,47 @@ export default {
     xueyuan_add() {
       let that = this;
       // console.log(this.form);
+
+        if(this.form.name==""){
+            this.$message({
+            showClose: false,
+            message: "学员姓名不能为空",
+            type: "error",
+          });
+          return;
+        }
+        if(this.form.tel==""){
+            this.$message({
+            showClose: false,
+            message: "联系方式不能为空",
+            type: "error",
+          });
+          return;
+        }
+      if(this.form.birthday==""){
+            this.$message({
+            showClose: false,
+            message: "日期不能为空",
+            type: "error",
+          });
+          return;
+        }
+         if(this.form.num==""){
+            this.$message({
+            showClose: false,
+            message: "学员编号不能为空",
+            type: "error",
+          });
+          return;
+        }
+        if(this.form.remarks==""){  
+            this.$message({
+            showClose: false,
+            message: "备注不能为空",
+            type: "error",
+          });
+          return;
+        }
        if(that.form.id){
             var huifu="修改成功"
        }else{
@@ -721,11 +763,16 @@ export default {
         "/api/students/add",
         JSON.stringify(this.form),
         (success) => {
+
           this.$message({
             showClose: true,
             message: huifu,
             type: "success",
           });
+
+     
+
+
           this.xuyuan_list();
           // console.log(success);
           this.dialogFormVisible = false;
@@ -746,7 +793,7 @@ export default {
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          // console.log("580", that.list);
+          console.log("580",success);
         },
         (failure) => {
           console.log(failure);
@@ -837,11 +884,6 @@ export default {
       this.gouke = true;
       this.form2.studentid = id.toString();
     },
-    // ces(index,name){
-    //   if(this.selectList[index].substr(0,this.selectList[index].indexOf("+",0))==name){
-    //           // return true;
-    //     }
-    // }
   },
 
   computed: {

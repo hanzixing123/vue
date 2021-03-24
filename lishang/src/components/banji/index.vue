@@ -17,13 +17,14 @@
         <el-dialog :title="title" :visible.sync="dialogFormVisible">
           <el-form v-model="form">
             <el-form-item label="所选课程">
-              <el-select v-model="form.coursename" placeholder="请选择">
+              <el-select v-model="form.courseid" placeholder="请选择">
                 <el-option
                   v-for="(item, indexs) in liet"
                   :key="indexs"
                   :label="item.name"
                   :value="item.id"
-                ></el-option>
+                >
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="班级名称">
@@ -37,6 +38,9 @@
               <el-input
                 v-model="form.coursecounts"
                 autocomplete="off"
+                type="number"
+                oninput="value=value.replace(/[^\d]/g,'')"
+                maxLength="9"
                 class="inputs"
                 placeholder="0"
               ></el-input>
@@ -854,6 +858,7 @@ export default {
             text: "昨天",
             onClick(picker) {
               const date = new Date();
+
               date.setTime(date.getTime() - 3600 * 1000 * 24);
               picker.$emit("pick", date);
             },
@@ -965,7 +970,21 @@ export default {
     },
     add: function () {
       let that = this;
-      // console.log(that.form);
+      console.log(that.form);
+      // 验证 所选课程不可为空
+      // if(that.form.coursename==""){that.$message({showClose: true,message: "请您该班级所选择的课程",type: "error",});return;}
+      // 验证班级名称
+      //   var arr = Object.keys(that.form); 
+      //   console.log(arr);
+      //   for(let i=1;i<arr.length;i++){
+      //       // if(arr[i])
+      //       // let ar=eval(.form.arr[i]);
+      //       let ar=arr[i];
+      //       console.log(ar);
+      //     console.log("成功？",this.form.ar);
+      //     //  console.log("for里？",arr[i]);
+      //   }
+      // return;
       that.$http.post(
         "/api/classes/add",
         JSON.stringify(this.form),
@@ -992,7 +1011,13 @@ export default {
         "/api/classes/delete",
         { id: id },
         (success) => {
+           this.$message({
+            showClose: true,
+            message: "删除成功",
+            type: "success",
+          });
           that.loaddata();
+
         },
         (failure) => {
           alert(failure);
