@@ -3,8 +3,7 @@
     <div class="lo">
       <p class="bq">讲师管理</p>
       <a class="el-icon-folder-add" @click="dialogFormVisible = true"
-        >添加讲师</a
-      >
+        >添加讲师</a>
       <div class="dh">
         <el-input
           placeholder="请输入内容"
@@ -34,7 +33,7 @@
           <td>讲师名称</td>
           <td>讲师电话</td>
           <td>微信号</td>
-          <td>类型</td>
+          <td>职位</td>
           <td>操作</td>
         </tr>
         <tr v-for="(item, index) in list" :key="index">
@@ -133,7 +132,7 @@ export default {
         name: "",
         tel: "",
         wechat: "",
-        type: 1,
+        type:1,
       },
       formLabelWidth: "120px",
     };
@@ -215,8 +214,15 @@ export default {
             wechat: "",
             type: 1,
           };
+          this.$message({
+            showClose: true,
+            message: "添加成功",
+            type: "success",
+          });
           this.klo();
           // console.log(success);
+        
+
         },
         (failure) => {
           console.log(failure);
@@ -232,6 +238,11 @@ export default {
         "/api/teachers/delete",
         { id: that.list[index].id },
         (success) => {
+             this.$message({
+            showClose: true,
+            message: "删除成功",
+            type: "success",
+          });
           this.klo();
         },
         (failure) => {}

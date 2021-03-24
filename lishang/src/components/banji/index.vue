@@ -101,7 +101,7 @@
       <table class="tab" id="datalist">
         <tbody>
           <tr>
-            <th class="textleft" width="300px">班级名称</th>
+            <th class="textleft" width="300px">班级名称{{list.length}}</th>
             <th>课程</th>
             <th>老師</th>
             <th>人数</th>
@@ -126,7 +126,7 @@
             <td>
               <el-button type="primary" @click="paike(index)">排课</el-button>
               <!-- dialogFormVisible1 = true -->
-              <el-button type="info" @click="kebiao()">课表</el-button>
+              <el-button type="info" @click="kebiao(index)">课表</el-button>
               <!-- <el-button type="success" @click="dialogVisible = true">单次排课</el-button> -->
               <el-button type="danger" @click="del(item.id)">删除</el-button>
               <el-button type="warning" @click="uplad(index)">修改</el-button>
@@ -164,12 +164,12 @@
       >
         <div class="main">
           <div class="main-left">
-            <div class="main-left-top">
-              <p class="top-t" >架子鼓基础班2101</p>
-              <li><b>课程：</b>架子鼓课</li>
-              <li><b>老师：</b>希希、老师傅</li>
+            <div class="main-left-top" >
+              <p class="top-t" >{{classModel.name}}</p>
+              <li><b>课程：</b>{{classModel.coursename}}</li>
+              <li><b>老师：</b>{{classModel.teacherslist}}</li>
               <li><b>教室：</b></li>
-              <li><b>人数：</b>2/30</li>
+              <li><b>人数：</b>{{classModel.students}}</li>
               <li>
                 <el-progress
                   :text-inside="true"
@@ -203,12 +203,8 @@
             </div>
           </div>
           <div class="main-right">
-            <div class="main-right-main">
-              <el-calendar :range="['2019-03-01', '2019-03-31']"> </el-calendar>
-            </div>
-            <div class="ke" v-for="(res, index) in liet" :key="index">
-              <li>{{ res.name }}</li>
-              <li>09:01在</li>
+            <div >
+              <keshi :classid="classModel.id" /> 
             </div>
           </div>
         </div>
@@ -693,6 +689,7 @@
   </el-container>
 </template>
 <script>
+  import keshi from "../keshi/index.vue";
 export default {
   data() {
     return {
@@ -727,6 +724,8 @@ export default {
       teacherAssistantsList: [],
       // 教室列表
       classroomList: [],
+      //课程信息
+      courseid:"",
       //排课列表
       scheduleList: {
         //单次排课:one 批量排课:more
@@ -874,9 +873,19 @@ export default {
           },
         ],
       },
+      classModel:{id:0},
+      classid:0
+
+
+      
     };
   },
+  watch(){
+
+  },
+  components:{keshi},
   created() {
+    this.initdata();
     this.loaddata();
     this.courses();
     this.xueyuan__list();
@@ -888,12 +897,17 @@ export default {
     this.addClassroomList();
   },
   methods: {
-    
+    initdata(){
+        // this.$refs.subkeshi.classid=100;
+    },
     search() {
       this.loaddata();
     },
-    kebiao() {
+    kebiao(index) {
+    this.classModel= this.list[index];
+     
       this.dialogVisible3 = true;
+      this.xueyuan__list()
     },
     paike(index) {
       this.scheduleList.classid = this.list[index].id;
@@ -917,7 +931,7 @@ export default {
         (success) => {
           that.counts = success.data.counts;
           that.list = success.data.list;
-          // console.log("班级信息", success.data.list);
+          console.log("班级信息", success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -932,7 +946,7 @@ export default {
         { page: 1 },
         (success) => {
           that.liet = success.data.list;
-          // console.log(success.data.list);
+          console.log(success.data.list);
         },
         (failure) => {
           console.log(failure);
@@ -997,7 +1011,13 @@ export default {
         "/api/classes/delete",
         { id: id },
         (success) => {
+           this.$message({
+            showClose: true,
+            message: "删除成功",
+            type: "success",
+          });
           that.loaddata();
+
         },
         (failure) => {
           alert(failure);
@@ -1021,7 +1041,7 @@ export default {
         );
       }
 
-      // console.log("学员列表", this.xueyuan_list);
+      console.log("学员列表", this.xueyuan_list);
     },
 
     uplad(index) {
