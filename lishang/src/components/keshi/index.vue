@@ -1,36 +1,23 @@
 <template>
   <div>
-    <div class="right-a">
-      <p class="bq">课时汇总</p>
-      <div id="triangle-right"></div>
-      <div class="right-three">
-        <div class="search-a">
-          <div>
-            <el-select v-model="selecta" slot="prepend" placeholder="请选择" style="width:15%">
-              <el-option v-for="(item,indexs) in liet" :key="indexs" :label="item.name" :value="item.id"></el-option>
-            </el-select>
-            <el-select v-model="selectb" slot="prepend" placeholder="请选择 " style="width:15%;margin-left:-5px">
-              <el-option v-for="(item,indexs) in liet" :key="indexs" :label="item.name" :value="item.id"></el-option>
-            </el-select>
-            <el-input placeholder="请输入内容" v-model="input3" class="ssk">
-              <el-button slot="append" icon="el-icon-search"></el-button>
-            </el-input>
-          </div>
-        </div>
-      </div>
-    </div>
     <el-calendar id="calendar">
       <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
       <template slot="dateCell" slot-scope="{ date, data }">
         <!--自定义内容-->
         <div @click="dialogFormVisible = true">
-          <div class="calendar-day">{{ data.day.split("-").slice(2).join("-") }}</div>
+          <div class="calendar-day">
+            {{ data.day.split("-").slice(2).join("-") }}
+          </div>
           <div v-for="(item, index) in list" :key="index">
             <div v-if="data.day == item.coursedate" class="kecheng">
               <div class="neirong">
-                <b style="width:100%">{{ item.coursename }}</b>
-                <span style="color:#a698a7;width:100%;">{{item.starttime | formatTime}}——{{item.endtime | formatTime}}</span>
-                <span style="color:#a698a7;">{{item.teachername}}</span>
+                <b style="width: 100%">{{ item.coursename }}</b>
+                <span style="color: #a698a7; width: 100%"
+                  >{{ item.starttime | formatTime }}——{{
+                    item.endtime | formatTime
+                  }}</span
+                >
+                <span style="color: #a698a7">{{ item.teachername }}</span>
               </div>
             </div>
           </div>
@@ -38,63 +25,151 @@
         </div>
       </template>
     </el-calendar>
-    <el-dialog :title="title" :visible.sync="dialogFormVisible" v-for="(item,index) in list" :key="index">
-         <h1>基本信息:</h1>
-          课程名称: {{item.coursename}}  主讲老师:{{item.teachername}} 教室:{{item.classrooms}}
-          <h1 style="margin:20px 0;">上课时间</h1>
-          {{item.starttime}}<br>
-          <h1 style="margin-top:20px;">学员({{xueyuan_list1.length}})</h1>
-         <el-form>
-          <div class="um" @click="dialogFormVisibles = true" style="cursor: pointer;">
-             <img  style="margin-left:5px;" alt="">
-            添加学员
-            <!-- src="../assets/11.png" -->
-          </div>
-          <el-button type="success" @click="dialogFormVisible = false" class="cgan">确定</el-button>
-        </el-form>
-         <div style="width:100%;height:70px;">
-            <tr v-for="(item,index) in xueyuan_list1" :key="index" style="float:left;margin:15px;">
-              <td style="font-size:18px;">
-                <img src="@/assets/images/10.png" width="30px" height="30px" alt="">{{item}}
-              </td>
-            </tr>
+    <el-dialog
+      :title="title"
+      :visible.sync="dialogFormVisible"
+      v-for="(item, index) in list"
+      :key="index"
+    >
+      <h1>基本信息:</h1>
+      课程名称: {{ item.coursename }} 主讲老师:{{ item.teachername }} 教室:{{
+        item.classrooms
+      }}
+      <h1 style="margin: 20px 0">上课时间</h1>
+      {{ item.starttime }}<br />
+      <h1 style="margin-top: 20px">学员({{ xueyuan_list1.length }})</h1>
+      <el-form>
+        <div
+          class="um"
+          @click="dialogFormVisibles = true"
+          style="cursor: pointer"
+        >
+          <img style="margin-left: 5px" alt="" />
+          添加学员
+          <!-- src="../assets/11.png" -->
         </div>
+        <el-button
+          type="success"
+          @click="dialogFormVisible = false"
+          class="cgan"
+          >确定</el-button
+        >
+      </el-form>
+      <div style="width: 100%; height: 70px">
+        <tr
+          v-for="(item, index) in xueyuan_list1"
+          :key="index"
+          style="float: left; margin: 15px"
+        >
+          <td style="font-size: 18px">
+            <img
+              src="@/assets/images/10.png"
+              width="30px"
+              height="30px"
+              alt=""
+            />{{ item }}
+          </td>
+        </tr>
+      </div>
     </el-dialog>
-           <el-dialog title1="选择学员22222(钢琴课)"   :visible.sync="dialogFormVisibles"  >
-       <div class="right-threes">
-          <div style="margin-top: 15px;">
-            <el-input placeholder="请输入内容" v-model="input3" class="input-with-select aac">
-              <el-select v-model="selectc" slot="prepend" placeholder="课程" class="aab">
-                <el-option v-for="(item,indexs) in liet" :key="indexs" :label="item.name" :value="item.id"></el-option>
-              </el-select>
-              <el-button slot="append" icon="el-icon-search" class="search-aa"></el-button>
-            </el-input>
-          </div>
+    <el-dialog
+      title1="选择学员22222(钢琴课)"
+      :visible.sync="dialogFormVisibles"
+    >
+      <div class="right-threes">
+        <div style="margin-top: 15px">
+          <el-input
+            placeholder="请输入内容"
+            v-model="input3"
+            class="input-with-select aac"
+          >
+            <el-select
+              v-model="selectc"
+              slot="prepend"
+              placeholder="课程"
+              class="aab"
+            >
+              <el-option
+                v-for="(item, indexs) in liet"
+                :key="indexs"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              class="search-aa"
+            ></el-button>
+          </el-input>
         </div>
-        <div class="stu">
-           <table> 
-          <tr v-for="item in xueyuan_list" :key="item.id" style="line-height:30px">
-           <td><input type="checkbox"  v-model="xueyuan_list1" :value="item.name" style="width:20px;height:20px;"/><img src="@/assets/images/10.png" alt="">{{item.name}}</td>
+      </div>
+      <div class="stu">
+        <table>
+          <tr
+            v-for="item in xueyuan_list"
+            :key="item.id"
+            style="line-height: 30px"
+          >
+            <td>
+              <input
+                type="checkbox"
+                v-model="xueyuan_list1"
+                :value="item.name"
+                style="width: 20px; height: 20px"
+              /><img src="@/assets/images/10.png" alt="" />{{ item.name }}
+            </td>
           </tr>
         </table>
-        </div> 
-      <div class="right">
-        <h1 style="font-size:16;color:black;">已选学员({{xueyuan_list1.length}})</h1>
-        <p class="rt"><img src="@/assets/006.png"  alt="">清空</p> 
-        <tr  v-for="(item,index) in xueyuan_list1" :key="index">
-            <td style="padding-top:20px;border-bottom: 1px solid #f0f0f0;width:480px;">
-              <img src="@/assets/images/10.png" width="30px" height="30px" alt="">{{item}}
-              <!--  -->
-              <img src="@/assets/006.png" width="20px" height="20px" alt="" style="float:right"></td>
-          </tr>
       </div>
-        <el-dialog width="50%" :append-to-body='true' class="dialog" center :visible.sync="isAddStu">
-        <addStudents ref = "refStuInfo" @checkStuInfo = "checkStuInfo"></addStudents>
+      <div class="right">
+        <h1 style="font-size: 16; color: black">
+          已选学员({{ xueyuan_list1.length }})
+        </h1>
+        <p class="rt"><img src="@/assets/006.png" alt="" />清空</p>
+        <tr v-for="(item, index) in xueyuan_list1" :key="index">
+          <td
+            style="
+              padding-top: 20px;
+              border-bottom: 1px solid #f0f0f0;
+              width: 480px;
+            "
+          >
+            <img
+              src="@/assets/images/10.png"
+              width="30px"
+              height="30px"
+              alt=""
+            />{{ item }}
+            <!--  -->
+            <img
+              src="@/assets/006.png"
+              width="20px"
+              height="20px"
+              alt=""
+              style="float: right"
+            />
+          </td>
+        </tr>
+      </div>
+      <el-dialog
+        width="50%"
+        :append-to-body="true"
+        class="dialog"
+        center
+        :visible.sync="isAddStu"
+      >
+        <addStudents
+          ref="refStuInfo"
+          @checkStuInfo="checkStuInfo"
+        ></addStudents>
       </el-dialog>
-        <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="dialogFormVisibles = false">确定</el-button>
-        </div> 
-      </el-dialog>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogFormVisibles = false"
+          >确定</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>  
 
@@ -103,24 +178,31 @@ export default {
   data() {
     return {
       list: [],
-      input3:'',
-      liet:[],
+      input3: "",
+      liet: [],
       isAddStu: false,
-      xueyuan_list1:[],
-      xueyuan_list:[],
-      selecta:'',
-      selectb:'',
-      selectc:'',
+      xueyuan_list1: [],
+      xueyuan_list: [],
+      selecta: "",
+      selectb: "",
+      selectc: "",
       time: new Date(),
-      dialogFormVisible:false,
-      dialogFormVisibles:false,
-      title:'课程详情'
+      dialogFormVisible: false,
+      dialogFormVisibles: false,
+      title: "课程详情",
     };
+  },
+
+  props: {
+    classid: {
+      type: Number,
+      default:0
+    },
   },
   filters: {
     formatTime(time) {
       return new Date(time).format("hh:mm");
-    }
+    },
   },
 
   created() {
@@ -128,11 +210,17 @@ export default {
     this.xueyuan__list();
     this.courses();
     // console.log(23434)
+    // console.log(this.keshi)
   },
+watch:{
+    classid(newvalue,oldvalue){
+       this.huo_list();
+    }
+},
   methods: {
-     checkStuInfo(val){
-      this.isAddStu = false
-      this.scheduleList.studentlist = val
+    checkStuInfo(val) {
+      this.isAddStu = false;
+      this.scheduleList.studentlist = val;
     },
     courses() {
       //使用axios 调用api接口数据
@@ -149,7 +237,7 @@ export default {
         }
       );
     },
-      xueyuan__list() {
+    xueyuan__list() {
       let that = this;
       for (var i = 1; i <= 4; i++) {
         that.$http.get(
@@ -171,36 +259,39 @@ export default {
     },
     huo_list() {
       let that = this;
+      console.log("-----------");
+       console.log(that.classid);
+        console.log("-----------");
       that.$http.get(
         "/api/coursetables/search",
-        { month: new Date().format("yyyy-MM"), page: 1, psize: 10000 },
-        success => {
+        {classid:that.classid,month: new Date().format("yyyy-MM"), page: 1, psize: 10000 },
+        (success) => {
           that.list = success.data.list;
           // console.log(success.data.list);
           // console.log(123);
         },
-        failure => {
+        (failure) => {
           console.log(failure);
           // console.log(321);
         }
       );
     },
-      }
+  },
 };
 </script>
 
 
 <style>
-.aac{
+.aac {
   width: 410px;
 }
-.aab{
+.aab {
   width: 90px;
 }
-.search-aa{
+.search-aa {
   width: 50px;
 }
-.cgan{
+.cgan {
   float: right;
   margin-top: 20px;
 }
@@ -240,14 +331,14 @@ export default {
   position: relative;
   bottom: 520px;
 }
-.um{
+.um {
   margin-left: 70px;
   margin-top: -15px;
 }
 .bq {
   float: left;
   line-height: 60px;
-  margin:0;
+  margin: 0;
   color: #333335;
   font-size: 24px;
   background-color: #dfe3ec;
@@ -263,10 +354,10 @@ export default {
   border-bottom: 30px solid transparent;
 }
 .right-a {
-    height: 62px;
-    background-color: #f5f6fa;
-    border: 1px solid #dee3e9;
-    margin-bottom: 20px;
+  height: 62px;
+  background-color: #f5f6fa;
+  border: 1px solid #dee3e9;
+  margin-bottom: 20px;
 }
 .search-a {
   background-color: #ffffff;
@@ -284,8 +375,8 @@ export default {
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
 }
-.ssk{
-  width:475px;
+.ssk {
+  width: 475px;
   border: 0;
   float: right;
 }
