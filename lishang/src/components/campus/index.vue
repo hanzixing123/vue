@@ -38,7 +38,7 @@
       <tr
         v-for="(res, index) in list"
         :key="index"
-        style="height: 50px; lien-height: 50px; border-top: 1px solid red"
+        style="height: 50px; lien-height: 50px; border-top: 1px solid red;"
       >
         <td style="padding-left: 40px">{{ res.title }}</td>
         <td>{{ res.address }}</td>
@@ -110,7 +110,13 @@
       </div>
     </div>
     <div v-else style="display: inline-block">
-      <el-pagination
+      <div style="height:50px;">
+      <select v-model="page_num" @change="bian" style="width:60px;height:30px;  display:inline-block;border:1px solid;padding:0;margin-left:20px;">
+            <option :value="8">8条</option>
+            <option :value="16">16条</option>
+            <option :value="24">24条</option>
+      </select>
+      <el-pagination  style="display:inline-block;"
         background
         layout="prev, pager, next"
         :page-size="page_num"
@@ -118,10 +124,11 @@
         @current-change="Page_changes"
       >
       </el-pagination>
-      <div style="font-size: 30px">
+      <div style="font-size: 30px;display:inline-block;position:relative;top:10px;">
         共<span style="color: red">{{ total }}</span
         >条
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -191,6 +198,10 @@ export default {
     search() {
       this.campus_list();
     },
+    bian(){
+      this.Page_number=1;
+      this.campus_list();
+    },
     campus_list() {
       // 获取列表
       let _this = this;
@@ -228,7 +239,7 @@ export default {
       }
 
 
-      
+
       _this.$http.post(
         "/api/campus/add",
         _this.form,
