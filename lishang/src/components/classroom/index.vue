@@ -121,7 +121,7 @@ export default {
   },
   watch: {
     dialogFormVisible(c, v) {
-      // console.log(c, v);
+      // console.log(c, v);/
       if (c === false) {
         this.form = {
           name: "", //班级名称
@@ -317,7 +317,7 @@ export default {
         id: shuju.id,
         name:shuju.name
       };
-      // console.log(this.form);
+      //  (this.form);
       this.titles = "修改教室信息";
       this.dialogFormVisible = true;
     },
@@ -486,8 +486,6 @@ tr {
   background-color: #fff;
   color: #333;
 }
-.el-icon-search::before{
-  /* position: relative; */
-  /* top:0; */
-}
+
+
 </style>

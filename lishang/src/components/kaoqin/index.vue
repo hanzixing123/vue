@@ -347,6 +347,9 @@ export default {
 </script>
 
 <style scoped>
+li{
+  list-style: none;
+}
 .el-dialog {
   width: 35%;
 }

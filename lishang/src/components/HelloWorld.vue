@@ -194,6 +194,14 @@ export default {
       if (this.$route.path == "/classroom") {
         this.isChange = 6;
       }
+      if(this.$route.path=="/campus"){
+        this.isChange=7;
+      }
+      if(this.$route.path=="/account_number"){
+        this.isChange=7;
+      }
+
+
     },
     enters(index){// 移入事件
       // alert("移入");
