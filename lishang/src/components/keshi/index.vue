@@ -39,9 +39,9 @@
       </template>
     </el-calendar>
     <el-dialog :title="title" :visible.sync="dialogFormVisible" v-for="(item,index) in list" :key="index">
-         <h1>基本信息:</h1>
-          课程名称: {{item.coursename}}  主讲老师:{{item.teachername}} 教室:{{item.classrooms}}
-          <h1 style="margin:20px 0;">上课时间</h1>
+         <h1 style="margin-top:-20px;">基本信息</h1>
+          课程名称: {{item.coursename}} &#160;&#160;&#160; 主讲老师:&#160;{{item.teachername}} &#160;&#160;&#160;教室:&#160;{{item.classrooms}}
+          <h1 style="margin-top:35px;">上课时间</h1>
           {{item.starttime}}<br>
           <h1 style="margin-top:20px;">学员({{xueyuan_list1.length}})</h1>
          <el-form>
@@ -63,7 +63,7 @@
            <el-dialog title1="选择学员22222(钢琴课)"   :visible.sync="dialogFormVisibles"  >
        <div class="right-threes">
           <div style="margin-top: 15px;">
-            <el-input placeholder="请输入内容" v-model="input3" class="input-with-select aac">
+            <el-input placeholder="请输入内容" v-model="input3" class="input-with-select aac" style="width:120%">
               <el-select v-model="selectc" slot="prepend" placeholder="课程" class="aab">
                 <el-option v-for="(item,indexs) in liet" :key="indexs" :label="item.name" :value="item.id"></el-option>
               </el-select>
@@ -209,7 +209,7 @@ export default {
 }
 .stu {
   overflow-y: scroll;
-  width: 430px;
+  width: 50%;
   height: 480px;
 }
 .stu::-webkit-scrollbar {
@@ -234,7 +234,7 @@ export default {
   margin-top: -18px;
 }
 .right {
-  width: 480px;
+  width: 40%;
   height: 520px;
   float: right;
   position: relative;
@@ -253,6 +253,7 @@ export default {
   background-color: #dfe3ec;
   padding-left: 20px;
   padding-right: 10px;
+  
 }
 #triangle-right {
   float: left;
@@ -263,7 +264,7 @@ export default {
   border-bottom: 30px solid transparent;
 }
 .right-a {
-    height: 62px;
+    height: 60px;
     background-color: #f5f6fa;
     border: 1px solid #dee3e9;
     margin-bottom: 20px;
