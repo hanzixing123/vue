@@ -312,12 +312,60 @@
       <!-- 添加学员 -->
       <el-dialog :title="titles" :visible.sync="dialogFormVisible">
         <el-form :model="form">
-          <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-form-item
+            label="姓名"
+            :label-width="formLabelWidth"
+            style="width: 340px"
+          >
             <el-input v-model="form.name" autocomplete="off"></el-input>
+            {{form.img}}
           </el-form-item>
-          <el-form-item label="联系方式" :label-width="formLabelWidth">
+          <el-form-item
+            label="联系方式"
+            :label-width="formLabelWidth"
+            style="width: 340px"
+          >
             <el-input v-model="form.tel" autocomplete="off"></el-input>
           </el-form-item>
+
+
+
+          <el-upload action="#"   v-model="form.img" list-type="picture-card" :auto-upload="false" style="margin-left:400px;position:absolute ;top:50px;right:100px;" >
+            <i slot="default" class="el-icon-plus"></i>
+            <div slot="file" slot-scope="{ file }" >
+              <img
+                class="el-upload-list__item-thumbnail"
+                :src="file.url"
+                alt=""
+              />
+              <span class="el-upload-list__item-actions">
+                <span
+                  class="el-upload-list__item-preview"
+                  @click="handlePictureCardPreview(file)"
+                >
+                  <i class="el-icon-zoom-in"></i>
+                </span>
+                <span
+                  v-if="!disabled"
+                  class="el-upload-list__item-delete"
+                  @click="handleRemove(file)"
+                >
+                  <i class="el-icon-delete"></i>
+                </span>
+              </span>
+            </div>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible" v-model="form.img">
+            <img width="100%" :src="dialogImageUrl" alt="" />
+          </el-dialog>
+
+
+
+
+
+
+
+
           <el-form-item label="性别" :label-width="formLabelWidth">
             <input type="radio" v-model="form.sex" name="sex" value="1" />男
             <input type="radio" v-model="form.sex" name="sex" value="0" />女
@@ -327,7 +375,7 @@
               <el-date-picker
                 v-model="form.birthday"
                 type="date"
-                placeholder="选择日期"
+                placeholder="请选择出生日期"
                 value-format="yyyy-MM-dd"
               >
               </el-date-picker>
@@ -539,6 +587,11 @@ export default {
 
   data() {
     return {
+
+            dialogImageUrl: '',
+        dialogVisible: false,
+        disabled: false,
+
       kljh: false,
       keywordd: "",
       kecehng_xuan: "",
@@ -564,7 +617,8 @@ export default {
       dialogTableVisible: false,
       dialogTableVisible1: false,
       dialogFormVisible1: false,
-      dialogFormVisible: false,
+      dialogFormVisible: true,
+      // 暂时, 
       gouke: false,
       form: {
         num: "", //学员编号
@@ -573,6 +627,7 @@ export default {
         sex: 1, //性别
         birthday: "", //日期
         remarks: "", //备注
+        img:"",
       },
       form1: {},
       form2: {
@@ -593,10 +648,33 @@ export default {
     };
   },
   methods: {
-    search() {
+
+    // 图片上传
+    handleRemove(file) {
+        console.log(file);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+      },
+      handleDownload(file) {
+        console.log(file);
+      },
+    // 图片上传
+
+
+
+
+
+
+
+
+
+
+
+    search() {//搜索
       this.xuyuan_list();
     },
-
     paike() {
       // this.kecehng_xuan
       // dialogFormVisible1 = false
@@ -656,11 +734,10 @@ export default {
         });
         return;
       }
-      
-      
+
       for (let i = 0; i < list.length; i++) {
         tath.$http.get(
-          "/api/students/delete", 
+          "/api/students/delete",
           {
             id: list[i].substring(list[i].lastIndexOf("+") + 1, list[i].length),
           },
@@ -714,64 +791,60 @@ export default {
       let that = this;
       // console.log(this.form);
 
-        if(this.form.name==""){
-            this.$message({
-            showClose: false,
-            message: "学员姓名不能为空",
-            type: "error",
-          });
-          return;
-        }
-        if(this.form.tel==""){
-            this.$message({
-            showClose: false,
-            message: "联系方式不能为空",
-            type: "error",
-          });
-          return;
-        }
-      if(this.form.birthday==""){
-            this.$message({
-            showClose: false,
-            message: "日期不能为空",
-            type: "error",
-          });
-          return;
-        }
-         if(this.form.num==""){
-            this.$message({
-            showClose: false,
-            message: "学员编号不能为空",
-            type: "error",
-          });
-          return;
-        }
-        if(this.form.remarks==""){  
-            this.$message({
-            showClose: false,
-            message: "备注不能为空",
-            type: "error",
-          });
-          return;
-        }
-       if(that.form.id){
-            var huifu="修改成功"
-       }else{
-            var huifu="添加成功"
-       }
+      if (this.form.name == "") {
+        this.$message({
+          showClose: false,
+          message: "学员姓名不能为空",
+          type: "error",
+        });
+        return;
+      }
+      if (this.form.tel == "") {
+        this.$message({
+          showClose: false,
+          message: "联系方式不能为空",
+          type: "error",
+        });
+        return;
+      }
+      if (this.form.birthday == "") {
+        this.$message({
+          showClose: false,
+          message: "日期不能为空",
+          type: "error",
+        });
+        return;
+      }
+      if (this.form.num == "") {
+        this.$message({
+          showClose: false,
+          message: "学员编号不能为空",
+          type: "error",
+        });
+        return;
+      }
+      if (this.form.remarks == "") {
+        this.$message({
+          showClose: false,
+          message: "备注不能为空",
+          type: "error",
+        });
+        return;
+      }
+      if (that.form.id) {
+        var huifu = "修改成功";
+      } else {
+        var huifu = "添加成功";
+      }
       that.$http.post(
         "/api/students/add",
         JSON.stringify(this.form),
         (success) => {
-
           this.$message({
             showClose: true,
             message: huifu,
             type: "success",
           });
-
-     
-
 
           this.xuyuan_list();
           // console.log(success);
@@ -868,7 +941,7 @@ export default {
         JSON.stringify(tath.form2),
         (success) => {
           this.gouke = false;
-                  this.$message({
+          this.$message({
             showClose: true,
             message: "购课成功",
             type: "success",

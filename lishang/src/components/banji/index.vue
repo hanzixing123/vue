@@ -160,8 +160,8 @@
         title="课表"
         :visible.sync="dialogVisible3"
         width="75%"
-        :before-close="handleClose"
       >
+              <!-- :before-close="handleClose"  拉回上面的提示再打开 handleClose方法重新使用点击确定取消-->
         <div class="main">
           <div class="main-left">
             <div class="main-left-top" >
@@ -915,13 +915,13 @@ export default {
       // this.scheduleList.coursename= this.list[index].coursename;
       this.dialogFormVisible1 = true;
     },
-    handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then((_) => {
-          done();
-        })
-        .catch((_) => {});
-    },
+    // handleClose(done) {
+    //   this.$confirm("确认关闭？")
+    //     .then((_) => {
+    //       done();
+    //     })
+    //     .catch((_) => {});
+    // },
     loaddata() {
       //使用axios 调用班级管理api接口数据
       let that = this;
