@@ -210,7 +210,39 @@ export default {
     },
     leave(){
         // this.isChange=1;
-        this.qitas=0
+        this.qitas=0;
+      if (this.$route.path == "/banji") {
+        this.isChange = 0;
+      }
+      if (this.$route.path == "/kecheng") {
+        this.isChange = 1;
+      }
+      if (this.$route.path == "/kaoqin") {
+        this.isChange = 2;
+      }
+      if (this.$route.path == "/keshi") {
+        this.isChange = 3;
+      }
+      if (this.$route.path == "/xueyuan") {
+        this.isChange = 4;
+      }
+      if (this.$route.path == "/lecturer") {
+        this.isChange = 5;
+      }
+      if (this.$route.path == "/classroom") {
+        this.isChange = 6;
+      }
+      // if(this.$route.path=="/campus"){
+      //   this.isChange=7;
+      // }
+      // if(this.$route.path=="/account_number"){
+      //   this.isChange=7;
+      // }
+
+
+
+
+
     }
     
 

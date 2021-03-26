@@ -123,7 +123,7 @@
 
     <!-- 表格 账号信息展示-->
     <div style="margin-left: 20px">
-      <table class="uls" style="margin-bottom: 100px; width: 100%;">
+      <table class="uls" style="margin-bottom: 100px; width: 100%">
         <tr>
           <td>账号</td>
           <td>姓名</td>
@@ -198,6 +198,21 @@ export default {
     this.zh_list();
     // 获取校区的
     this.xq_list();
+  },
+  watch: {
+    kjh(v, b) {
+      if (v == false) {
+        this.form = {
+          campusid: "",
+          name: "",
+          pass: "",
+          username: "",
+          tel: "",
+          Email: "",
+          remarks: "",
+        };
+      }
+    },
   },
   methods: {
     search() {
@@ -279,18 +294,19 @@ export default {
 
     // 账号添加
     zh_add() {
-      if(this.form.name==""||
-          this.form.username==""||
-           this.form.tel==""||
-            this.form.Email==""||
-             this.form.remarks==""
-      ){
-                  this.$message({
-            showClose: true,
-            message: "全部都鸡巴不能为空 艹 傻逼",
-            type: "error",
-          });
-          return;
+      if (
+        this.form.name == "" ||
+        this.form.username == "" ||
+        this.form.tel == "" ||
+        this.form.Email == "" ||
+        this.form.remarks == ""
+      ) {
+        this.$message({
+          showClose: true,
+          message: "全部都鸡巴不能为空 艹 傻逼",
+          type: "error",
+        });
+        return;
       }
       let that = this;
       let data = JSON.stringify(this.form);
@@ -336,17 +352,16 @@ export default {
 
       that.$http.post(
         "/api/company/changepass",
-        
+
         { id: that.list[index].id, pass: this.pass },
         (success) => {
-          this.czlk = true,
-            this.form = {
+          (this.czlk = true),
+            (this.form = {
               username: "",
               pass: "",
-            };
+            });
           that.form = that.list[index];
           that.zh_list();
-          
         },
         (failure) => {
           alert(failure);
@@ -362,7 +377,6 @@ export default {
   height: 100px;
   background-color: rgb(500, 231, 231);
   margin-top: 30px;
-
 }
 .uls {
   margin-top: 30px;

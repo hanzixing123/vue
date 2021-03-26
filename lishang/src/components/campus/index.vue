@@ -84,7 +84,7 @@
         </el-form-item>
         <el-form-item label="地区" :label-width="formLabelWidth">
           <el-cascader
-            style="width: 790px; margin-bottom: 10px"
+            style="width: 100%; margin-bottom: 10px"
             placeholder="请输入校区地址"
             size="large"
             :options="options"
