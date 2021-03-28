@@ -2,21 +2,13 @@
   <div style="width: 100%">
     <div class="er">
       <el-button
-        style="margin-left: 1430px; margin-top: 20px"
+        style="margin-left: 1090px; margin-top: 30px; position: relative; right:-150px;font-size:20px;"
         type="primary"
         @click="kjh = true"
-        >添加</el-button
+        >添 加</el-button
       >
 
-      <div
-        style="
-          margin-left: 30px;
-          position: relative;
-          top: -30px;
-          font-size: 20px;
-          display: inline-block;
-        "
-      >
+      <div style="margin-left:50px;margin-top:-30px;">
         账号数目({{ this.list.length }})个
       </div>
     </div>
@@ -30,7 +22,7 @@
         <el-button
           slot="append"
           icon="el-icon-search"
-          @click="search"
+          @click="search()"
         ></el-button>
       </el-input>
     </div>
@@ -396,7 +388,7 @@ export default {
 }
 .dh {
   width: 30%;
-  margin-left: 500px;
+  margin-left: 480px;
   margin-top: 20px;
 }
 </style>

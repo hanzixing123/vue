@@ -300,7 +300,7 @@ watch:{
 }
 .stu {
   overflow-y: scroll;
-  width: 430px;
+  width: 50%;
   height: 480px;
 }
 .stu::-webkit-scrollbar {
@@ -325,7 +325,7 @@ watch:{
   margin-top: -18px;
 }
 .right {
-  width: 480px;
+  width: 40%;
   height: 520px;
   float: right;
   position: relative;
@@ -344,6 +344,7 @@ watch:{
   background-color: #dfe3ec;
   padding-left: 20px;
   padding-right: 10px;
+  
 }
 #triangle-right {
   float: left;
@@ -354,7 +355,7 @@ watch:{
   border-bottom: 30px solid transparent;
 }
 .right-a {
-  height: 62px;
+  height: 60px;
   background-color: #f5f6fa;
   border: 1px solid #dee3e9;
   margin-bottom: 20px;
