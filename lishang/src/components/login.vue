@@ -116,7 +116,7 @@ export default {
           (success) => {
             localStorage.setItem("token", success.data);
             router.push({ path: "/banji" });
-            //    console.log(success.errCode);
+                    sessionStorage.setItem("lishang",that.username);
                console.log(123);
           },
           (failure) => {

@@ -1091,6 +1091,7 @@ td {
   /* float: left; */
   font-size: 14px;
   display: inline-block;
+
 }
 
 .paiban {
@@ -1349,6 +1350,7 @@ tr {
   font-size: 24px;
   line-height: 59px;
   padding-left: 10px;
+    margin:0px;
 }
 
 /* 一对一排课

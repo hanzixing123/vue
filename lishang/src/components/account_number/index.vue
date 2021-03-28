@@ -353,7 +353,7 @@ export default {
       that.$http.post(
         "/api/company/changepass",
 
-        { id: that.list[index].id, pass: this.pass },
+        { id: that.list[index].id, pass: this.form.pass },
         (success) => {
           (this.czlk = true),
             (this.form = {

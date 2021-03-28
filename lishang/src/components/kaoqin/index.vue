@@ -119,12 +119,18 @@
                   </tr>
                   <el-dialog title="签到" :visible.sync="dialogFormVisibles">
                     <div class="groups">
-                      <el-radio label="1" v-model="signList.checked">未签到</el-radio>
-                      <el-radio label="2" v-model="signList.checked">出勤</el-radio>
-                      <el-radio label="3" v-model="signList.checked">迟到</el-radio>
-                      <el-radio label="4" v-model="signList.checked">请假</el-radio>
-                      <el-radio label="5" v-model="signList.checked">旷课</el-radio>
-                      <br />
+                      <el-radio label="0" v-model="signList.checked">未签到</el-radio>
+                      <el-radio label="1" v-model="signList.checked">出勤</el-radio>
+                      <el-radio label="2" v-model="signList.checked">迟到</el-radio>
+                      <el-radio label="3" v-model="signList.checked">请假</el-radio>
+                      <el-radio label="4" v-model="signList.checked">旷课</el-radio>
+                      <br>
+                      <div style="text-align:left;padding-left:250px;">
+                      <span > 是否扣学员课时  </span>  
+                      <el-radio label="1" v-model="signList.consumed">是</el-radio>
+                      <el-radio label="0" v-model="signList.consumed">否</el-radio>
+                      </div>
+                  
                       <el-input
                         type="textarea"
                         v-model="form.remarks"
@@ -164,7 +170,9 @@ export default {
         },
       ],
 
-    signList:[],
+    signList:{
+      consumed:'1',
+    },
 
       liet: [],
       stuAll: [],
@@ -254,34 +262,36 @@ export default {
     //确定签到
     addSign() {
       // console.log(this.signList.checked);
-      this.signList = [
-        {
-          id: this.stuId,
-          checked: this.signList.checked,
-          courseid: this.courseId,
-          remarks: this.signList.remarks,
-        },
+      this.signList = [                   
+        {                                 
+          id:       this.stuId,           
+          checked:  this.signList.checked,
+          courseid: this.courseId,        
+          consumed: this.consumed,        
+          remarks:  this.signList.remarks,
+        },                                
       ];
 
       // console.log(JSON.stringify(this.signList));
-      this.$http.post(
+
+      this.$http.post(                   
         "/api/coursetables/updateState",
         this.signList,
         (success) => {
           // console.log(success);
+          this.dialogFormVisibles = false;
           this.$message({
             message: "恭喜你，签到成功",
             type: "success",
           });
-          this.dialogFormVisibles = false;
           this.courses();
         },
         (fail) => {
           console.log(fail);
         }
       );
-    },
 
+    },
   //考勤
     classOrAll() {
       // console.log(this.checkClass);

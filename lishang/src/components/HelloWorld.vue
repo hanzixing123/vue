@@ -7,10 +7,37 @@
           src="../assets/yun.png"
         />
         <span> 云教务管理系统</span>
+        <span
+          style="float: right; font-size: 20px; height: 40px; lien-height: 20px"
+          >校区:<select
+            name=""
+            id=""
+            style="width: 200px; height: 30px; border: 0px; outline: 0"
+          >
+            <option value="">SBSBSBSSBSBSBSBBSBSB</option>
+          </select>
+          <span class="el-icon-user" style="width: 20px; height: 20px"></span>
+          <!-- <span style="cursor: pointer" @click="Personal_Center=true">个人中心</span> -->
+          <el-dropdown trigger="click">
+            <span class="el-dropdown-link">
+              下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu
+              slot="dropdown"
+              style="margin-left: 20px; text-align: center"
+            >
+              <el-dropdown-item @click.native="Personal_Center = true"
+                >个人信息
+              </el-dropdown-item>
+              <el-dropdown-item>修改密码</el-dropdown-item>
+              <el-dropdown-item  @click.native="tuichu()">退出</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </span>
       </el-header>
 
       <el-container>
-        <el-aside width="125px" style="overflow:visible;">
+        <el-aside width="125px" style="overflow: visible">
           <ul>
             <template v-for="(item, index) in navList">
               <li
@@ -20,9 +47,11 @@
                 @click="addClass(index, item.path)"
                 :class="index == isChange ? 'changeClass' : ''"
                 :style="index == isChange ? item.checked : item.unchecked"
-              >{{item.meta.name}}</li>
+              >
+                {{ item.meta.name }}
+              </li>
               <li
-                v-if="(index >= 5) && (index <= 6)"
+                v-if="index >= 5 && index <= 6"
                 :key="index.id"
                 ref="changeInit"
                 @click="addClass(index, item.path)"
@@ -38,21 +67,23 @@
 
               <!-- @mouseleave="leave()" -->
               <li
-                v-if="index == 7" :key="index"
-                 @mouseenter="enters(index)" @mouseleave="leave()"
-                :class="[             
+                v-if="index == 7"
+                :key="index"
+                @mouseenter="enters(index)"
+                @mouseleave="leave()"
+                :class="[
                   index == 7 ? 'el-icon-setting' : '',
                   index == isChange ? 'changeClass' : '',
                   index == isChange ? 'el-icon-setting1' : '',
                 ]"
               >
                 <span>其他</span>
-                <div v-if="qitas==1"  class="tanchukuang">
-                        <span v-for="(item, index) in navList"  :key="index">
-                          <span v-if="index>=7" class='qita' @click="qt(item.path)">
-                              {{item.meta.name}}
-                          </span>
-                          </span>
+                <div v-if="qitas == 1" class="tanchukuang">
+                  <span v-for="(item, index) in navList" :key="index">
+                    <span v-if="index >= 7" class="qita" @click="qt(item.path)">
+                      {{ item.meta.name }}
+                    </span>
+                  </span>
                 </div>
               </li>
             </template>
@@ -62,6 +93,46 @@
         <router-view />
       </el-container>
     </el-container>
+    <!-- // 个人中心,弹框 -->
+    <el-dialog title="账号信息" :visible.sync="Personal_Center">
+      <table class="geren" style="width: 60%">
+        <tr>
+          <td>账号</td>
+          <td>1111</td>
+          <td> <span class="el-icon-edit"></span></td>
+        </tr>
+        <tr>
+          <td>姓名</td>
+          <td>11111</td>
+          <td><span class="el-icon-edit"></span></td>
+        </tr>
+        <tr>
+          <td>联系方式</td>
+          <td>111111</td>
+          <td><span class="el-icon-edit"></span></td>
+        </tr>
+        <tr>
+          <td>邮箱</td>
+          <td>111111</td>
+          <td><span class="el-icon-edit"></span></td>
+        </tr>
+        <tr>
+          <td>地址</td>
+          <td>111111</td>
+          <td><span class="el-icon-edit"></span></td>
+        </tr>
+        <tr>
+          <td>登录密码</td>
+          <td>111111</td>
+          <td><span class="el-icon-edit"></span></td>
+        </tr>
+      </table>
+      <!-- <el-table :data="gridData">
+    <el-table-column property="date" label="日期" width="150"></el-table-column>
+    <el-table-column property="name" label="姓名" width="200"></el-table-column>
+    <el-table-column property="address" label="地址"></el-table-column>
+  </el-table> -->
+    </el-dialog>
   </div>
 </template>
 
@@ -71,7 +142,7 @@ export default {
     return {
       path: "",
       isChange: 0,
-      qitas:0,//
+      qitas: 0, //
       navList: [
         {
           path: "/banji",
@@ -158,20 +229,45 @@ export default {
           },
         },
       ],
+      Personal_Center: false,
     };
   },
   created() {
     this.lujing();
+    this.geren();
   },
   methods: {
+    geren() {
+      var kk = sessionStorage.getItem("lishang");
+      // alert(kk);
+      if (kk == null) {
+        this.timer = setTimeout(() => {
+          //设置延迟执行
+          clearTimeout(this.timer); //清除延迟执行
+          this.$router.push("login");
+          this.$message({
+            message: "请您先登录",
+            type: "error",
+          });
+        }, 1000);
+      } else {
+        // this.$http.get(
+        //   "/company/get",
+        //   { username:kk},
+        //   (success) => {
+        //     console.log(success)
+        //   },
+        //   (fall) => {}
+        // );
+      }
+    },
     addClass(val, path) {
       this.isChange = val;
       this.$router.push(path);
     },
-    qt(path){
-        this.$router.push(path);
+    qt(path) {
+      this.$router.push(path);
     },
-
     lujing() {
       if (this.$route.path == "/banji") {
         this.isChange = 0;
@@ -194,23 +290,22 @@ export default {
       if (this.$route.path == "/classroom") {
         this.isChange = 6;
       }
-      if(this.$route.path=="/campus"){
-        this.isChange=7;
+      if (this.$route.path == "/campus") {
+        this.isChange = 7;
       }
-      if(this.$route.path=="/account_number"){
-        this.isChange=7;
+      if (this.$route.path == "/account_number") {
+        this.isChange = 7;
       }
-
-
     },
-    enters(index){// 移入事件
+    enters(index) {
+      // 移入事件
       // alert("移入");
-      this.isChange=index;
-      this.qitas=1;
+      this.isChange = index;
+      this.qitas = 1;
     },
-    leave(){
-        // this.isChange=1;
-        this.qitas=0;
+    leave() {
+      // this.isChange=1;
+      this.qitas = 0;
       if (this.$route.path == "/banji") {
         this.isChange = 0;
       }
@@ -232,20 +327,10 @@ export default {
       if (this.$route.path == "/classroom") {
         this.isChange = 6;
       }
-      // if(this.$route.path=="/campus"){
-      //   this.isChange=7;
-      // }
-      // if(this.$route.path=="/account_number"){
-      //   this.isChange=7;
-      // }
-
-
-
-
-
+    },
+    tuichu(){
+        
     }
-    
-
   },
 };
 </script>
@@ -275,8 +360,6 @@ export default {
   background-color: #fafafc;
   color: #333;
   text-align: center;
-    
-
 }
 ul,
 li {
@@ -355,8 +438,6 @@ li {
   position: relative;
 }
 
-
-
 body > .el-container {
   margin-bottom: 40px;
 }
@@ -368,24 +449,43 @@ body > .el-container {
   line-height: 320px;
 }
 
-.tanchukuang{
-  width:150px;
-  height:100px;
-  background-color:#cdcdcd;
-  position:absolute;
-  top:0px;
-  right:-150px;
-
+.tanchukuang {
+  width: 150px;
+  height: 100px;
+  background-color: #cdcdcd;
+  position: absolute;
+  top: 0px;
+  right: -150px;
 }
-.qita{
-      width:150px;
-      height:30px;
-      display: inline-block;
-      margin-bottom:4px;
-      background-color: yellow;
-      border-radius: 6px;
-      line-height: 30px;
-      cursor: pointer;
+.qita {
+  width: 150px;
+  height: 30px;
+  display: inline-block;
+  margin-bottom: 4px;
+  background-color: yellow;
+  border-radius: 6px;
+  line-height: 30px;
+  cursor: pointer;
+}
+.el-icon-user::before {
+  width: 20px;
+  height: 20px;
+  color: #cdcdcd;
+  /* display: inline-block; */
+  /* float:right; */
+}
 
+/* 个人中心 弹出框 table样式
+ */
+.geren > tr {
+  height: 60px;
+  width: 100%;
+  border-bottom: 1px solid red;
+}
+.el-icon-edit::before {
+  display: inline-block;
+  /* width:50px; */
+  font-size: 20px;
+  color: hotpink;
 }
 </style>

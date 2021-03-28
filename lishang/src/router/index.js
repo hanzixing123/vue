@@ -75,8 +75,6 @@ export default new Router({
       // name: 'HelloWorld',
       component:()=>import("@/components/login.vue"),
     }
-   
-
   ],
   // methods:{
 
